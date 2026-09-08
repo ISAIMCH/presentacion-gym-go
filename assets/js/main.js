@@ -66,8 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
         L.Routing.control({
             waypoints: [
                 L.latLng(19.4326, -99.1332), // Punto A: Centro de CDMX
-                L.latLng(20.2286, -99.2131)  // Punto B: Sucursal en Mixquiahuala, Hidalgo
-            ],
+                L.latLng(20.028215, -99.225026)  // Punto B: Sucursal en Mixquiahuala, Hidalgo
+            ],    
             language: 'es', // Instrucciones en español
             lineOptions: {
                 styles: [{ color: '#0d6efd', opacity: 0.8, weight: 6 }] // Línea azul estilo Bootstrap
