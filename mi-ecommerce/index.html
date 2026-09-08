@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop - Tecnología Premium</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light pt-5 mt-4">
+
+    <!-- ==========================================
+         Barra de Navegación (Navbar)
+         ========================================== -->
+    <nav class="navbar navbar-expand-lg fixed-top bg-white border-bottom py-2 shadow-sm">
+        <div class="container">
+            <!-- Nuevo icono de tecnología y marca genérica -->
+            <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">
+                <i class="bi bi-lightning-charge-fill text-primary me-1"></i> E-Shop
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav fw-medium">
+                    <li class="nav-item"><a class="nav-link text-dark px-3" href="#">Inicio</a></li>
+                    <!-- Categorías multimarca -->
+                    <li class="nav-item"><a class="nav-link text-dark px-3" href="pages/productos.html">Laptops</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-3" href="pages/productos.html">Tablets</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-3" href="pages/productos.html">Smartphones</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-3" href="pages/productos.html">Accesorios</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark px-3" href="pages/contacto.html">Soporte</a></li>
+                </ul>
+            </div>
+            <!-- Iconos de usuario y carrito -->
+            <div class="d-flex align-items-center gap-3 d-none d-lg-flex">
+                <a href="#" class="text-dark"><i class="bi bi-search fs-5"></i></a>
+                
+                <!-- Cambiamos la etiqueta 'a' por un 'div' con la clase 'dropdown' -->
+                <div class="dropdown" id="userNavContainer">
+                    <a href="pages/login.html" class="text-dark text-decoration-none">
+                        <i class="bi bi-person fs-5"></i>
+                    </a>
+                </div>
+                
+                <a href="pages/carrito.html" class="text-dark"><i class="bi bi-bag fs-5"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         Inicio del Slider (Hero)
+         ========================================== -->
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        
+        <div class="carousel-indicators mb-4">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+
+        <div class="carousel-inner">
+            
+            <!-- Slide 1 -->
+            <div class="carousel-item active" data-bs-interval="5000" style="height: 75vh; min-height: 500px;">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1920&q=80" class="d-block w-100 h-100 object-fit-cover" alt="Smartwatch Series">
+                
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+                
+                <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
+                    <h1 class="display-4 fw-bold text-white mb-2">Smartwatch Pro X</h1>
+                    <p class="fs-4 fw-light text-white mb-4">Monitoreo avanzado y diseño premium.</p>
+                    <div class="d-flex gap-3">
+                        <a href="pages/producto.html" class="btn btn-primary rounded-pill px-4 py-2 fw-medium">Comprar</a>
+                        <a href="#" class="btn btn-outline-light rounded-pill px-4 py-2 fw-medium">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item" data-bs-interval="5000" style="height: 75vh; min-height: 500px;">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1920&q=80" class="d-block w-100 h-100 object-fit-cover" alt="Auriculares Inalámbricos">
+                
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+                
+                <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
+                    <h1 class="display-4 fw-bold text-white mb-2">Aura Sound Max</h1>
+                    <p class="fs-4 fw-light text-white mb-4">Cancelación de ruido activa. Inmersión total.</p>
+                    <a href="pages/producto.html" class="btn btn-primary rounded-pill px-4 py-2 fw-medium">Comprar</a>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item" data-bs-interval="5000" style="height: 75vh; min-height: 500px;">
+                <img src="https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=1920&q=80" class="d-block w-100 h-100 object-fit-cover" alt="Nuevo Smartphone">
+                
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
+                
+                <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100 text-center pb-5">
+                    <h1 class="display-4 fw-bold text-white mb-2">Quantum X1</h1>
+                    <p class="fs-4 fw-light text-white mb-4">Rendimiento extremo. Cámara profesional.</p>
+                    <a href="pages/producto.html" class="btn btn-primary rounded-pill px-4 py-2 fw-medium">Comprar</a>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+
+    <!-- ==========================================
+         Sección de Productos Destacados
+         ========================================== -->
+    <div class="container my-5 pt-4">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Los favoritos de nuestros clientes.</h2>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Producto 1 -->
+            <div class="col-md-4">
+                <div class="card border-0 rounded-4 shadow-sm p-4 text-center h-100 bg-white">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500&q=80" class="card-img-top rounded object-fit-cover mb-3" alt="Laptop" style="height: 200px;">
+                    <div class="card-body p-0">
+                        <h5 class="card-title fw-bold">Ultrabook Infinity</h5>
+                        <p class="card-text text-secondary small">Procesador de última generación. Diseño ultradelgado.</p>
+                        <p class="fs-5 fw-semibold">$1,299</p>
+                        <a href="pages/producto.html" class="btn btn-primary rounded-pill px-4">Comprar</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 2 -->
+            <div class="col-md-4">
+                <div class="card border-0 rounded-4 shadow-sm p-4 text-center h-100 bg-white">
+                    <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80" class="card-img-top rounded object-fit-cover mb-3" alt="Watch" style="height: 200px;">
+                    <div class="card-body p-0">
+                        <h5 class="card-title fw-bold">Sport Watch Extreme</h5>
+                        <p class="card-text text-secondary small">Resistente al agua. Batería de larga duración.</p>
+                        <p class="fs-5 fw-semibold">$799</p>
+                        <a href="pages/producto.html" class="btn btn-primary rounded-pill px-4">Comprar</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="col-md-4">
+                <div class="card border-0 rounded-4 shadow-sm p-4 text-center h-100 bg-white">
+                    <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=500&q=80" class="card-img-top rounded object-fit-cover mb-3" alt="Accesorios" style="height: 200px;">
+                    <div class="card-body p-0">
+                        <h5 class="card-title fw-bold">Tablet Vision X</h5>
+                        <p class="card-text text-secondary small">Pantalla 4K brillante. Perfecta para creadores.</p>
+                        <p class="fs-5 fw-semibold">$599</p>
+                        <a href="pages/producto.html" class="btn btn-primary rounded-pill px-4">Comprar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script principal para cambiar la barra de navegación (AGREGA ESTA LÍNEA) -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - E-Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg bg-white border-bottom py-3 shadow-sm">
+        <div class="container justify-content-center">
+            <a class="navbar-brand fw-bold fs-4 text-dark m-0" href="../index.html">
+                <i class="bi bi-lightning-charge-fill text-primary me-1"></i> E-Shop
+            </a>
+        </div>
+    </nav>
+
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="col-12 col-md-8 col-lg-5 col-xl-4">
+            <div class="card border-0 rounded-4 shadow-sm bg-white p-4 p-md-5 mt-4">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold mb-1">Crear cuenta</h2>
+                    <p class="text-secondary small">Únete para una experiencia de compra premium.</p>
+                </div>
+
+                <form id="registroForm">
+                    <!-- Nombres y Apellidos en una sola fila (Grid de Bootstrap) -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="regNombre" class="form-label fw-medium small text-dark">Nombre(s)</label>
+                            <input type="text" class="form-control rounded-pill px-4 py-2 bg-light border-0" id="regNombre" required>
+                        </div>
+                        <div class="col-md-6 mt-3 mt-md-0">
+                            <label for="regApellidos" class="form-label fw-medium small text-dark">Apellidos</label>
+                            <input type="text" class="form-control rounded-pill px-4 py-2 bg-light border-0" id="regApellidos" required>
+                        </div>
+                    </div>
+
+                    <!-- Fecha de Nacimiento -->
+                    <div class="mb-3">
+                        <label for="regFechaNac" class="form-label fw-medium small text-dark">Fecha de Nacimiento</label>
+                        <input type="date" class="form-control rounded-pill px-4 py-2 bg-light border-0" id="regFechaNac" required>
+                    </div>
+
+                    <!-- Correo -->
+                    <div class="mb-3">
+                        <label for="regEmail" class="form-label fw-medium small text-dark">Correo Electrónico</label>
+                        <input type="email" class="form-control rounded-pill px-4 py-2 bg-light border-0" id="regEmail" placeholder="ejemplo@correo.com" required>
+                    </div>
+
+                    <!-- Contraseña -->
+                    <div class="mb-4">
+                        <label for="regPassword" class="form-label fw-medium small text-dark">Contraseña</label>
+                        <input type="password" class="form-control rounded-pill px-4 py-2 bg-light border-0" id="regPassword" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary rounded-pill w-100 py-2 fw-medium mb-3">Registrarme</button>
+                    
+                    <div class="text-center">
+                        <p class="small text-secondary mb-0">¿Ya tienes cuenta? <a href="login.html" class="text-primary text-decoration-none fw-medium">Inicia sesión</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/registro.js"></script>
+</body>
+</html>

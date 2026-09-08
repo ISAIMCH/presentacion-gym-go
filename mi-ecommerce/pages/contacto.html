@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - E-Shop</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- CSS de Leaflet y Routing Machine -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+    <!-- Tu CSS global (ya no necesitas poner lo del mapa aquí) -->
+    <link rel="stylesheet" href="../assets/css/estilos.css">
+</head>
+<body class="bg-light"> <!-- bg-light de Bootstrap para un fondo gris claro -->
+
+    <!-- Tu Navbar iría aquí -->
+
+    <!-- my-5 = margin en el eje Y, py-4 = padding en el eje Y -->
+    <main class="container my-5 py-4">
+        <h2 class="text-center fw-bold mb-3">Visita nuestras instalaciones</h2>
+        <p class="text-center text-secondary mb-4">Te mostramos la ruta sugerida desde la CDMX hasta nuestra sucursal.</p>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- 
+                  AQUÍ ESTÁ LA MAGIA DE BOOTSTRAP:
+                  shadow = sombra suave
+                  rounded-4 = bordes bien redondeados
+                  border = borde sutil
+                  z-1 = z-index para que no tape menús
+                  overflow-hidden = para que el mapa no se salga de los bordes redondeados
+                  style="height: 500px;" = Lo único que Leaflet pide a gritos
+                -->
+                <div id="miMapaRuta" class="shadow rounded-4 border z-1 overflow-hidden" style="height: 500px; width: 100%;"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tu Footer iría aquí -->
+
+    <!-- JS de Leaflet y Routing Machine -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    <!-- TU JS PRINCIPAL -->
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
