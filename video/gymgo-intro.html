@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GymGo · Video de introducción</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* Video de 60 s a 1920 × 1080. Todo se dibuja a partir del tiempo (render(t)), así la vista previa y la exportación
+   cuadro por cuadro dan exactamente lo mismo. Abrir con ?render para exportar (sin controles ni escalado). */
+:root{
+  --bg:#F5F7F6; --surface:#FFFFFF; --border:#E0E6E2; --border-strong:#C7D0CB;
+  --text:#0E1512; --text2:#4B5751; --text3:#7A8580;
+  --volt:#12E07B; --volt-text:#06783C; --volt-dim:#E8F9F0; --ink:#04120A; --danger:#CF3A2E; --danger-dim:#FDECEA; --info:#0A73B0;
+  --display:'Barlow Condensed','Arial Narrow',sans-serif; --body:'Barlow',system-ui,sans-serif;
+  --shadow:0 2px 6px rgba(14,21,18,.06),0 24px 60px rgba(14,21,18,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#101412;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;margin:-540px 0 0 -960px;transform-origin:center;background:var(--bg);
+  overflow:hidden;font-family:var(--body);color:var(--text)}
+body.render #stage{left:0;top:0;margin:0}
+.a{position:absolute;opacity:0;visibility:hidden;will-change:transform,opacity}
+.full{position:absolute;inset:0}
+.center{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;pointer-events:none}
+.disp{font-family:var(--display);font-weight:700;line-height:1}
+mark{background:none;color:var(--volt-text)}
+.title{left:0;right:0;top:70px;text-align:center;font-family:var(--display);font-weight:700;font-size:76px;letter-spacing:.005em}
+.kicker{display:block;font-family:var(--body);font-size:22px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--volt-text);margin-bottom:10px}
+
+/* Escena 1 */
+.word{display:flex;flex-direction:column;align-items:center;gap:22px;position:relative}
+.word svg{width:150px;height:150px;fill:none;stroke:var(--text);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.word b{font-family:var(--display);font-size:150px;font-weight:700;line-height:.9;position:relative}
+.strike{position:absolute;left:-14px;right:-14px;top:52%;height:12px;border-radius:6px;background:var(--danger);transform-origin:left center;transform:scaleX(0)}
+
+/* Marcos */
+.phone{border:11px solid #0E1512;border-radius:46px;overflow:hidden;background:#0E1512;box-shadow:var(--shadow);position:relative;aspect-ratio:1080/2400}
+.phone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.browser{border-radius:18px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow);border:1px solid var(--border-strong);display:flex;flex-direction:column}
+.browser .bar{height:44px;flex:none;display:flex;align-items:center;gap:9px;padding:0 18px;background:#EDF1EF;border-bottom:1px solid var(--border)}
+.browser .bar i{width:13px;height:13px;border-radius:50%;background:#D3DAD6}
+.browser .bar span{margin-left:14px;font-size:17px;font-weight:600;color:var(--text3);background:#fff;border-radius:8px;padding:4px 16px}
+.browser .view{position:relative;flex:1;overflow:hidden}
+.browser .view img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
+
+/* Escena 3: mapa */
+.core{left:750px;top:440px;width:420px;height:230px;border-radius:26px;background:var(--volt-dim);border:3px solid var(--volt-text);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;box-shadow:var(--shadow)}
+.core b{font-family:var(--display);font-size:62px;line-height:1}
+.core b em{font-style:normal;color:var(--volt-text)}
+.core span{font-size:24px;color:var(--text2)}
+.guard{left:716px;top:404px;width:488px;height:340px;border-radius:34px;border:2.5px dashed var(--border-strong)}
+.guard span{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-size:17px;font-weight:700;letter-spacing:.16em;color:var(--info)}
+.node{width:560px;height:230px;border-radius:24px;background:var(--surface);border:1px solid var(--border-strong);box-shadow:var(--shadow);display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:center;padding:20px}
+.node .thumb{height:190px;border-radius:14px;overflow:hidden;background:#EDF1EF;position:relative;border:1px solid var(--border)}
+.node .thumb img{width:100%;height:100%;object-fit:cover;object-position:top left}
+.node .tag{font-size:16px;font-weight:700;letter-spacing:.14em;color:var(--info);text-transform:uppercase}
+.node h3{font-family:var(--display);font-size:52px;line-height:1;margin:6px 0 8px}
+.node p{font-size:24px;color:var(--text2);line-height:1.2}
+#links path{fill:none;stroke:var(--volt-text);stroke-width:4;stroke-dasharray:12 12}
+
+/* Escena 4: roles */
+.role{width:400px;height:640px;border-radius:28px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;align-items:center;padding:30px 26px;gap:22px;transform-origin:center}
+.role .who{font-family:var(--display);font-size:50px;line-height:1}
+.role .who small{display:block;font-family:var(--body);font-size:18px;font-weight:700;letter-spacing:.16em;color:var(--volt-text);text-transform:uppercase;margin-bottom:6px}
+.role .media{flex:1;display:flex;align-items:center;justify-content:center;width:100%;position:relative}
+.role p{font-size:25px;color:var(--text2);text-align:center;line-height:1.2;min-height:60px}
+.swap{position:absolute;inset:0;transition:none}
+
+/* Escena 5 */
+.ok-badge,.toast{border-radius:18px;box-shadow:var(--shadow);font-weight:700}
+.ok-badge{background:var(--volt);color:var(--ink);font-size:34px;padding:14px 28px;font-family:var(--display);letter-spacing:.02em}
+.toast{background:var(--surface);border:1px solid var(--border-strong);padding:18px 24px;display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:center;width:540px}
+.toast .dot{grid-row:span 2;width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-size:30px;font-weight:800}
+.toast b{font-size:27px}
+.toast > span{font-size:21px;color:var(--text2);font-weight:500}
+.toast.in .dot{background:var(--volt-dim);color:var(--volt-text)}
+.toast.no{border-color:#F2B8B2}
+.toast.no .dot{background:var(--danger-dim);color:var(--danger)}
+.chip-red{display:inline-block;margin-left:8px;font-size:16px;font-weight:700;letter-spacing:.06em;color:#fff;background:var(--danger);border-radius:30px;padding:2px 10px;vertical-align:middle}
+.counter{background:var(--ink);color:#fff;border-radius:20px;padding:18px 26px;box-shadow:var(--shadow);text-align:left}
+.counter small{display:block;font-size:17px;font-weight:700;letter-spacing:.16em;color:var(--volt);text-transform:uppercase}
+.counter b{font-family:var(--display);font-size:84px;line-height:1}
+.counter b span{font-size:36px;color:#9AA5A0}
+#wire{stroke:var(--volt-text);stroke-width:5;stroke-dasharray:14 12;fill:none}
+
+/* Escena 6 */
+.pill{display:inline-flex;align-items:center;gap:12px;border-radius:60px;padding:14px 30px;font-size:30px;font-weight:600;border:2px solid var(--border-strong);background:var(--surface);box-shadow:0 2px 8px rgba(14,21,18,.05)}
+.pill.on{background:var(--volt);border-color:var(--volt);color:var(--ink);font-weight:700}
+.pill i{font-style:normal;color:var(--volt-text);font-weight:800}
+
+/* Subtítulos */
+#sub{left:50%;bottom:58px;transform:translateX(-50%);max-width:1500px;text-align:center;font-size:42px;font-weight:600;line-height:1.25;color:#fff;
+  background:rgba(14,21,18,.82);border-radius:16px;padding:12px 30px;position:absolute;opacity:0;white-space:normal;text-wrap:balance}
+
+/* Controles de la vista previa */
+.ctrl{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:14px;padding:10px 16px;background:rgba(16,20,18,.92);color:#E8EEEA;font:14px system-ui;z-index:5}
+.ctrl button{background:#12E07B;color:#04120A;border:0;border-radius:8px;padding:7px 16px;font-weight:700;cursor:pointer}
+.ctrl input{flex:1;accent-color:#12E07B}
+.ctrl span{font-variant-numeric:tabular-nums;min-width:90px;text-align:right}
+body.render .ctrl{display:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="blob" id="blobA" style="width:760px;height:760px;background:#BFF5D8;left:-200px;top:-260px"></div>
+  <div class="blob" id="blobB" style="width:680px;height:680px;background:#CFE7F5;right:-220px;bottom:-260px"></div>
+
+  <!-- ===== Escena 1 · El problema ===== -->
+  <div class="a full center" id="s1">
+    <div style="display:flex;gap:150px;align-items:flex-end">
+      <div class="word a" id="w1" style="position:relative"><svg viewBox="0 0 48 48"><rect x="11" y="8" width="26" height="34" rx="3"/><path d="M19 5h10v6H19zM17 20h14M17 27h14M17 34h9"/></svg><b>Listas<i class="strike" id="k1"></i></b></div>
+      <div class="word a" id="w2" style="position:relative"><svg viewBox="0 0 48 48"><path d="M12 6h24a3 3 0 0 1 3 3v30a3 3 0 0 1-3 3H12z"/><path d="M12 6v36M8 13h8M8 22h8M8 31h8M21 16h12M21 23h12"/></svg><b>Libretas<i class="strike" id="k2"></i></b></div>
+      <div class="word a" id="w3" style="position:relative"><svg viewBox="0 0 48 48"><path d="M14 10h17l7 7v25H14z"/><path d="M31 10v7h7M20 25h12M20 32h12"/><path d="M10 15v31h22"/></svg><b>Papeles<i class="strike" id="k3"></i></b></div>
+    </div>
+    <p class="a" id="s1t" style="position:relative;margin-top:70px;font-size:46px;color:var(--text2);font-weight:500">Así trabajan muchos gimnasios.</p>
+  </div>
+
+  <!-- ===== Escena 2 · Aparece GymGo ===== -->
+  <div class="a full center" id="s2">
+    <div class="disp" style="font-size:300px;letter-spacing:.01em;display:flex"><span>Gym</span><span class="a" id="go" style="position:relative;color:var(--volt-text)">Go</span></div>
+    <p class="a" id="s2t" style="position:relative;margin-top:26px;font-size:56px;font-weight:500;color:var(--text2)">Todo tu gimnasio, en <b style="color:var(--text)">una sola plataforma</b>.</p>
+  </div>
+
+  <!-- ===== Escena 3 · El mapa del sistema ===== -->
+  <div class="a full" id="s3">
+    <div class="a title" id="s3t"><span class="kicker">El sistema</span>Una plataforma, cuatro piezas</div>
+    <svg class="full" id="links" viewBox="0 0 1920 1080" style="position:absolute">
+      <path id="l1" d="M680 395 C 720 395 700 500 750 510"/>
+      <path id="l2" d="M680 765 C 720 765 700 610 750 600"/>
+      <path id="l3" d="M1240 395 C 1200 395 1220 500 1170 510"/>
+      <path id="l4" d="M1240 765 C 1200 765 1220 610 1170 600"/>
+    </svg>
+    <div class="a guard" id="guard"><span>NORMATIVAS · DATOS PROTEGIDOS</span></div>
+    <div class="a core" id="core"><b>Gym<em>Go</em></b><span>Una sola plataforma</span></div>
+    <div class="a node" id="n1" style="left:120px;top:280px"><div class="thumb"><img src="../img/home.jpg" alt=""></div><div><div class="tag">Negocio electrónico</div><h3>Sitio web</h3><p>Contratar GymGo en línea</p></div></div>
+    <div class="a node" id="n2" style="left:120px;top:650px"><div class="thumb"><img src="assets/panel-dueno.png" alt=""></div><div><div class="tag">Administración</div><h3>Panel</h3><p>Dirigir el negocio</p></div></div>
+    <div class="a node" id="n3" style="left:1240px;top:280px"><div class="thumb" style="display:grid;place-items:center;background:#E7EEEA"><div class="phone" style="height:172px;border-width:5px;border-radius:18px"><img src="assets/app/cliente-inicio.png" alt=""></div></div><div><div class="tag">Aplicación móvil</div><h3>App</h3><p>El día a día del gimnasio</p></div></div>
+    <div class="a node" id="n4" style="left:1240px;top:650px"><div class="thumb" style="display:grid;place-items:center;background:#E7EEEA"><svg viewBox="0 0 120 160" style="height:170px"><use href="#reader"/></svg></div><div><div class="tag">Adquisición de datos</div><h3>Lector</h3><p>Registra cada entrada</p></div></div>
+  </div>
+
+  <!-- ===== Escena 4 · Quién lo usa ===== -->
+  <div class="a full" id="s4">
+    <div class="a title" id="s4t" style="top:46px"><span class="kicker">Quién lo usa</span>Cada quien ve lo suyo</div>
+    <div class="a role" id="r1" style="left:110px;top:225px"><div class="who"><small>Administración</small>El dueño</div>
+      <div class="media"><div class="browser" style="width:352px;height:250px"><div class="bar" style="height:30px;padding:0 10px;gap:6px"><i style="width:9px;height:9px"></i><i style="width:9px;height:9px"></i><i style="width:9px;height:9px"></i></div><div class="view"><img src="assets/panel-dueno.png" alt=""></div></div></div>
+      <p>Todo su negocio<br>en una vista</p></div>
+    <div class="a role" id="r2" style="left:550px;top:225px"><div class="who"><small>App</small>El socio</div>
+      <div class="media"><div class="phone" style="height:400px"><img src="assets/app/cliente-qr.png" alt=""><img class="swap" id="r2b" src="assets/app/cliente-rutinas.png" alt="" style="opacity:0"></div></div>
+      <p>Entra con su QR<br>y sigue su rutina</p></div>
+    <div class="a role" id="r3" style="left:990px;top:225px"><div class="who"><small>App</small>El entrenador</div>
+      <div class="media"><div class="phone" style="height:400px"><img src="assets/app/coach-clientes.png" alt=""><img class="swap" id="r3b" src="assets/app/coach-rutinas.png" alt="" style="opacity:0"></div></div>
+      <p>Planes a la medida<br>de cada cliente</p></div>
+    <div class="a role" id="r4" style="left:1430px;top:225px"><div class="who"><small>App</small>Recepción</div>
+      <div class="media"><div class="phone" style="height:400px"><img src="assets/app/recepcion-inicio.png" alt=""><img class="swap" id="r4b" src="assets/app/recepcion-caja.png" alt="" style="opacity:0"></div></div>
+      <p>Cobra y registra<br>a cada persona</p></div>
+  </div>
+
+  <!-- ===== Escena 5 · Cómo se conecta todo ===== -->
+  <div class="a full" id="s5">
+    <div class="a title" id="s5t" style="top:56px"><span class="kicker">En la puerta</span>Todo se conecta, al instante</div>
+    <!-- Clip real del lector: si existe assets/lector-clip.mp4 reemplaza a la ilustración. -->
+    <div class="a" id="clipBox" style="left:110px;top:270px;width:640px;height:560px;border-radius:26px;overflow:hidden;box-shadow:var(--shadow);background:#0E1512">
+      <video id="clip" src="assets/lector-clip.mp4" muted playsinline preload="auto" style="width:100%;height:100%;object-fit:cover"></video></div>
+    <svg class="a" id="readerBig" viewBox="0 0 120 160" style="left:250px;top:300px;width:330px;height:440px"><use href="#reader"/></svg>
+    <div class="a" id="qrPhone" style="left:60px;top:420px"><div class="phone" style="height:330px;background:#fff;border-radius:34px;border-width:9px">
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#fff">
+        <span style="font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--volt-text)">PASE DE ACCESO</span>
+        <svg id="qr" viewBox="0 0 21 21" style="width:118px;height:118px" shape-rendering="crispEdges"></svg>
+        <span style="font-size:14px;font-weight:600">Ana López</span></div></div></div>
+    <div class="a ok-badge" id="okBadge" style="left:300px;top:770px">Acceso permitido ✓</div>
+    <svg class="full" viewBox="0 0 1920 1080" style="position:absolute;pointer-events:none"><path id="wire" d="M640 520 C 760 520 760 520 860 520" style="opacity:0"/><circle id="spark" r="11" fill="#12E07B" cx="640" cy="520" style="opacity:0"/></svg>
+    <div class="a browser" id="panel5" style="left:860px;top:250px;width:960px;height:610px"><div class="bar"><i></i><i></i><i></i><span>Panel GymGo · Control de acceso</span></div>
+      <div class="view"><img src="assets/panel-aforo.png" alt=""><img id="p5b" src="assets/panel-actividad.png" alt="" style="opacity:0"></div></div>
+    <div class="a counter" id="counter" style="left:1560px;top:200px"><small>Dentro ahora</small><b><span id="cnt" style="font-size:84px;color:#fff">23</span><span> / 80</span></b></div>
+    <div class="a toast in" id="toastIn" style="left:1250px;top:585px"><div class="dot">→</div><b>Ana López entró</b><span>Fuerza Gym Centro · 11:02 a.m.</span></div>
+    <div class="a toast no" id="toastNo" style="left:1250px;top:720px"><div class="dot">!</div><b>Membresía vencida <span class="chip-red">POR COBRAR</span></b><span>Emilio Herrera · 11:03 a.m.</span></div>
+  </div>
+
+  <!-- ===== Escena 6 · Cierre ===== -->
+  <div class="a full center" id="s6a">
+    <svg viewBox="0 0 48 48" style="width:220px;height:220px;fill:none;stroke:var(--volt-text);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M24 4l16 6.5v11.5c0 10.5-6.6 17.8-16 22-9.4-4.2-16-11.5-16-22V10.5z" fill="#E8F9F0"/><path id="check" d="M16.5 24.5l5.5 5.5 10-11" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1;stroke-width:3"/></svg>
+    <div class="disp" style="font-size:96px;margin-top:30px">Todo conectado. <mark>Todo protegido.</mark></div>
+    <div style="display:flex;gap:18px;margin-top:34px">
+      <span class="pill a" id="c1" style="position:relative"><i>✓</i>Acceso por perfil</span>
+      <span class="pill a" id="c2" style="position:relative"><i>✓</i>Información cifrada</span>
+      <span class="pill a" id="c3" style="position:relative"><i>✓</i>NMX-I-27002 · LFPDPPP</span></div>
+  </div>
+  <div class="a full center" id="s6b">
+    <div class="disp" style="font-size:230px">Gym<span style="color:var(--volt-text)">Go</span></div>
+    <p class="a" id="end1" style="position:relative;font-family:var(--display);font-weight:600;font-size:76px;margin-top:6px">Menos papeles, <mark>más gimnasio.</mark></p>
+    <div class="a" id="end2" style="position:relative;display:flex;gap:18px;margin-top:40px"><span class="pill on">Prueba gratis 14 días</span><span class="pill">Contrátalo en línea</span></div>
+    <div class="a" id="end3" style="position:relative;display:flex;align-items:center;gap:22px;margin-top:56px">
+      <span style="font-size:24px;font-weight:600;color:var(--text3);letter-spacing:.08em">UN PRODUCTO DE</span>
+      <div style="width:250px;height:167px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow)"><img src="LOGO-SIRID.jpeg" alt="SIRID Systems" style="width:100%;height:100%;object-fit:cover"></div></div>
+  </div>
+
+  <div id="sub"></div>
+
+  <!-- Ilustración del lector GymGo (se reutiliza en el mapa y en la escena 5). -->
+  <svg width="0" height="0" style="position:absolute"><defs>
+    <g id="reader">
+      <rect x="40" y="128" width="40" height="28" rx="4" fill="#C7D0CB"/>
+      <rect x="14" y="6" width="92" height="128" rx="14" fill="#1B201E"/>
+      <rect x="24" y="18" width="72" height="46" rx="6" class="rscreen" fill="#2A322E"/>
+      <text x="60" y="47" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="16" class="rtext" fill="#7A8580">GymGo</text>
+      <rect x="30" y="78" width="60" height="44" rx="6" fill="#0B0E0D" stroke="#363E3A" stroke-width="2"/>
+      <rect x="34" y="98" width="52" height="3" rx="1.5" fill="#12E07B" class="rbeam" opacity=".9"/>
+    </g></defs></svg>
+</div>
+
+<div class="ctrl"><button id="play">▶ Reproducir</button><input id="seek" type="range" min="0" max="60" step="0.01" value="0"><span id="time">0.0 s</span></div>
+
+<script>
+const T = 60;
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (p) => 1 - Math.pow(1 - p, 3);
+const easeIO = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+const back = (p) => { const c = 1.7; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+const prog = (t, a, d) => clamp((t - a) / d);
+const lerp = (a, b, p) => a + (b - a) * p;
+// Visible de a a b: entra en din segundos y sale en dout.
+const vis = (t, a, b, din = 0.6, dout = 0.45) => (t < a || t > b + dout ? 0 : ease(prog(t, a, din)) * (1 - ease(prog(t, b, dout))));
+function set(el, { o = 1, x = 0, y = 0, s = 1 } = {}) {
+  el.style.opacity = o;
+  el.style.visibility = o <= 0.001 ? 'hidden' : 'visible';
+  el.style.transform = `translate(${x}px,${y}px) scale(${s})`;
+}
+// Entrada estándar: sube y aparece.
+const rise = (el, t, a, b, dist = 40, din = 0.6) => { const p = ease(prog(t, a, din)); set(el, { o: vis(t, a, b, din), y: (1 - p) * dist }); };
+
+// QR decorativo (determinista).
+(() => {
+  let s = 11; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const finder = (x, y) => `<rect x="${x}" y="${y}" width="7" height="7"/><rect x="${x + 1}" y="${y + 1}" width="5" height="5" fill="#fff"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3"/>`;
+  let cells = '';
+  for (let y = 0; y < 21; y++) for (let x = 0; x < 21; x++) {
+    const inFinder = (x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12);
+    if (!inFinder && r() < 0.48) cells += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+  }
+  $('qr').innerHTML = `<g fill="#0E1512">${cells}${finder(0, 0)}${finder(14, 0)}${finder(0, 14)}</g>`;
+})();
+
+const SUBS = [
+  [0.3, 2.0, 'Listas en recepción.'], [2.0, 3.8, 'Cobros en libretas.'], [3.8, 5.6, 'Rutinas en papel.'],
+  [5.6, 7.8, 'Así trabajan muchos gimnasios.'],
+  [8.4, 13.6, 'Por eso creamos GymGo: todo tu gimnasio, en una sola plataforma.'],
+  [14.2, 18.6, 'GymGo une cuatro piezas: un sitio web para contratarlo,'],
+  [18.6, 23.6, 'un panel para dirigir el negocio, una app para el día a día… y un lector en la puerta.'],
+  [24.3, 27.4, 'El dueño ve todo su negocio desde el panel.'], [27.4, 31.0, 'El socio entra con su QR y sigue su rutina.'],
+  [31.0, 34.4, 'El entrenador le arma planes a la medida.'], [34.4, 37.8, 'Y recepción cobra y registra a cada persona.'],
+  [38.3, 42.5, 'Cuando un socio llega, el lector escanea su código…'],
+  [42.5, 49.6, 'y al instante, el panel sabe quién entró y quién debe su mensualidad.'],
+  [50.2, 53.8, 'Todo conectado, y todo protegido.'], [54.2, 59.6, 'GymGo, de SIRID Systems: menos papeles… más gimnasio.'],
+];
+
+let hasClip = false;
+$('clip').addEventListener('loadeddata', () => { hasClip = true; render(current); });
+
+function render(t) {
+  // Fondo vivo
+  set($('blobA'), { o: 0.55, x: Math.sin(t / 7) * 80, y: Math.cos(t / 9) * 60 });
+  set($('blobB'), { o: 0.55, x: Math.cos(t / 8) * 90, y: Math.sin(t / 6) * 50 });
+
+  /* ---- Escena 1 (0–8) ---- */
+  const s1 = vis(t, 0, 7.4, 0.01, 0.5);
+  set($('s1'), { o: s1, y: -ease(prog(t, 7.4, 0.5)) * 60 });
+  [[0.3, 'w1', 'k1'], [2.0, 'w2', 'k2'], [3.8, 'w3', 'k3']].forEach(([a, w, k]) => {
+    const p = ease(prog(t, a, 0.55));
+    set($(w), { o: p, y: (1 - p) * 70, s: lerp(0.9, 1, p) });
+    $(k).style.transform = `scaleX(${easeIO(prog(t, a + 0.9, 0.45))})`;
+    $(w).querySelector('b').style.color = t > a + 1.2 ? '#7A8580' : '#0E1512';
+  });
+  rise($('s1t'), t, 5.6, 99, 30);
+
+  /* ---- Escena 2 (8–14) ---- */
+  const s2in = ease(prog(t, 8.1, 0.6)), s2out = ease(prog(t, 13.4, 0.6));
+  set($('s2'), { o: (t < 8.1 || t > 14) ? 0 : s2in * (1 - s2out), s: lerp(0.92, 1, s2in) * lerp(1, 0.45, s2out), y: s2out * 60 });
+  { const p = prog(t, 8.5, 0.7); set($('go'), { o: ease(p), y: (1 - back(p)) * 120 }); }
+  rise($('s2t'), t, 9.4, 99, 30);
+
+  /* ---- Escena 3 (14–24) ---- */
+  set($('s3'), { o: vis(t, 13.7, 23.5, 0.4, 0.5) });
+  rise($('s3t'), t, 14.3, 99, 25);
+  { const p = ease(prog(t, 13.8, 0.7)); set($('core'), { o: p, s: lerp(0.7, 1, back(prog(t, 13.8, 0.7))) }); }
+  [[16.4, 'n1', 'l1', -60], [18.8, 'n2', 'l2', -60], [20.6, 'n3', 'l3', 60], [22.3, 'n4', 'l4', 60]].forEach(([a, n, l, dx]) => {
+    const p = ease(prog(t, a, 0.6));
+    set($(n), { o: p, x: (1 - p) * dx, s: lerp(0.94, 1, p) });
+    const path = $(l); path.style.opacity = ease(prog(t, a + 0.25, 0.5)); path.style.strokeDashoffset = -t * 40;
+  });
+  set($('guard'), { o: ease(prog(t, 22.9, 0.5)) });
+
+  /* ---- Escena 4 (24–38) ---- */
+  set($('s4'), { o: vis(t, 23.8, 37.7, 0.4, 0.5) });
+  rise($('s4t'), t, 24.0, 99, 25);
+  const spans = [[24.3, 27.4], [27.4, 31.0], [31.0, 34.4], [34.4, 37.8]];
+  ['r1', 'r2', 'r3', 'r4'].forEach((id, k) => {
+    const pin = ease(prog(t, 24.2 + k * 0.18, 0.6));
+    const [a, b] = spans[k];
+    const on = t >= a && t < b ? 1 : 0;
+    const act = ease(prog(t, a, 0.35)) * (1 - ease(prog(t, b, 0.35)));
+    const anyActive = t >= 24.3 && t < 37.8;
+    set($(id), { o: pin * (anyActive ? lerp(0.42, 1, act) : 1), y: (1 - pin) * 60 - act * 16, s: 1 + act * 0.05 });
+    $(id).style.zIndex = on ? 2 : 1;
+    $(id).style.borderColor = act > 0.5 ? '#06783C' : '';
+  });
+  $('r2b').style.opacity = ease(prog(t, 29.3, 0.5));
+  $('r3b').style.opacity = ease(prog(t, 32.8, 0.5));
+  $('r4b').style.opacity = ease(prog(t, 36.2, 0.5));
+
+  /* ---- Escena 5 (38–50) ---- */
+  set($('s5'), { o: vis(t, 37.9, 49.6, 0.4, 0.5) });
+  rise($('s5t'), t, 38.1, 99, 25);
+  if (hasClip) {
+    set($('clipBox'), { o: ease(prog(t, 38.3, 0.5)) });
+    set($('readerBig'), { o: 0 }); set($('qrPhone'), { o: 0 });
+  } else {
+    set($('clipBox'), { o: 0 });
+    set($('readerBig'), { o: ease(prog(t, 38.3, 0.5)), y: (1 - ease(prog(t, 38.3, 0.5))) * 30 });
+    const p = easeIO(prog(t, 38.6, 1.6));
+    set($('qrPhone'), { o: ease(prog(t, 38.5, 0.4)), x: lerp(-60, 268, p), y: lerp(80, 30, p), s: lerp(1, 0.8, p) });
+  }
+  const granted = t > 40.5;
+  document.querySelectorAll('.rscreen').forEach((el) => el.setAttribute('fill', granted && t < 49.6 && t > 38 ? '#12E07B' : '#2A322E'));
+  document.querySelectorAll('.rtext').forEach((el) => { el.textContent = granted && t < 49.6 && t > 38 ? '✓  OK' : 'GymGo'; el.setAttribute('fill', granted && t < 49.6 && t > 38 ? '#04120A' : '#7A8580'); });
+  document.querySelectorAll('.rbeam').forEach((el) => el.setAttribute('y', 82 + (Math.sin(t * 6) + 1) * 17));
+  { const p = prog(t, 40.6, 0.5); set($('okBadge'), { o: ease(p) * (1 - ease(prog(t, 49.2, 0.4))), s: lerp(0.6, 1, back(p)) }); }
+  $('wire').style.opacity = ease(prog(t, 41.2, 0.4));
+  $('wire').style.strokeDashoffset = -t * 50;
+  { const p = easeIO(prog(t, 41.4, 1.0)); const sp = $('spark'); sp.setAttribute('cx', lerp(640, 860, p)); sp.style.opacity = p > 0 && p < 1 ? 1 : 0; }
+  rise($('panel5'), t, 39.0, 99, 40, 0.7);
+  { const p = ease(prog(t, 39.6, 0.6)); set($('counter'), { o: p, y: (1 - p) * 30, s: 1 + 0.12 * Math.max(0, 1 - Math.abs(t - 42.6) / 0.35) }); }
+  $('cnt').textContent = t >= 42.5 ? '24' : '23';
+  { const p = ease(prog(t, 42.6, 0.55)); set($('toastIn'), { o: p, x: (1 - p) * 120 }); }
+  $('p5b').style.opacity = ease(prog(t, 45.6, 0.6));
+  { const p = ease(prog(t, 46.2, 0.55)); set($('toastNo'), { o: p, x: (1 - p) * 120 }); }
+
+  /* ---- Escena 6 (50–60) ---- */
+  { const o = vis(t, 49.9, 53.7, 0.5, 0.45); set($('s6a'), { o, s: lerp(0.96, 1, ease(prog(t, 49.9, 0.6))) }); }
+  $('check').style.strokeDashoffset = 1 - easeIO(prog(t, 50.5, 0.6));
+  ['c1', 'c2', 'c3'].forEach((id, k) => rise($(id), t, 51.2 + k * 0.3, 99, 25, 0.45));
+  { const o = vis(t, 54.1, 99, 0.6); set($('s6b'), { o, s: lerp(0.94, 1, ease(prog(t, 54.1, 0.8))) }); }
+  rise($('end1'), t, 54.9, 99, 25);
+  rise($('end2'), t, 55.8, 99, 25);
+  rise($('end3'), t, 56.8, 99, 25);
+
+  /* ---- Subtítulos ---- */
+  const cue = SUBS.find(([a, b]) => t >= a && t < b);
+  const sub = $('sub');
+  if (cue) {
+    if (sub.textContent !== cue[2]) sub.textContent = cue[2];
+    sub.style.opacity = Math.min(ease(prog(t, cue[0], 0.15)), 1 - ease(prog(t, cue[1] - 0.15, 0.15)));
+  } else sub.style.opacity = 0;
+}
+
+/* ===== Exportación cuadro por cuadro ===== */
+let current = 0;
+window.seek = async (t) => {
+  current = t;
+  if (hasClip) {
+    const v = $('clip');
+    const want = clamp(t - 38.3, 0, Math.max(0, v.duration - 0.05));
+    if (Math.abs(v.currentTime - want) > 0.001) { v.currentTime = want; await new Promise((r) => v.addEventListener('seeked', r, { once: true })); }
+  }
+  render(t);
+};
+
+/* ===== Vista previa ===== */
+const RENDER = new URLSearchParams(location.search).has('render');
+if (RENDER) document.body.classList.add('render');
+function fit() {
+  if (RENDER) return;
+  const s = Math.min(innerWidth / 1920, (innerHeight - 52) / 1080);
+  $('stage').style.transform = `translateY(-26px) scale(${s})`;
+}
+let playing = false, startWall = 0, startT = 0;
+function loop() {
+  if (!playing) return;
+  let t = startT + (performance.now() - startWall) / 1000;
+  if (t >= T) { t = T; playing = false; $('play').textContent = '▶ Reproducir'; }
+  current = t; render(t); $('seek').value = t; $('time').textContent = t.toFixed(1) + ' s';
+  if (hasClip && t >= 38.3 && $('clip').paused) { $('clip').currentTime = t - 38.3; $('clip').play().catch(() => {}); }
+  requestAnimationFrame(loop);
+}
+$('play').onclick = () => {
+  if (playing) { playing = false; $('play').textContent = '▶ Reproducir'; $('clip').pause(); return; }
+  if (current >= T) current = 0;
+  playing = true; startWall = performance.now(); startT = current; $('play').textContent = '❚❚ Pausa'; loop();
+};
+$('seek').oninput = (e) => { playing = false; $('play').textContent = '▶ Reproducir'; current = +e.target.value; render(current); $('time').textContent = current.toFixed(1) + ' s'; };
+document.addEventListener('keydown', (e) => { if (e.key === ' ') { e.preventDefault(); $('play').click(); } });
+addEventListener('resize', fit);
+fit(); render(0);
+</script>
+</body>
+</html>
