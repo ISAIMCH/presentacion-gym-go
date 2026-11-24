@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GymGo · Presentación de venta</title>
+<title>GymGo · Lanzamiento</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
@@ -320,6 +320,9 @@ ul.demo-chk li .lk svg{width:11px;height:11px}
 .go-link{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:17px;color:var(--ink);background:var(--volt);border-radius:40px;padding:8px 16px;text-decoration:none;transition:transform .15s}
 a.go-link:hover{transform:translateY(-2px)}
 .go-link.off{background:none;color:var(--text2);border:1px solid var(--border-strong)}
+.stations.solo{margin-top:8px;flex:none;align-items:start;align-content:start}
+.stations.solo .stn{gap:22px;padding:30px 26px 28px;min-height:300px}
+.stations.solo .stn .go-link{margin-top:auto}
 .dleg{margin-top:14px;display:flex;justify-content:center;gap:22px;font-size:16px;color:var(--text2);align-items:center}
 .dleg .lk{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:800;color:var(--info);border:1.5px solid var(--info);border-radius:30px;padding:1px 9px}
 .dleg .lk svg{width:12px;height:12px}
@@ -364,6 +367,143 @@ body.pv .top,body.pv .deck,body.pv .notes,body.pv .hand{display:none}
 .pv-btns button{border:1px solid var(--border-strong);border-radius:.6rem;padding:.7rem 1.3rem;font-weight:600;font-size:1.05rem}
 .pv-btns button.go{background:var(--volt);color:var(--ink);border-color:var(--volt-text)}
 
+/* ===== Lanzamiento · capa de cine: video (diapositiva 0) y portada oscura (1) a pantalla completa ===== */
+.top{transition:transform .6s var(--ease)}
+body.m-cine .top{transform:translateY(-100%)}
+.cine{position:fixed;inset:0;z-index:15;background:#000;display:none;overflow:hidden;cursor:none}
+body.m-cine .cine{display:block}
+body.pv .cine,body.pv #wipeband{display:none!important}
+.hand{z-index:17}
+.cine video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;display:none}
+body.m-video .cine video{display:block}
+/* La portada replica el último cuadro del video (1920 × 1080, mismo encuadre que object-fit:contain). */
+.hero{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center;display:none;color:#fff;font-family:var(--body);line-height:normal}
+body.m-hero .hero{display:block}
+.hero .glow{position:absolute;left:360px;top:-70px;width:1200px;height:1000px;opacity:.85;background:radial-gradient(circle at 50% 50%,rgba(18,224,123,.32),rgba(18,224,123,.08) 40%,transparent 68%);transition:transform 1.4s var(--ease)}
+.hero .logo{position:absolute;left:705.8px;top:213px;width:508.4px;height:434px;transform-origin:50% 50%;transition:transform 1.25s var(--ease)}
+.hero .firm{position:absolute;left:0;right:0;top:772px;display:flex;justify-content:center;align-items:center;gap:26px;transition:opacity .5s,transform .7s var(--ease)}
+.hero .firm small{font-size:21px;font-weight:700;letter-spacing:.26em;color:rgba(255,255,255,.55)}
+.hero .promise{position:absolute;left:0;right:0;top:470px;text-align:center;font-family:var(--display);font-weight:700;font-size:92px;line-height:1;letter-spacing:-.005em}
+.hero .promise em{font-style:normal;color:var(--volt)}
+.hero .hpills{position:absolute;left:0;right:0;top:622px;display:flex;justify-content:center;gap:16px}
+.hero .hpills span{display:inline-flex;align-items:center;gap:12px;font-size:25px;font-weight:600;color:#DDE7E2;border:1.5px solid rgba(18,224,123,.45);border-radius:60px;padding:10px 26px;background:rgba(18,224,123,.06)}
+.hero .hpills span::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--volt);box-shadow:0 0 10px var(--volt)}
+.hero .hteam{position:absolute;left:0;right:0;top:880px;text-align:center;font-size:24px;color:rgba(255,255,255,.62)}
+.hero .hteam b{display:block;font-size:16px;letter-spacing:.24em;text-transform:uppercase;color:var(--volt);margin-bottom:8px}
+.hero .promise,.hero .hpills,.hero .hteam{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform 1s var(--ease)}
+.hero.go .logo{transform:translateY(-150px) scale(.62)}
+.hero.go .glow{transform:translateY(-150px) scale(.8)}
+.hero.go .firm{opacity:0;transform:translateY(24px)}
+.hero.go .promise,.hero.go .hpills,.hero.go .hteam{opacity:1;transform:none}
+.hero.go .promise{transition-delay:.45s}.hero.go .hpills{transition-delay:.7s}.hero.go .hteam{transition-delay:.95s}
+.hero .vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.55) 100%)}
+/* Encendido de la sala (portada → diapositiva 2): la capa oscura se retira detrás de una franja verde. */
+.cine.wipe{clip-path:inset(0 0 0 100%);transition:clip-path 1s cubic-bezier(.65,0,.35,1)}
+.cine.wipe-start{clip-path:inset(0 0 0 0%)}
+#wipeband{position:fixed;top:-10vh;bottom:-10vh;left:-120px;width:240px;z-index:16;pointer-events:none;opacity:0;transform:skewX(-10deg);filter:blur(6px);
+  background:linear-gradient(90deg,rgba(18,224,123,0),#12E07B 38%,#C8FFE2 50%,#12E07B 62%,rgba(18,224,123,0))}
+#wipeband.run{opacity:1;animation:wipeband 1s cubic-bezier(.65,0,.35,1) both}
+@keyframes wipeband{from{left:-120px}to{left:calc(100% - 120px)}}
+
+/* ===== 4 · Contratar: recorrido sin capturas ===== */
+.journey{display:grid;grid-template-columns:repeat(5,1fr);position:relative;margin-top:8px}
+.journey::before{content:'';position:absolute;left:10%;right:10%;top:45px;height:3px;background:repeating-linear-gradient(90deg,var(--volt-text) 0 8px,transparent 8px 16px);background-size:16px 100%;animation:dash .8s linear infinite}
+.jstep{position:relative;display:grid;justify-items:center;align-content:start;text-align:center;gap:8px;padding:0 10px}
+.jstep .c{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:2px solid var(--volt-text);color:var(--volt-text);box-shadow:var(--shadow);position:relative}
+.jstep .c svg{width:44px;height:44px}
+.jstep .c i{position:absolute;top:-6px;right:-6px;width:30px;height:30px;border-radius:50%;background:var(--volt);color:var(--ink);font-style:normal;font-weight:800;font-size:15px;display:grid;place-items:center}
+.jstep.hl .c{background:var(--volt);border-color:var(--volt);color:var(--ink)}
+.jstep.hl .c i{background:var(--ink);color:var(--volt)}
+.jstep b{font-family:var(--display);font-size:29px;line-height:1.05;margin-top:6px}
+.jstep span{font-size:18px;color:var(--text2);max-width:250px}
+.offer{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:20px;margin-top:44px;align-items:stretch}
+.ofc{display:flex;gap:16px;align-items:flex-start;padding:22px 24px}
+.ofc .vs{color:var(--volt-text);margin-bottom:4px}
+.ofc h3{font-size:30px}
+.ofc p{font-size:19px}
+.offer .price{margin-top:0;padding:18px 24px;gap:6px 20px}
+.offer .price .amt{font-size:78px}
+
+/* ===== 5 · Perfiles: panel web contra app, sin capturas ===== */
+.prof{display:grid;grid-template-columns:1fr 2.6fr;gap:24px;flex:1;min-height:0;max-height:560px}
+.pgrp{display:flex;flex-direction:column;gap:12px;min-height:0}
+.pgl{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);padding-left:4px}
+.pgl svg{width:24px;height:24px;color:var(--volt-text)}
+.pgl b{color:var(--text)}
+.pcards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;flex:1;background:var(--volt-dim);border:1px solid rgba(6,120,60,.2);border-radius:26px;padding:16px}
+.pc{display:flex;flex-direction:column;gap:14px;padding:22px 22px 20px;position:relative;overflow:hidden}
+.pc::before{content:'';position:absolute;inset:0 0 auto 0;height:5px;background:var(--volt)}
+.pc .hd{display:flex;align-items:center;gap:14px}
+.pc .ico{width:56px;height:56px;border-radius:16px}
+.pc h3{font-size:36px;margin:0;line-height:1}
+.pc .who{font-size:15px;font-weight:600;color:var(--text3);margin-top:4px}
+.pc ul{list-style:none;display:grid;gap:11px;font-size:20px;color:var(--text2)}
+.pc li{display:flex;gap:10px;align-items:flex-start;line-height:1.25}
+.pc li svg{width:22px;height:22px;color:var(--volt-text);margin-top:1px;flex:none}
+.pc.adm{flex:1;background:var(--ink);border-color:var(--ink);color:#fff;padding:26px 26px 22px}
+.pc.adm::before{background:linear-gradient(90deg,var(--volt),#7DFFBD)}
+.pc.adm .ico{background:rgba(18,224,123,.15);color:var(--volt)}
+.pc.adm h3{font-size:40px}
+.pc.adm .who{color:rgba(255,255,255,.6)}
+.pc.adm ul{color:rgba(255,255,255,.86);font-size:20.5px}
+.pc.adm li svg{color:var(--volt)}
+.pc .note{margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,.14);font-size:15.5px;color:rgba(255,255,255,.6)}
+
+/* ===== 7 · Datos: de la puerta a la decisión, sin capturas ===== */
+.data2{display:grid;grid-template-columns:420px 1fr;gap:30px;flex:1;min-height:0;max-height:540px}
+.pipe{background:var(--ink);color:#fff;border-radius:24px;padding:28px 30px;display:flex;flex-direction:column;justify-content:center;gap:4px;box-shadow:var(--shadow-lg)}
+.pipe .pn{display:flex;align-items:center;gap:18px}
+.pipe .pn .ico{background:rgba(18,224,123,.15);color:var(--volt)}
+.pipe .pn b{display:block;font-family:var(--display);font-size:32px;line-height:1}
+.pipe .pn span{font-size:17px;color:rgba(255,255,255,.7)}
+.pipe .ar{display:block;width:3px;height:40px;margin:6px 0 6px 26px;background:repeating-linear-gradient(180deg,var(--volt) 0 6px,transparent 6px 12px);background-size:100% 12px;animation:dashv .9s linear infinite}
+.pipe .live{margin-top:26px;color:var(--volt)}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.dc{display:flex;flex-direction:column;gap:12px;padding:24px 26px;justify-content:center}
+.dc h3{font-size:31px;margin:0}
+.dc p{font-size:19.5px}
+.dc.r .ico{background:var(--danger-dim);color:var(--danger)}
+
+/* ===== 9 · Comparación ===== */
+.cmp{display:grid;grid-template-columns:250px 1fr 1fr;border-radius:22px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);background:var(--surface)}
+.cmp > div{padding:13px 22px;display:flex;align-items:center;gap:12px;font-size:20.5px;border-top:1px solid var(--border);line-height:1.25}
+.cmp .h{font-size:14px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;border-top:0;padding:14px 22px}
+.cmp .h.old{color:var(--text3);background:var(--raised)}
+.cmp .h.new{color:var(--ink);background:var(--volt)}
+.cmp .k{font-family:var(--display);font-weight:700;font-size:27px}
+.cmp .k .ico{width:42px;height:42px;border-radius:12px}
+.cmp .k .ico svg{width:24px;height:24px}
+.cmp .o{color:var(--text3);background:#FAFBFA}
+.cmp .o > svg{width:22px;height:22px;color:var(--danger);flex:none}
+.cmp .n{color:var(--text);font-weight:600;background:var(--volt-dim)}
+.cmp .n > svg{width:22px;height:22px;color:var(--volt-text);flex:none}
+
+/* ===== 10 · La inversión ===== */
+.inv{display:grid;grid-template-columns:1fr 1fr 1.05fr;gap:20px;align-items:stretch}
+.pl{display:flex;flex-direction:column;gap:8px;padding:24px 26px}
+.pl .vs{color:var(--volt-text)}
+.pl .amt{font-family:var(--display);font-weight:800;font-size:78px;line-height:.95;font-variant-numeric:tabular-nums}
+.pl .amt em{font-style:normal;font-size:22px;font-weight:600;color:var(--text3);margin-left:6px;letter-spacing:.01em}
+.pl .iva{font-size:17px;font-weight:600;color:var(--text2)}
+.pl ul{list-style:none;display:grid;gap:9px;font-size:19px;color:var(--text2);margin-top:8px;padding-top:12px;border-top:1px solid var(--border)}
+.pl li{display:flex;gap:9px;align-items:flex-start;line-height:1.25}
+.pl li svg{width:20px;height:20px;color:var(--volt-text);flex:none;margin-top:2px}
+.pl.dk{background:var(--ink);border-color:var(--ink);color:#fff}
+.pl.dk .vs{color:var(--volt)}
+.pl.dk .amt em,.pl.dk .iva{color:rgba(255,255,255,.72)}
+.pl.dk ul{color:rgba(255,255,255,.86);border-top-color:rgba(255,255,255,.14)}
+.pl.dk li svg{color:var(--volt)}
+.persp{display:flex;flex-direction:column;gap:14px;padding:24px 26px;background:var(--volt-dim);border-color:rgba(6,120,60,.25)}
+.persp .vs{color:var(--volt-text)}
+.eq{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center}
+.eq span b{font:inherit;font-weight:700;color:var(--volt-text)}
+.eq > b{font-family:var(--display);font-weight:800;font-size:64px;line-height:1;color:var(--volt-text);font-variant-numeric:tabular-nums}
+.eq span{font-size:19.5px;color:var(--text);line-height:1.25}
+.fine{margin-top:auto;font-size:14px;color:var(--text2);line-height:1.35}
+.inv-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:22px}
+.inv-foot .chips{margin-top:0}
+.inv-foot .next{margin-top:0}
+
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:820px){.seg{font-size:0}}
 @media (max-width:520px){.clock:not(.act){display:none}.brand{display:none}}
@@ -389,11 +529,26 @@ body.pv .top,body.pv .deck,body.pv .notes,body.pv .hand{display:none}
 <div class="hand" id="hand"></div>
 <div class="notes" id="notes"></div>
 
+<!-- Capa de cine: el video de apertura (diapositiva 0) y la portada (1), que replica el último cuadro del video. -->
+<div class="cine" id="cine">
+  <video id="vid" src="video/salida/gymgo-intro-v3.mp4" preload="auto" playsinline></video>
+  <div class="hero" id="hero">
+    <div class="glow"></div>
+    <img class="logo" src="video/assets/logo/completo.png" alt="GymGo">
+    <div class="firm"><small>UN PRODUCTO DE</small><img src="video/assets/logo/sirid.png" alt="SIRID Systems" style="height:96px"></div>
+    <p class="promise">La plataforma que conecta <em>todo tu gimnasio</em>.</p>
+    <div class="hpills"><span>Negocio electrónico</span><span>Aplicación móvil</span><span>IoT</span><span>Seguridad de redes</span></div>
+    <div class="hteam"><b>Equipo SIRID Systems</b><span id="heroTeam"></span></div>
+    <div class="vig"></div>
+  </div>
+</div>
+<i id="wipeband" aria-hidden="true"></i>
+
 <div class="help" id="help"><div>
   <h2>Atajos</h2>
-  <kbd>→</kbd><span>Avanzar (también Espacio, Enter o el control de diapositivas)</span>
+  <kbd>→</kbd><span>Avanzar (también Espacio, Enter o el control de diapositivas). En el video: la primera vez lo reproduce y arranca el cronómetro; la segunda lo salta</span>
   <kbd>←</kbd><span>Regresar</span>
-  <kbd>T</kbd><span>Iniciar o pausar el cronómetro de 10:00</span>
+  <kbd>T</kbd><span>Iniciar o pausar el cronómetro (10:00 para video y exposición; 5:00 aparte para la demostración)</span>
   <kbd>D</kbd><span>Ir a la demostración</span>
   <kbd>P</kbd><span>Abrir la vista del presentador en otra ventana (guion y ritmo)</span>
   <kbd>N</kbd><span>Mostrar el guion abajo (para ensayar)</span>
@@ -431,9 +586,10 @@ const CONFIG = {
   urlApi: 'https://sirid-systemsappmovil.onrender.com/api/saas-plans',
 };
 
-// Tiempo total: 10 minutos para exposición y demostración. Lo que sobre de la exposición es para la demostración.
+// Tiempos: 10:00 para el video y la exposición (el cronómetro arranca con el video) y 5:00 aparte para la demostración.
 const TOTAL = 600;
-const SECCIONES = ['Inicio', 'Negocio electrónico', 'Aplicación móvil', 'Adquisición de datos', 'Normativas', 'Cierre'];
+const DEMO_T = 300;
+const SECCIONES = ['Apertura', 'Negocio electrónico', 'Aplicación móvil', 'IoT', 'Seguridad de redes', 'Valor y cierre'];
 
 /* ===== Piezas de contenido ===== */
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -468,6 +624,8 @@ const ICON = {
   check: '<path d="M10 25l9 9 19-20"/>',
   x: '<path d="M14 14l20 20M34 14L14 34"/>',
   eye: '<path d="M3 24s8-14 21-14 21 14 21 14-8 14-21 14S3 24 3 24z"/><circle cx="24" cy="24" r="6"/>',
+  laptop: '<rect x="8" y="9" width="32" height="22" rx="3"/><path d="M3 37h42"/>',
+  user: '<circle cx="24" cy="15" r="7"/><path d="M10 41c1-9 7-14 14-14s13 5 14 14"/>',
   clock: '<circle cx="24" cy="24" r="17"/><path d="M24 14v10l7 5"/>',
   cart: '<path d="M5 8h6l5 22h22l4-15H14"/><circle cx="19" cy="38" r="3"/><circle cx="35" cy="38" r="3"/>',
   plus: '<path d="M24 10v28M10 24h28"/>',
@@ -485,10 +643,10 @@ const chk = (items) => `<ul class="demo-chk">${items.map((t) => `<li role="check
 
 const paso = (n, icon, t, d) => `<div class="fl"><div class="c">${ic(icon)}<i>${n}</i></div><b>${t}</b><span>${d}</span></div>`;
 const FLOW = `<div class="flow rv-g">${[
-  paso(1, 'qr', 'Presenta su QR', 'El socio lo abre en su app'),
-  paso(2, 'lector', 'Se escanea', 'Con el lector o la cámara'),
-  paso(3, 'valida', 'Se valida', 'Contra la membresía del socio'),
-  paso(4, 'decide', 'Permite o rechaza', 'Según el resultado'),
+  paso(1, 'qr', 'Presenta su QR', 'Desde la app del socio'),
+  paso(2, 'lector', 'Se lee', 'Lector en la puerta o cámara'),
+  paso(3, 'valida', 'Se valida', 'Membresía, sucursal y horario'),
+  paso(4, 'decide', 'Permite o rechaza', 'Con su motivo, al momento'),
   paso(5, 'registro', 'Queda registrado', 'Y el panel lo ve al instante'),
 ].join('<i class="arrow" aria-hidden="true"></i>')}</div>`;
 
@@ -521,86 +679,98 @@ const role = (icon, t, where, main, acts, btnIcon, btn, btnLabel = 'Su botón pr
 const sc = (icon, t, d, num, name, demo) => `<div class="card sc"><span class="ico">${ic(icon)}</span><h3>${t}</h3><p>${d}</p>
   <div class="meta">${iso(num, name)}<span class="indemo">${ic('play')}${demo}</span></div></div>`;
 
-/* ===== Diapositivas =====
-   sec: sección · t: segundos previstos · enf: 'oferta' (lo que ofrecemos)
-   name: nombre para la vista del presentador cuando no hay título · body: lo que ve el público · say: guion breve. */
-const SLIDES = [
-  /* ---------- 1 · Portada ---------- */
-  { sec: 0, t: 15, name: 'Portada · GymGo',
-    body: `<div class="cover">
-      <div>
-        <div class="bm rv-1"><i>G</i>SIRID Systems presenta</div>
-        <h1 class="xl rv-1">Gym<mark>Go</mark></h1>
-        <p class="lead rv-1">Todo tu gimnasio en una sola plataforma: <b>contrata en minutos, opera desde el celular y conoce tu negocio en tiempo real.</b></p>
-        <div class="pillars rv-g"><span>Negocio electrónico</span><span>Aplicación móvil</span><span>Adquisición de datos</span><span>Normativas</span></div>
-        <div class="team rv-1"><b>Equipo SIRID Systems</b>${CONFIG.equipo.join(' · ')}</div></div>
-      <div class="cv-r">
-        <div class="halo"></div><div class="ring" style="width:560px;height:560px"></div><div class="ring" style="width:680px;height:680px"></div>
-        <div class="rv-1 pp" style="position:absolute;inset:0"><div class="phonef">${pic('img/app/cliente-qr.webp', 'Pase QR del socio en la app GymGo')}</div></div>
-        <div class="tw rv-1" style="left:-30px;top:70px"><div class="fz">${toast('', 'check', 'Acceso permitido', 'Membresía vigente')}</div></div>
-        <div class="tw rv-1" style="right:-50px;top:455px"><div class="fz" style="animation-delay:-1.2s">${toast('', 'cash', 'Pago registrado', 'Mensualidad renovada')}</div></div>
-        <div class="tw rv-1" style="left:-20px;bottom:40px"><div class="fz" style="animation-delay:-2.1s">${toast('', 'dumbbell', 'Rutina asignada', 'Por su entrenador')}</div></div></div></div>`,
-    say: 'Buenos días. Somos SIRID Systems y venimos a presentarles GymGo: la plataforma que pone a trabajar a todo un gimnasio desde un solo lugar. En los próximos minutos les vamos a mostrar por qué un dueño de gimnasio querría contratarla hoy mismo.' },
+/* Piezas de las diapositivas comerciales: tarjetas e íconos, sin capturas (las interfaces se ven en la demostración). */
+const jstep = (n, icon, t, d, hl = false) => `<div class="jstep${hl ? ' hl' : ''}"><div class="c">${ic(icon)}<i>${n}</i></div><b>${t}</b><span>${d}</span></div>`;
+const pc = (icon, t, who, acts, cls = '', note = '') => `<div class="card pc ${cls}"><div class="hd"><span class="ico">${ic(icon)}</span><div><h3>${t}</h3><div class="who">${who}</div></div></div>
+  <ul>${acts.map((a) => `<li>${ic('check')}<span>${a}</span></li>`).join('')}</ul>${note ? `<div class="note">${note}</div>` : ''}</div>`;
+const dc = (icon, t, d, cls = '') => `<div class="card dc ${cls}"><span class="ico">${ic(icon)}</span><h3>${t}</h3><p>${d}</p></div>`;
+const crow = (icon, k, o, n) => `<div class="k"><span class="ico">${ic(icon)}</span>${k}</div><div class="o">${ic('x')}<span>${o}</span></div><div class="n">${ic('check')}<span>${n}</span></div>`;
+const li = (items) => `<ul>${items.map((a) => `<li>${ic('check')}<span>${a}</span></li>`).join('')}</ul>`;
 
-  /* ---------- 2 · El problema ---------- */
-  { sec: 0, t: 25, kicker: '¿Les suena?', title: 'Un gimnasio pierde dinero y tiempo con herramientas que <mark>no se hablan</mark>',
+/* ===== Diapositivas =====
+   sec: sección · t: segundos previstos · enf: 'oferta' (lo que ofrecemos) · cine: 'video' o 'hero' (capa a pantalla completa)
+   name: nombre para la vista del presentador cuando no hay título · body: lo que ve el público · say: guion breve.
+   La numeración que ve el público empieza en la portada: el video es la diapositiva 0 y la arquitectura sigue siendo la 3. */
+const SLIDES = [
+  /* ---------- 0 · Video de apertura ---------- */
+  { sec: 0, t: 52, cine: 'video', kicker: 'Video de apertura', name: 'Video · Las preguntas de todos los días', body: '',
+    say: '(Video, 52 segundos. Sin narración: música, efectos y animaciones.) Presionar → una sola vez en la ventana del proyector: arranca el video y el cronómetro. Al terminar pasa solo a la portada y el presentador toma la palabra. Mientras corre, el primer presentador se coloca al frente. Si el video falla, → otra vez lo salta.' },
+
+  /* ---------- 1 · Portada (continúa el último cuadro del video) ---------- */
+  { sec: 0, t: 25, cine: 'hero', kicker: 'Portada', name: 'Portada · GymGo', body: '',
+    say: 'Administrar un gimnasio debería ser tan sencillo como entrenar en él.<br><br>Pero sabemos que la realidad es diferente: información dispersa, procesos que consumen tiempo y herramientas que no trabajan juntas.<br><br>Por eso creamos GymGo.<br><br>Una plataforma diseñada para conectar cada parte de un gimnasio y convertir su administración en una experiencia mucho más inteligente.<br><br>Somos SIRID Systems y hoy queremos presentarles una nueva forma de administrar un gimnasio.' },
+
+  /* ---------- 2 · El problema (responde las preguntas del video) ---------- */
+  { sec: 0, t: 45, kicker: 'Las preguntas de todos los días', title: 'Un gimnasio pierde dinero y tiempo con herramientas que <mark>no se hablan</mark>',
     body: `<div class="grid g4 rv-g">
       <div class="card pain"><span class="ico">${ic('paper')}</span><div class="vs">La entrada</div><h3>Una lista en recepción</h3><p>Alguien revisa a mano si la membresía sigue vigente.</p><div class="cost">Filas y errores en la puerta</div></div>
       <div class="card pain"><span class="ico">${ic('cash')}</span><div class="vs">Los cobros</div><h3>Efectivo y hojas de cálculo</h3><p>El dueño se entera tarde de quién ya no pagó.</p><div class="cost">Membresías vencidas sin cobrar</div></div>
       <div class="card pain"><span class="ico">${ic('dumbbell')}</span><div class="vs">El entrenamiento</div><h3>Rutinas en papel</h3><p>El entrenador pierde el seguimiento de cada cliente.</p><div class="cost">Clientes que se van sin aviso</div></div>
       <div class="card pain"><span class="ico">${ic('chart')}</span><div class="vs">Las decisiones</div><h3>A ciegas</h3><p>No se sabe cuánta gente entra ni a qué hora.</p><div class="cost">Horarios y personal a ojo</div></div></div>
       <div class="bridge rv-1"><p>Cada herramienta suelta es trabajo repetido. <mark>El problema es que nada se conecta.</mark></p><span class="go">GymGo lo conecta ${ic('arrow')}</span></div>`,
-    say: 'Piensen en cualquier gimnasio de su colonia. La entrada se controla con una lista, los cobros en efectivo y en una hoja de cálculo, las rutinas en papel, y las decisiones se toman a ojo. Nada de eso está mal por sí solo; el problema es que nada se conecta. Eso se traduce en trabajo repetido, cobros que se escapan y clientes que se van sin que nadie lo note.' },
+    say: 'Pongámonos en el lugar de un propietario de gimnasio.<br><br>Cada día tiene que saber quién pagó su mensualidad, quién está entrando, cuántos clientes tiene activos y cómo está trabajando su personal.<br><br>Ahora imaginemos que para responder esas preguntas necesita revisar una libreta, consultar una hoja de Excel, preguntar en recepción y buscar información en diferentes lugares.<br><br>¿El resultado? Tiempo perdido, información desactualizada y decisiones tomadas sin tener una visión completa del negocio.<br><br>El problema no es que los gimnasios no tengan herramientas. Es que esas herramientas trabajan por separado.<br><br>Y precisamente ahí es donde GymGo marca la diferencia.' },
 
-  /* ---------- 3 · La solución y sus tecnologías ---------- */
-  { sec: 0, t: 35, kicker: 'La solución', title: 'Una sola plataforma que <mark>conecta todo el gimnasio</mark>',
+  /* ---------- 3 · La solución y sus tecnologías (contenido intacto; es la única con tecnologías) ---------- */
+  { sec: 0, t: 55, kicker: 'La solución', title: 'Una sola plataforma que <mark>conecta todo el gimnasio</mark>',
     sub: 'Cuatro herramientas que comparten la misma información, construidas con tecnología actual.',
     body: `${HUB}<div class="chips c rv-g" style="margin-top:18px"><span class="chip">Para <b>gimnasios independientes</b></span><span class="chip">Para <b>cadenas con varias sucursales</b></span><span class="chip g"><b>14 días</b> de prueba gratis</span></div>`,
-    say: 'GymGo resuelve eso conectando todo. El dueño contrata en nuestro sitio y dirige su gimnasio desde el panel; socios, entrenadores y recepción usan la misma app; y cada entrada se registra sola. En medio está la plataforma GymGo, que comparte una sola base de datos, así que lo que pasa en la puerta lo ve el dueño al instante. Y está hecha con herramientas actuales: React en el panel, Expo y React Native en la app, Node.js en el servidor y MongoDB para guardar la información, todo en la nube. Sirve igual para un gimnasio independiente que para una cadena.' },
+    say: 'Nuestra propuesta es integrar todo en un mismo ecosistema.<br><br>GymGo está compuesto por cuatro soluciones que trabajan de manera coordinada.<br><br>Primero, nuestro sitio web, donde los gimnasios pueden conocer y contratar el servicio.<br><br>Segundo, un panel administrativo que permite gestionar la operación desde una computadora.<br><br>Tercero, una aplicación móvil para socios, entrenadores y recepción.<br><br>Y cuarto, un sistema de control de acceso mediante dispositivos conectados.<br><br>Para desarrollar este ecosistema utilizamos tecnologías como React, React Native, Expo, Node.js, Express y MongoDB, entre otras que pueden observar en pantalla.<br><br>Toda la información se concentra en una misma plataforma y se mantiene sincronizada.<br><br>Esto significa que el gimnasio deja de trabajar con información aislada y comienza a operar como un solo sistema.' },
 
   /* ---------- 4 · Negocio electrónico ---------- */
   { sec: 1, t: 45, enf: 'oferta', kicker: 'Negocio electrónico', title: 'Contratar GymGo toma <mark>minutos</mark>, sin visitas ni papeles',
-    body: `<div class="buy">
-      <div class="rv-1">${browser('img/home.jpg', 'Página principal del sitio de GymGo', 'sirid-systems-1.onrender.com')}</div>
-      <div><ol class="steps rv-g">${['Elige su plan', 'Registra su gimnasio', 'Confirma su correo con un código', 'Paga con tarjeta, OXXO o PayPal', 'Su plan queda activo al momento', 'Entra a su panel y suma a su equipo'].map((t, k) => `<li class="${k === 4 ? 'ok' : ''}">${t}</li>`).join('')}</ol>
-        <div class="price rv-1"><span class="amt"><small style="display:block;margin-bottom:6px">Desde</small>$<span data-count="699">699</span><em>/mes + IVA</em></span>
-          <span class="trial">${ic('star')}14 días de prueba gratis</span><span class="pay">Tarjeta · OXXO · PayPal</span></div></div></div>`,
-    say: 'Empezamos por cómo se vende GymGo. Todo el proceso es en línea: el dueño entra a nuestro sitio, elige su plan, registra su gimnasio, confirma su correo con un código, paga con tarjeta, OXXO o PayPal, y su plan queda activo al momento. De ahí entra directo a su panel. Sin visitas, sin contratos en papel, y con catorce días de prueba gratis. Para la evaluación el pago es simulado, sin cargos reales, pero el flujo es el mismo que verán en la demostración.' },
+    body: `<div class="journey rv-g">
+        ${jstep(1, 'web', 'Conoce los planes', 'En el sitio de GymGo')}
+        ${jstep(2, 'registro', 'Registra su gimnasio', 'Con sus datos y su primera sucursal')}
+        ${jstep(3, 'mail', 'Confirma su correo', 'Con un código de 6 dígitos')}
+        ${jstep(4, 'star', 'Prueba 14 días', 'Gratis, sin pagar nada', true)}
+        ${jstep(5, 'cash', 'Paga en línea', 'Cuando decide quedarse')}</div>
+      <div class="offer rv-g">
+        <div class="card ofc"><span class="ico">${ic('clock')}</span><div><div class="vs">Sin intermediarios</div><h3>Listo en minutos</h3><p>Sin visitas, sin contratos en papel y <b>sin instalar nada</b>.</p></div></div>
+        <div class="card ofc"><span class="ico">${ic('cash')}</span><div><div class="vs">Como prefiera</div><h3>Tarjeta, OXXO o PayPal</h3><p>Pago mensual o anual, con <b>dos meses de regalo</b> al pagar el año.</p></div></div>
+        <div class="price"><span class="amt"><small style="display:block;margin-bottom:6px">Desde</small>$<span data-count="699">699</span><em>/mes + IVA</em></span>
+          <span class="trial">${ic('star')}14 días gratis</span><span class="pay">Y entra directo a su panel</span></div></div>`,
+    say: 'Ahora bien, contratar una solución tecnológica también debería ser sencillo.<br><br>Por eso diseñamos un proceso completamente digital.<br><br>Un propietario puede conocer GymGo, comparar nuestros planes y registrar su gimnasio directamente desde nuestro sitio web.<br><br>Después de verificar su cuenta, obtiene 14 días de prueba gratuita para conocer la plataforma.<br><br>Cuando decide contratar, puede realizar su pago mediante las opciones disponibles y comenzar a utilizar el servicio.<br><br>Sin visitas comerciales obligatorias, sin instalaciones complicadas y sin procesos innecesarios.<br><br>Queremos que implementar tecnología en un gimnasio sea una decisión sencilla, no un obstáculo.' },
 
   /* ---------- 5 · Perfiles (antes diapositivas 5 y 6) ---------- */
-  { sec: 2, t: 50, enf: 'oferta', kicker: 'Aplicación móvil · Perfiles', title: 'Cada persona de tu equipo, <mark>con su propia herramienta</mark>',
-    body: `<div class="grid roles rv-g">
-      ${role('panel', 'Administrador', 'Panel web y app', 'Ve todo su negocio en un panel: entradas, cobros y ventas del día.',
-        ['Define planes, precios y promociones', 'Controla el inventario y la tienda', 'Invita a su equipo y decide qué puede hacer cada quien', 'Administra varias sucursales'], 'chart', 'Inicio', 'Lo primero que ve')}
-      ${role('qr', 'Recepción / Staff', 'App en el celular', 'Escanea la entrada del socio con la cámara.',
-        ['Cobra membresías y ventas de mostrador', 'Da de alta a socios nuevos', 'Ve quién está dentro del gimnasio'], 'qr', 'Escanear')}
-      ${role('dumbbell', 'Entrenador', 'App y panel', 'Crea rutinas a la medida de cada cliente.',
-        ['Ve a los clientes que tiene asignados', 'Sigue el avance de cada uno', 'Usa plantillas para ahorrar tiempo'], 'plus', 'Crear rutina')}</div>
-      <div class="bridge rv-1" style="margin-top:18px;padding:14px 26px"><p style="font-size:30px">Una sola plataforma, tres vistas: <mark>cada quien ve solo lo que necesita.</mark></p><span class="go">${ic('users')}Sin sistemas complicados</span></div>`,
-    say: 'GymGo le da a cada persona del equipo solo lo que necesita. El administrador ve todo su negocio en un panel y define planes y precios. Recepción escanea la entrada y cobra. Y el entrenador crea rutinas a la medida y sigue el avance de sus clientes. Nadie tiene que aprender un sistema complicado.' },
+  { sec: 2, t: 55, enf: 'oferta', kicker: 'Aplicación móvil · Perfiles', title: 'Cada persona, con la herramienta que <mark>su trabajo necesita</mark>',
+    body: `<div class="prof">
+      <div class="pgrp rv-1"><div class="pgl">${ic('laptop')}En la computadora · <b>Panel web</b></div>
+        ${pc('panel', 'Administrador', 'Dueño o gerente del gimnasio', ['Ve la operación del día: entradas, cobros y ventas', 'Define planes, precios y promociones', 'Controla inventario y tienda', 'Invita a su equipo y decide qué puede hacer cada quien', 'Administra sus sucursales'], 'adm', 'También consulta su resumen desde la app.')}</div>
+      <div class="pgrp rv-1"><div class="pgl">${ic('movil')}En el celular · <b>App GymGo</b></div>
+        <div class="pcards rv-g">
+          ${pc('qr', 'Recepción', 'Mostrador y entrada', ['Escanea el QR de entrada', 'Cobra membresías y ventas de mostrador', 'Da de alta a socios nuevos'])}
+          ${pc('dumbbell', 'Entrenador', 'Seguimiento de clientes', ['Arma rutinas a la medida', 'Usa plantillas para ahorrar tiempo', 'Sigue el avance de cada cliente'])}
+          ${pc('user', 'Socio', 'El cliente del gimnasio', ['Entra con su pase QR', 'Sigue su rutina y registra sus series', 'Ve su progreso y pide en la tienda'])}</div></div></div>`,
+    say: 'Pero administrar un gimnasio no depende de una sola persona.<br><br>Participan diferentes perfiles, y cada uno tiene necesidades distintas.<br><br>Por eso GymGo no ofrece una herramienta genérica para todos.<br><br>El administrador tiene el control del negocio desde nuestro panel: puede gestionar sucursales, membresías, personal e inventario.<br><br>Recepción puede registrar socios, gestionar cobros y validar accesos.<br><br>Los entrenadores pueden crear rutinas personalizadas y dar seguimiento al progreso de sus clientes.<br><br>Y los socios tienen en su teléfono su pase de entrada, sus rutinas y su progreso.<br><br>Cuatro perfiles, diferentes responsabilidades, una misma plataforma.<br><br>Así conseguimos que todos trabajen coordinadamente y que la información no se pierda entre departamentos.' },
 
   /* ---------- 6 · Adquisición de datos ---------- */
-  { sec: 3, t: 35, enf: 'oferta', kicker: 'Adquisición de datos · En la puerta', title: 'Cada entrada se captura <mark>sola, en tiempo real</mark>',
+  { sec: 3, t: 45, enf: 'oferta', kicker: 'IoT · Control de acceso', title: 'Cada entrada se captura <mark>sola, en tiempo real</mark>',
     body: `${FLOW}
       <div class="ways rv-g">
-        <div class="card way star"><span class="ico">${ic('lector')}</span><div><div class="vs">Forma 1 · En la entrada</div><h3>Lector GymGo</h3><p>El socio acerca su QR al dispositivo de la puerta y el acceso se decide <b>sin nadie en recepción</b>.</p></div></div>
-        <div class="card way"><span class="ico">${ic('movil')}</span><div><div class="vs">Forma 2 · En recepción</div><h3>Cámara del celular</h3><p>Recepción escanea con la app. Sirve de respaldo o para gimnasios que <b>aún no tienen lector</b>.</p></div></div>
+        <div class="card way star"><span class="ico">${ic('lector')}</span><div><div class="vs">Forma 1 · En la entrada · Plan Pro</div><h3>Lector en la puerta</h3><p>Un dispositivo conectado, con su propia llave y ligado a una sucursal: el acceso se decide <b>sin nadie en recepción</b>.</p></div></div>
+        <div class="card way"><span class="ico">${ic('movil')}</span><div><div class="vs">Forma 2 · En recepción · Todos los planes</div><h3>Cámara del celular</h3><p>Recepción escanea con la app. Sirve de respaldo o para gimnasios que <b>aún no tienen lector</b>.</p></div></div>
         <div class="card way qr"><span class="ico">${ic('lock')}</span><div><div class="vs">Sin trampas</div><h3>Un QR que no se presta</h3><p>Caduca en segundos y vale una sola vez: no se puede copiar ni compartir.</p></div></div></div>`,
-    say: 'Ahora, los datos. Cada vez que un socio llega, GymGo lo captura solo: el socio presenta su QR, se lee, se valida contra su membresía, se permite o se rechaza, y queda registrado al instante. Hay dos formas de escanear: con nuestro lector en la puerta, que decide sin que nadie intervenga, o con la cámara del celular de recepción, que sirve de respaldo o para gimnasios que todavía no tienen lector. Y el QR del socio caduca en segundos y vale una sola vez, así que no se puede prestar ni copiar.' },
+    say: 'Uno de los momentos más importantes en cualquier gimnasio ocurre en su puerta: cuando llega un socio.<br><br>Con GymGo, ese momento deja de ser simplemente una entrada y se convierte en un proceso automatizado.<br><br>El socio presenta su código QR y nuestro dispositivo de acceso lo valida directamente con la plataforma.<br><br>Se comprueba su membresía, su sucursal y las condiciones de acceso.<br><br>Si todo está correcto, se autoriza la entrada. Si existe alguna restricción, el sistema la identifica y rechaza el acceso.<br><br>Además, contamos con una alternativa mediante la cámara del teléfono para los gimnasios que todavía no disponen del lector.<br><br>Y gracias a que el código es temporal y de un solo uso, reducimos el riesgo de que las membresías se compartan mediante capturas de pantalla.<br><br>Más control en la entrada y menos trabajo manual para el personal.' },
 
-  { sec: 3, t: 35, enf: 'oferta', kicker: 'Adquisición de datos · Lo que el dueño gana', title: 'Datos que se convierten en <mark>decisiones</mark>',
-    body: `<div class="data">
-      <div class="drows rv-g">
-        <div class="card drow"><span class="ico">${ic('users')}</span><div><h3>Quién entra y a qué hora</h3><p>Cuánta gente hay dentro ahora mismo, en cada sucursal.</p></div></div>
-        <div class="card drow r"><span class="ico">${ic('x')}</span><div><h3>Quién intentó entrar vencido</h3><p>Una lista de cobranza que se arma sola, con el motivo.</p></div></div>
-        <div class="card drow"><span class="ico">${ic('dumbbell')}</span><div><h3>Cómo entrena cada socio</h3><p>Series, peso y repeticiones: su progreso y el seguimiento del entrenador.</p></div></div>
-        <div class="card drow"><span class="ico">${ic('cash')}</span><div><h3>Cobros y ventas del día</h3><p>Los ingresos claros, sin hojas de cálculo.</p></div></div></div>
-      <div class="rv-1" style="position:relative">${browser('video/assets/panel-actividad.png', 'Bitácora de accesos del panel GymGo', 'Panel GymGo · Control de acceso')}
-        <div class="tw" style="right:-26px;top:-24px"><div class="fz"><span class="chip" style="box-shadow:var(--shadow-lg);background:#fff"><span class="live">Se actualiza solo, sin recargar</span></span></div></div></div></div>`,
-    say: 'Y esos datos no se quedan guardados sin uso. Con cada entrada, el dueño sabe cuánta gente hay dentro y en qué horario. Con cada rechazo, se arma sola una lista de quién tiene la membresía vencida: eso es cobranza. Cuando el socio registra sus series, su peso y sus repeticiones, el entrenador ve su progreso. Y cada cobro y cada venta aparece en el panel del día. Esto que ven es la bitácora real del panel, y se actualiza en el momento: lo van a ver en la demostración.' },
+  { sec: 3, t: 40, enf: 'oferta', kicker: 'IoT · Lo que el dueño gana', title: 'Datos que se convierten en <mark>decisiones</mark>',
+    body: `<div class="data2">
+      <div class="pipe rv-1">
+        <div class="pn"><span class="ico">${ic('lector')}</span><div><b>La puerta</b><span>Lector o cámara de recepción</span></div></div>
+        <i class="ar" aria-hidden="true"></i>
+        <div class="pn"><span class="ico">${ic('valida')}</span><div><b>GymGo valida</b><span>Y guarda cada entrada, salida y rechazo</span></div></div>
+        <i class="ar" aria-hidden="true"></i>
+        <div class="pn"><span class="ico">${ic('chart')}</span><div><b>El dueño decide</b><span>Con los datos del momento</span></div></div>
+        <span class="live">Se actualiza solo, sin recargar</span></div>
+      <div class="dgrid rv-g">
+        ${dc('users', 'Quién está dentro ahora', 'Aforo en vivo de cada sucursal, para decidir horarios y personal.')}
+        ${dc('x', 'Quién intentó entrar', 'Cada rechazo queda con su motivo: el dueño sabe a quién cobrar.', 'r')}
+        ${dc('dumbbell', 'Cómo entrena cada socio', 'Series, peso y repeticiones: el entrenador ve su progreso.')}
+        ${dc('cash', 'Cobros y ventas del día', 'Los ingresos claros, sin hojas de cálculo.')}</div></div>
+      <p class="ref rv-1">El aforo en vivo y la bitácora de accesos forman parte del plan Pro.</p>`,
+    say: 'Pero controlar quién entra es solamente una parte de la solución.<br><br>Lo verdaderamente valioso es lo que el propietario puede hacer con esa información.<br><br>Con GymGo puede conocer la actividad de su gimnasio, consultar los registros de acceso, identificar los horarios de mayor afluencia y revisar información relacionada con sus socios y operaciones.<br><br>Ya no tiene que esperar al final del día para reunir información de diferentes lugares.<br><br>Puede consultar lo que sucede y utilizar esos datos para organizar mejor sus recursos, su personal y sus servicios.<br><br>Porque administrar un gimnasio no debería consistir en adivinar qué está pasando, sino en tener información para tomar mejores decisiones.' },
 
   /* ---------- 8 · Seguridad y protección de la información ---------- */
-  { sec: 4, t: 55, kicker: 'Normativas · Seguridad de la información', title: 'La información de tu gimnasio y tus socios, <mark>protegida</mark>',
+  { sec: 4, t: 50, kicker: 'Normativas · Seguridad de la información', title: 'La información de tu gimnasio y tus socios, <mark>protegida</mark>',
     sub: 'Cuatro medidas que ya funcionan en GymGo, alineadas con los controles de la NMX-I-27001-NYCE-2015.',
     body: `<div class="grid sec rv-g">
       ${sc('users', 'Cada quien ve solo lo suyo', 'Permisos por perfil: recepción no ve lo del dueño y <b>un gimnasio nunca ve los datos de otro</b>.', 'A.9.4.1', 'Restricción de acceso a la información', 'En la demo: al cambiar de perfil')}
@@ -611,52 +781,63 @@ const SLIDES = [
         <p><b>Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).</b> Los datos de tus socios se tratan con aviso de privacidad, términos y aviso de cookies, y en la app el socio decide qué historial comparte.</p>
         ${iso('A.18.1.4', 'Privacidad y protección de información de identificación personal')}</div>
       <p class="ref rv-1">Controles del Apéndice A (Tabla 1) de la NMX-I-27001-NYCE-2015, usados como referencia de buenas prácticas. GymGo no cuenta con una certificación.</p>`,
-    say: 'Algo que todo dueño se pregunta es qué pasa con la información de sus socios. En GymGo la protegemos con cuatro medidas, tomando como referencia los controles de la norma mexicana NMX-I-27001. Primero, cada quien ve solo lo suyo, y un gimnasio nunca ve los datos de otro. Segundo, las cuentas se verifican con un código en el correo y el inicio de sesión tiene límite de intentos. Tercero, el pase QR caduca en segundos y vale una sola vez, así que no se puede prestar. Y cuarto, cada entrada, salida y rechazo queda registrado. Además, atendemos la Ley Federal de Protección de Datos Personales: hay aviso de privacidad y el socio decide qué historial comparte. Varias de estas medidas las van a ver funcionando en la demostración.' },
+    say: 'Ahora, hay algo que no podemos dejar de lado: la confianza.<br><br>Un gimnasio administra información de sus socios, sus pagos y sus actividades. Por eso, proteger esos datos es fundamental.<br><br>En GymGo consideramos la seguridad desde el diseño de la plataforma.<br><br>Implementamos controles de acceso para separar la información de cada gimnasio, verificación de cuentas mediante correo electrónico, limitación de intentos de inicio de sesión y códigos QR temporales.<br><br>También mantenemos registros de los movimientos de acceso para facilitar su seguimiento.<br><br>Estas medidas toman como referencia controles de la norma mexicana NMX-I-27001.<br><br>Además, contemplamos las obligaciones relacionadas con la protección de datos personales.<br><br>Porque una buena plataforma no solamente debe facilitar el trabajo: también debe generar confianza en quienes la utilizan.' },
 
-  /* ---------- 9 · Cierre ---------- */
-  { sec: 5, t: 20, center: true, kicker: 'SIRID Systems · GymGo', title: '', name: 'Cierre',
-    body: `<blockquote class="rv-1">Menos listas, menos papeles, menos cobros perdidos: <mark>todo tu gimnasio en GymGo</mark>.</blockquote>
-      <div class="stats rv-g">
-        <div class="card stat"><b data-count="14">14</b><span>días de prueba gratis</span></div>
-        <div class="card stat dk"><b>$<span data-count="699">699</span></b><span>al mes + IVA, desde</span></div>
-        <div class="card stat"><b data-count="4">4</b><span>herramientas en una plataforma</span></div></div>
-      <span class="next rv-1">${ic('play')}A continuación: demostración en vivo</span>`,
-    say: 'En resumen: GymGo cambia listas por un QR, papeles por una app y suposiciones por datos en tiempo real. Se contrata en minutos y se prueba gratis catorce días. Pero no queremos que nos crean por lo que dijimos: ahora se los vamos a mostrar funcionando.' },
+  /* ---------- 9 · Por qué GymGo y no herramientas sueltas ---------- */
+  { sec: 5, t: 40, kicker: 'Por qué GymGo', title: 'Herramientas sueltas contra <mark>una sola plataforma</mark>',
+    body: `<div class="cmp rv-1"><div class="h"></div><div class="h old">Hoy · herramientas sueltas</div><div class="h new">Con GymGo · una plataforma</div>
+        ${crow('qr', 'La entrada', 'Una lista y alguien que revisa a mano', 'Un QR que caduca y se valida al momento')}
+        ${crow('cash', 'Los cobros', 'Libreta y hoja de cálculo: el atraso se nota tarde', 'Cada pago en el panel; el vencido se detecta en la puerta')}
+        ${crow('dumbbell', 'El entrenamiento', 'Rutinas en papel o por mensaje', 'Rutinas en la app, con el avance de cada socio')}
+        ${crow('chart', 'Las decisiones', 'A ojo, al final del mes', 'Con los datos del día, en tiempo real')}
+        ${crow('lock', 'La información', 'Repartida en cuadernos, archivos y chats', 'En un solo lugar, y cada quien ve solo lo suyo')}</div>
+      <div class="bridge rv-1" style="margin-top:18px;padding:16px 28px"><p style="font-size:32px">Se captura una vez <mark>y sirve en todo el gimnasio.</mark></p><span class="go">${ic('check')}Un solo proveedor</span></div>`,
+    say: 'Llegados a este punto, quizá se pregunten: ¿por qué contratar GymGo si ya puedo administrar mi gimnasio con Excel, WhatsApp y una libreta?<br><br>La respuesta está en la integración.<br><br>Con herramientas independientes, cada proceso tiene su propia información y alguien debe encargarse de relacionarla.<br><br>Con GymGo, la administración, los accesos, los entrenamientos y los registros forman parte de un mismo ecosistema.<br><br>No estamos ofreciendo simplemente otra aplicación o un panel administrativo.<br><br>Estamos ofreciendo una solución integral para que el gimnasio trabaje de manera coordinada, desde la recepción hasta la administración.<br><br>Esa es nuestra principal ventaja.' },
 
-  /* ---------- 10 · Demostración: el recorrido de gymgo-integrador, con lista que se palomea con un clic ---------- */
-  { demo: true, t: 0, kicker: 'Demostración en vivo', title: 'Ahora, véanlo <mark>funcionando</mark>',
-    body: `<div class="dtop rv-1"><p class="sub" style="margin:0">Cuatro paradas: el mismo recorrido que haría tu gimnasio desde el primer día.</p>
-        <div class="dprog"><div class="pb"><i id="dpBar"></i></div><span><b id="dpN">0</b> de <b id="dpT">0</b> mostrados</span></div></div>
-      <div class="grid stations rv-g">
+  /* ---------- 10 · La inversión y el paso a la demostración ---------- */
+  { sec: 5, t: 45, kicker: 'La inversión', title: 'Todo tu gimnasio por <mark>unos $27 al día</mark>',
+    body: `<div class="inv rv-g">
+        <div class="card pl"><div class="vs">Plan Esencial · 1 sucursal</div><div class="amt">$<span data-count="699">699</span><em>/mes + IVA</em></div><div class="iva">$810.84 al mes con IVA · unos $27 al día</div>
+          ${li(['App para socios, entrenadores y recepción', 'Membresías, cobros y tienda', 'Acceso con QR desde la cámara de recepción'])}</div>
+        <div class="card pl dk"><div class="vs">Plan Pro · hasta 3 sucursales</div><div class="amt">$1,299<em>/mes + IVA</em></div><div class="iva">$1,506.84 al mes con IVA</div>
+          ${li(['Todo lo del plan Esencial', 'Conexión del lector en la puerta', 'Aforo en vivo y bitácora de accesos'])}</div>
+        <div class="card persp"><div class="vs">En perspectiva</div>
+          <div class="eq"><b>&lt;&#8202;2</b><span>El plan Esencial cuesta menos que <b>dos mensualidades</b> de un socio.</span></div>
+          <div class="eq"><b>&lt;&#8202;3</b><span>El plan Pro, menos que <b>tres</b>.</span></div>
+          <p class="fine">Ejemplo con la mensualidad de $650 de nuestro gimnasio de demostración y precios con IVA. Es una comparación de costo, no una promesa de ingresos.</p></div></div>
+      <div class="inv-foot rv-1"><div class="chips"><span class="chip g"><b>14 días</b> de prueba sin pagar</span><span class="chip">Pago anual: <b>2 meses de regalo</b></span><span class="chip">Cadenas: <b>a cotizar</b></span></div>
+        <span class="next">${ic('play')}A continuación: demostración en vivo</span></div>`,
+    say: 'Y finalmente, hablemos de inversión.<br><br>GymGo está diseñado para que tanto un gimnasio independiente como una operación con varias sucursales puedan encontrar una solución adecuada a sus necesidades.<br><br>Nuestro plan Esencial comienza en 699 pesos mensuales más IVA. Esto representa aproximadamente 27 pesos diarios con impuestos incluidos.<br><br>Para ponerlo en perspectiva, en nuestro gimnasio de demostración una mensualidad cuesta 650 pesos.<br><br>Es decir, el costo mensual de GymGo Esencial equivale aproximadamente a una mensualidad y cuarto de ese gimnasio.<br><br>Además, ofrecemos 14 días de prueba gratuita y beneficios para quienes prefieren contratar anualmente.<br><br>Queremos que la tecnología sea accesible para los gimnasios y que puedan comenzar a aprovechar sus beneficios sin realizar una inversión inicial elevada.<br><br>Pero no queremos quedarnos solamente con lo que les hemos contado.<br><br>Queremos que conozcan GymGo por ustedes mismos.' },
+
+  /* ---------- 11 · Demostración: las cuatro paradas con su acceso directo ---------- */
+  { demo: true, t: 0, kicker: 'Demostración en vivo', title: 'Ahora, véanlo <mark>funcionando</mark>', sub: 'Cuatro paradas: el mismo recorrido que haría tu gimnasio desde el primer día.',
+    body: `
+      <div class="grid stations solo rv-g">
         <div class="card stn"><div class="hd"><span class="ico">${ic('web')}</span><span class="n">01</span></div><div><h3>Sitio web</h3><div class="why">Así te contratas</div></div>
-          ${chk(['Conocer las soluciones y los planes', 'Registrar un gimnasio', `Confirmar el correo con un código ${lk('A.9.4.2')}`, 'Pagar el plan (simulado) y quedar activo'])}
           <a class="go-link" href="${CONFIG.urlSitio}" target="_blank" rel="noopener">Abrir el sitio ${ic('arrow')}</a></div>
         <div class="card stn"><div class="hd"><span class="ico">${ic('panel')}</span><span class="n">02</span></div><div><h3>Panel administrativo</h3><div class="why">Así diriges tu gimnasio</div></div>
-          ${chk(['Entrar con la cuenta recién creada', 'El inicio con la operación del día', 'Planes, inventario y equipo en un solo lugar'])}
           <a class="go-link" href="${CONFIG.urlPanel}" target="_blank" rel="noopener">Abrir el panel ${ic('arrow')}</a></div>
         <div class="card stn"><div class="hd"><span class="ico">${ic('movil')}</span><span class="n">03</span></div><div><h3>App móvil</h3><div class="why">Así trabaja tu equipo</div></div>
-          ${chk(['Socio: su rutina y su pase QR', 'Entrenador: sus clientes y crear una rutina', 'Recepción: escanear y cobrar', `Cambiar de perfil: cada quien ve lo suyo ${lk('A.9.4.1')}`])}
           <span class="go-link off">En el teléfono proyectado</span></div>
         <div class="card stn"><div class="hd"><span class="ico">${ic('lector')}</span><span class="n">04</span></div><div><h3>Control de acceso</h3><div class="why">Así entra tu socio</div></div>
-          ${chk(['El lector de la puerta lee el QR', 'Respaldo: la cámara de recepción', `La entrada aparece sola en el panel ${lk('A.12.4.1')}`, `Un QR vencido se rechaza con su motivo ${lk('A.14.1.3')}`])}
-          <a class="go-link" href="${CONFIG.urlPanel}" target="_blank" rel="noopener">Ver la bitácora ${ic('arrow')}</a></div></div>
-      <div class="dleg rv-1"><span class="lk">${ic('lock')}Control</span><span>Medida de seguridad que se comprueba en ese paso · un clic en cada punto lo marca como mostrado</span></div>`,
-    say: 'Orden. 1) Sitio: soluciones y planes, registrar un gimnasio, confirmar el correo con el código (señalar: inicio de sesión seguro), pago simulado y plan activo. 2) Panel administrativo con esa misma cuenta: el inicio del día, planes, inventario y equipo. 3) App en el teléfono proyectado: socio (rutina y QR), entrenador (clientes y crear rutina), recepción (escanear y cobrar); cambiar de perfil para mostrar que cada quien ve lo suyo. 4) Control de acceso con el panel abierto: el lector lee el QR (si el prototipo no responde, usar la cámara de recepción y decirlo), la entrada aparece sola en la bitácora, y un QR vencido se rechaza con su motivo. Palomear cada punto con un clic. Mostrar, no volver a explicar. Si algo falla, decirlo y pasar al siguiente punto; no simular una operación.' },
+          <a class="go-link" href="${CONFIG.urlPanel}" target="_blank" rel="noopener">Ver la bitácora ${ic('arrow')}</a></div></div>`,
+    say: 'A continuación, vamos a recorrer GymGo desde la perspectiva de quienes lo utilizan.<br><br>Primero veremos cómo un gimnasio puede conocer y contratar nuestra plataforma.<br><br>Después entraremos al panel administrativo para conocer las herramientas de gestión.<br><br>Continuaremos con la aplicación móvil, donde veremos las funciones disponibles para cada perfil.<br><br>Y finalmente, comprobaremos cómo funciona nuestro control de acceso y cómo se registra una entrada en la plataforma.<br><br>Los invitamos a conocer GymGo en funcionamiento.<br><br><b>Durante la demostración:</b> Sitio web: mostrar contratación y registro. · Dashboard: mostrar administración. · Aplicación: mostrar los perfiles y sus funciones. · IoT: validar un acceso y comprobar el registro en tiempo real.<br><br><i>Evitar volver a explicar lo que ya se dijo en la presentación. Aquí hay que demostrar.</i>' },
 
   { post: true, t: 0, center: true, cls: 'thanks', kicker: 'SIRID Systems', title: 'Gracias',
     body: `<p class="lead rv-1">GymGo: todo tu gimnasio en una sola plataforma. Quedamos atentos a sus preguntas.</p>
       <div class="chips rv-g">${CONFIG.equipo.map((n) => `<span class="chip">${n}</span>`).join('')}</div>
       <div class="chips rv-g" style="margin-top:14px"><span class="chip g"><b>14 días</b> de prueba gratis</span><span class="chip">Desde <b>$699</b> al mes + IVA</span></div>`,
-    say: 'Muchas gracias por su atención. Quedamos atentos a sus preguntas.' },
+    say: 'GymGo: un gimnasio mejor conectado, una administración más inteligente y una experiencia mejor para todos.<br><br>Somos SIRID Systems.<br><br>Muchas gracias por su atención. Estamos listos para responder sus preguntas.' },
 ];
 
 const clockFmt = (ms) => { const s = Math.abs(Math.ceil(ms / 1000)); return (ms < 0 ? '+' : '') + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
 /* ===== Estado y sincronización entre ventanas ===== */
 const PV = new URLSearchParams(location.search).has('presentador');
-const KEY = 'gymgo-venta-v2';
+const KEY = 'gymgo-lanzamiento-v3';
 const DEMO_I = SLIDES.findIndex((s) => s.demo);
-const fresh = () => ({ i: 0, run: false, base: 0, t0: 0 });
+// vid: 'idle' o 'play' (el video de apertura). d0: tiempo transcurrido al entrar a la demostración (su cronómetro de 5:00 cuenta desde ahí).
+const fresh = () => ({ i: 0, run: false, base: 0, t0: 0, vid: 'idle', d0: null });
 let state = fresh();
 const read = () => { try { const s = JSON.parse(localStorage.getItem(KEY)); return s && s.i >= 0 && s.i < SLIDES.length ? s : null; } catch { return null; } };
 state = read() ?? state;
@@ -682,15 +863,23 @@ function toggleTimer() {
   if (state.run) { state.base = elapsed(); state.run = false; } else { state.t0 = Date.now(); state.run = true; }
   commit();
 }
+const startClock = () => { if (!state.run && state.base === 0) { state.t0 = Date.now(); state.run = true; } };
 function show(n) {
   n = Math.max(0, Math.min(SLIDES.length - 1, n));
   if (n === state.i) return;
-  // El cronómetro arranca solo con el primer avance y sigue corriendo durante la demostración.
-  if (!state.run && state.base === 0 && state.i === 0 && n > 0) { state.t0 = Date.now(); state.run = true; }
+  // El cronómetro arranca con el video; si se salta el video, arranca con el primer avance.
+  if (n > state.i) startClock();
+  // La demostración tiene sus propios 5:00, que cuentan desde que se entra a ella por primera vez.
+  if (SLIDES[n].demo && state.d0 == null) state.d0 = elapsed();
+  if (n === 0) state.vid = 'idle';
   state.i = n;
   commit();
 }
-const go = (d) => show(state.i + d);
+function go(d) {
+  // En el video: el primer avance lo reproduce; el segundo lo salta.
+  if (d > 0 && SLIDES[state.i].cine === 'video' && state.vid !== 'play') { state.vid = 'play'; startClock(); commit(); return; }
+  show(state.i + d);
+}
 let resetArmed = 0;
 function reset() {
   if (Date.now() - resetArmed > 1500) { resetArmed = Date.now(); flash('Presiona R otra vez para reiniciar todo'); return; }
@@ -700,6 +889,8 @@ function reset() {
 /* ===== Construcción ===== */
 const $ = (id) => document.getElementById(id);
 const plain = (html) => html.replace(/<[^>]+>/g, '');
+// En la ventana del proyector, un video que quedó "reproduciendo" en otra sesión no arranca solo al recargar.
+if (!PV && state.vid === 'play' && state.i === 0) state.vid = 'idle';
 const cum = SLIDES.map((_, k) => SLIDES.slice(0, k + 1).reduce((a, s) => a + s.t, 0));
 const EXPO_T = cum[cum.length - 1];
 const ENF = { oferta: 'Lo que ofrecemos' };
@@ -708,11 +899,13 @@ const label = (s) => (s ? plain(s.title || '') || s.name || s.kicker : '');
 function build() {
   $('stage').innerHTML = SLIDES.map((s, k) => {
     const next = SLIDES[k + 1];
-    const pass = next?.demo ? '<span class="pass">Sigue: demostración en vivo →</span>' : `<span class="pg">${String(k + 1).padStart(2, '0')} / ${String(SLIDES.length).padStart(2, '0')}</span>`;
+    // El público ve el número a partir de la portada (01): el video es la 0 y la arquitectura queda como la 03.
+    const pass = next?.demo ? '<span class="pass">Sigue: demostración en vivo →</span>' : `<span class="pg">${String(k).padStart(2, '0')} / ${String(SLIDES.length - 1).padStart(2, '0')}</span>`;
+    if (s.cine) return `<section class="slide" id="s${k}" aria-hidden="true"></section>`;
     const head = s.kicker || s.title ? `<div class="s-head">${s.kicker ? `<div class="kick">${s.kicker}${s.enf ? `<span class="enf">${ENF[s.enf]}</span>` : ''}</div>` : ''}
         ${s.title ? `<h1>${s.title}</h1>` : ''}${s.sub ? `<p class="sub">${s.sub}</p>` : ''}</div>` : '';
     return `<section class="slide ${s.center ? 'center' : ''} ${s.cls || ''}" id="s${k}" aria-hidden="true">
-      ${s.center || k === 0 ? '' : `<span class="wm" aria-hidden="true">${String(k + 1).padStart(2, '0')}</span>`}
+      ${s.center ? '' : `<span class="wm" aria-hidden="true">${String(k).padStart(2, '0')}</span>`}
       ${head}<div class="s-body">${s.body}</div>
       <div class="foot"><span class="fb"><i>G</i>SIRID Systems · GymGo</span>${pass}</div></section>`;
   }).join('');
@@ -725,22 +918,25 @@ function build() {
       el.style.setProperty('--d', Math.min(n++, 16) * 75 + 'ms');
     });
   });
-  $('dpT').textContent = document.querySelectorAll('.demo-chk li').length;
   const track = $('track');
   SECCIONES.forEach((name, k) => {
     const el = document.createElement('div');
     el.className = 'seg'; el.id = 'seg' + k; el.textContent = name;
-    el.style.flex = SLIDES.filter((s) => s.sec === k).reduce((a, s) => a + s.t, 0);
+    // Cada sección mide al menos lo que su nombre (para que se lea completo) y crece según su tiempo previsto.
+    el.style.flex = `${SLIDES.filter((s) => s.sec === k).reduce((a, s) => a + s.t, 0)} 1 auto`;
     track.insertBefore(el, $('marker'));
   });
+  // La demostración va aparte, con sus 5:00.
   const d = document.createElement('div');
-  d.className = 'seg demo'; d.id = 'segDemo'; d.textContent = 'Demostración';
-  d.style.flex = Math.max(60, TOTAL - EXPO_T);
+  d.className = 'seg demo'; d.id = 'segDemo'; d.textContent = 'Demo · 5:00';
   track.appendChild(d);
+  $('heroTeam').textContent = CONFIG.equipo.join(' · ');
 }
 function fit() {
   const r = $('deck').getBoundingClientRect();
   $('stage').style.transform = `translate(-50%,-50%) scale(${Math.min(r.width / 1600, r.height / 840)})`;
+  // La portada usa el mismo encuadre que el video (object-fit: contain) para que el corte no se note.
+  $('hero').style.transform = `translate(-50%,-50%) scale(${Math.min(innerWidth / 1920, innerHeight / 1080)})`;
 }
 let flashTimer = 0;
 function flash(text) {
@@ -762,10 +958,50 @@ function countUp(root) {
   });
 }
 
+/* ===== Capa de cine: video, portada y encendido de la sala ===== */
+const vid = $('vid');
+let heroTimer = 0, wipeTimer = 0;
+function paintCine(prev) {
+  const c = SLIDES[state.i].cine || '';
+  const hero = $('hero'), cine = $('cine'), band = $('wipeband');
+  clearTimeout(heroTimer); clearTimeout(wipeTimer);
+  // Portada → diapositiva 2: la capa oscura se retira de izquierda a derecha detrás de una franja verde.
+  if (!c && prev >= 0 && SLIDES[prev]?.cine === 'hero' && state.i === prev + 1 && !still.matches && !PV) {
+    cine.classList.add('wipe-start'); band.classList.remove('run'); void cine.offsetWidth;
+    cine.classList.remove('wipe-start'); cine.classList.add('wipe'); band.classList.add('run');
+    wipeTimer = setTimeout(() => { document.body.classList.remove('m-cine', 'm-video', 'm-hero'); cine.classList.remove('wipe'); band.classList.remove('run'); }, 1050);
+    return;
+  }
+  cine.classList.remove('wipe', 'wipe-start'); band.classList.remove('run');
+  document.body.classList.toggle('m-cine', !!c);
+  document.body.classList.toggle('m-video', c === 'video');
+  document.body.classList.toggle('m-hero', c === 'hero');
+  if (c === 'hero') {
+    // Viniendo del video, la portada empieza idéntica a su último cuadro y luego se acomoda.
+    if (prev === state.i - 1 && SLIDES[prev]?.cine === 'video') { hero.classList.remove('go'); heroTimer = setTimeout(() => hero.classList.add('go'), 900); }
+    else hero.classList.add('go');
+  }
+}
+// Solo la ventana del proyector reproduce el video.
+function syncVideo() {
+  if (PV) return;
+  const onVid = SLIDES[state.i].cine === 'video';
+  if (!onVid) { if (!vid.paused) vid.pause(); return; }
+  if (state.vid === 'play') {
+    if (vid.paused && !vid.ended) vid.play().catch(() => flash('Haz clic en esta pantalla para reproducir el video con sonido'));
+  } else {
+    if (!vid.paused) vid.pause();
+    if (vid.currentTime > 0) vid.currentTime = 0;
+  }
+}
+vid.addEventListener('ended', () => { if (!PV && SLIDES[state.i].cine === 'video') show(state.i + 1); });
+$('cine').addEventListener('click', () => { if (SLIDES[state.i].cine === 'video') { if (state.vid !== 'play') go(1); else if (vid.paused) vid.play().catch(() => {}); } });
+
 /* ===== Pintado ===== */
 let painted = -1;
 function paint() {
   const s = SLIDES[state.i], next = SLIDES[state.i + 1], prev = painted;
+  paintCine(prev);
   $('stage').style.setProperty('--dir', prev === -1 || state.i >= prev ? 1 : -1);
   document.querySelectorAll('.slide').forEach((el, k) => {
     el.classList.toggle('on', k === state.i);
@@ -778,7 +1014,7 @@ function paint() {
   $('pvTitle').textContent = label(s);
   $('pvSay').innerHTML = s.say;
   $('pvPass').classList.toggle('on', !!next?.demo);
-  $('pvPass').textContent = next?.demo ? 'Al avanzar empieza la demostración: usa el tiempo que quede de los 10 minutos.' : '';
+  $('pvPass').textContent = next?.demo ? 'Al avanzar empieza la demostración, con su propio cronómetro de 5:00.' : '';
   $('pvNext').textContent = next ? label(next) : 'Fin de la presentación';
   const faltan = SLIDES.length - 1 - state.i;
   $('pvCount').textContent = `diapositiva ${state.i + 1} de ${SLIDES.length}, ` + (faltan === 0 ? 'es la última' : faltan === 1 ? 'falta 1' : `faltan ${faltan}`);
@@ -790,16 +1026,32 @@ function paint() {
   painted = state.i;
 }
 
+// Posición del marcador: avanza dentro del segmento de la sección según el tiempo previsto de esa sección.
+function markerX(demoOn, demoMs) {
+  const sd = $('segDemo');
+  if (demoOn) return sd.offsetLeft + sd.offsetWidth * Math.min(1, demoMs / (DEMO_T * 1000));
+  let e = elapsed() / 1000, last = null;
+  for (let k = 0; k < SECCIONES.length; k++) {
+    const dur = SLIDES.filter((s) => s.sec === k).reduce((a, s) => a + s.t, 0), el = $('seg' + k);
+    last = el;
+    if (e <= dur) return el.offsetLeft + el.offsetWidth * (e / dur);
+    e -= dur;
+  }
+  return last.offsetLeft + last.offsetWidth;
+}
 function tick() {
   const s = SLIDES[state.i];
-  const left = TOTAL * 1000 - elapsed();
-  const tone = left <= 30000 ? 'danger' : left <= 120000 ? 'warn' : '';
+  // Dos cronómetros: 10:00 para el video y la exposición; 5:00 para la demostración, desde que empieza.
+  const demoOn = inDemo() && state.d0 != null;
+  const demoMs = demoOn ? elapsed() - state.d0 : 0;
+  const left = demoOn ? DEMO_T * 1000 - demoMs : TOTAL * 1000 - elapsed();
+  const tone = left <= 30000 ? 'danger' : left <= (demoOn ? 60000 : 120000) ? 'warn' : '';
   $('ckT').textContent = $('pvClockT').textContent = clockFmt(left);
+  $('ck').querySelector('small').textContent = $('pvClock').querySelector('small').textContent = demoOn ? 'DEMOSTRACIÓN' : 'TIEMPO';
   $('ck').className = 'clock act ' + tone + (state.run ? ' run' : '');
   $('pvClock').className = 'pv-clock ' + tone;
   $('bPlay').textContent = state.run ? '⏸' : '▶';
-  const track = $('track');
-  $('marker').style.left = track.offsetWidth * Math.min(1, elapsed() / (TOTAL * 1000)) + 'px';
+  $('marker').style.left = markerX(demoOn, demoMs) + 'px';
   // Ritmo: compara el tiempo transcurrido con el previsto para la diapositiva actual.
   const pace = $('pvPace');
   if (inDemo()) {
@@ -813,7 +1065,7 @@ function tick() {
     else { pace.className = 'pace ok'; pace.textContent = state.run ? 'En tiempo' : 'En pausa'; }
   }
 }
-function render() { if (painted !== state.i) paint(); tick(); }
+function render() { if (painted !== state.i) paint(); tick(); syncVideo(); }
 
 /* ===== Controles ===== */
 document.addEventListener('keydown', (e) => {

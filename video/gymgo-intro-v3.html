@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GymGo · Intro v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Versión 3 · "Las preguntas de todos los días". 52 s a 1920 × 1080.
+   El video no explica: pregunta y promete. La presentación responde.
+   Todo sale de render(t): la vista previa y la exportación cuadro por cuadro dan lo mismo. ?render oculta los controles.
+   El último cuadro (48 – 52 s) es idéntico a la portada de la presentación (corte por coincidencia). */
+:root{
+  --surface:#FFFFFF; --border:#E0E6E2; --border-strong:#C7D0CB;
+  --text:#0E1512; --text2:#4B5751; --text3:#7A8580;
+  --volt:#12E07B; --volt-text:#06783C; --volt-dim:#E8F9F0; --ink:#04120A; --danger:#CF3A2E;
+  --display:'Barlow Condensed','Arial Narrow',sans-serif; --body:'Barlow',system-ui,sans-serif;
+  --shadow:0 2px 6px rgba(0,0,0,.2),0 40px 90px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;margin:-540px 0 0 -960px;transform-origin:center;background:#000;
+  overflow:hidden;font-family:var(--body);color:#fff}
+body.render #stage{left:0;top:0;margin:0}
+.L{position:absolute;inset:0;overflow:hidden}
+.a{position:absolute;will-change:transform,opacity,filter}
+.disp{font-family:var(--display);font-weight:700;line-height:.95}
+.tl{transform-origin:0 0}
+.sheen{filter:brightness(2.6) saturate(.35) drop-shadow(0 0 12px rgba(200,255,225,.8));opacity:0}
+
+/* ===== A · Las preguntas ===== */
+#sA{background:radial-gradient(ellipse at 50% 55%,#0B110E 0%,#030504 70%);perspective:1100px}
+.q{left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;
+  letter-spacing:.01em;color:#E9EFEC;white-space:nowrap;transform-style:preserve-3d}
+.echo{font-family:var(--display);font-weight:700;color:#C9D3CE;white-space:nowrap;transform-origin:50% 50%}
+#clk{left:110px;top:92px;display:flex;align-items:center;gap:16px;font-size:26px;font-weight:700;letter-spacing:.3em;color:rgba(233,239,236,.6)}
+#clk i{width:10px;height:10px;border-radius:50%;background:#12E07B;box-shadow:0 0 12px #12E07B}
+#clk b{font-family:var(--display);font-size:40px;letter-spacing:.06em;color:#E9EFEC;font-variant-numeric:tabular-nums}
+#clkBar{left:110px;top:150px;width:300px;height:2px;background:rgba(255,255,255,.12)}
+#clkBar i{display:block;height:100%;width:0;background:#12E07B}
+
+/* ===== B y C · La línea y el logo ===== */
+#sB{background:radial-gradient(ellipse at 50% 42%,#062A17 0%,#020805 55%,#000 100%)}
+#floor{left:-1200px;right:-1200px;top:560px;height:1400px;transform-origin:50% 0;transform:perspective(700px) rotateX(78deg);
+  background-image:linear-gradient(rgba(18,224,123,.35) 2px,transparent 2px),linear-gradient(90deg,rgba(18,224,123,.35) 2px,transparent 2px);
+  background-size:120px 120px;-webkit-mask-image:linear-gradient(#000 0%,transparent 70%);mask-image:linear-gradient(#000,transparent 70%)}
+#horizon{left:0;right:0;top:540px;height:260px;margin-top:-130px;background:radial-gradient(ellipse at 50% 50%,rgba(18,224,123,.35),transparent 65%);filter:blur(10px)}
+#lineSvg{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+#shock{left:0;top:0;width:1920px;height:1080px}
+
+/* ===== D · Destellos ===== */
+#sD{background:radial-gradient(ellipse at 62% 50%,#0B2518 0%,#04100A 50%,#000 100%)}
+#trackD{left:0;top:0;width:7680px;height:1080px}
+.shot{position:absolute;top:0;width:1920px;height:1080px;perspective:1700px;overflow:hidden}
+.verb{position:absolute;left:150px;top:395px;height:260px;overflow:hidden;font-family:var(--display);font-weight:800;font-size:250px;line-height:1;letter-spacing:-.005em;color:#fff}
+.verb span{display:block}
+.verb em{font-style:normal;color:#12E07B}
+.phone{border:11px solid #0E1512;border-radius:52px;overflow:hidden;background:#0E1512;position:absolute;aspect-ratio:1080/2400;
+  box-shadow:0 0 0 1.5px rgba(255,255,255,.08),0 50px 110px rgba(0,0,0,.7)}
+.phone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.glow{border-radius:50%;filter:blur(40px)}
+#qrScan{position:absolute;left:21.7%;top:25.2%;width:56.6%;height:25.5%;overflow:hidden}
+#qrLine{position:absolute;left:-6%;width:112%;height:5px;background:#5CF5A8;box-shadow:0 0 22px 8px rgba(18,224,123,.75)}
+#qrOk{position:absolute;inset:0;background:rgba(18,224,123,.28)}
+#okBadge{width:150px;height:150px;border-radius:50%;background:#12E07B;color:#04120A;display:grid;place-items:center;font-size:84px;font-weight:800;
+  box-shadow:0 0 0 14px rgba(18,224,123,.18),0 0 60px rgba(18,224,123,.7)}
+.plan{width:660px;border-radius:28px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow);padding:32px 36px;color:var(--text)}
+.plan h4{font-family:var(--display);font-size:56px;line-height:1}
+.plan .who{font-size:23px;color:var(--text3);font-weight:600;margin-top:6px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin:26px 0 22px}
+.days span{height:68px;border-radius:14px;display:grid;place-items:center;font-size:22px;font-weight:700;background:#EFF3F1;color:#9AA5A0;border:2px solid transparent}
+.days span.on{background:var(--volt-dim);color:var(--volt-text);border-color:var(--volt)}
+.ex{display:flex;align-items:center;gap:16px;padding:14px 4px;border-top:1px solid var(--border);font-size:28px;font-weight:600;position:relative}
+.ex i{width:42px;height:42px;border-radius:11px;background:var(--volt-dim);color:var(--volt-text);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:20px}
+.paid{width:600px;border-radius:26px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow);padding:26px 30px;display:grid;grid-template-columns:72px 1fr auto;gap:4px 20px;align-items:center;color:var(--text)}
+.paid .av{grid-row:span 2;width:72px;height:72px;border-radius:50%;background:var(--volt-dim);color:var(--volt-text);display:grid;place-items:center;font-weight:800;font-size:30px}
+.paid b{font-size:34px}
+.paid span{font-size:24px;color:var(--text2);font-weight:500}
+.paid .amt{grid-row:span 2;text-align:right}
+.paid .amt strong{display:block;font-family:var(--display);font-size:54px;line-height:1}
+.chipg{display:inline-block;font-size:20px;font-weight:800;letter-spacing:.08em;color:var(--ink);background:var(--volt);border-radius:30px;padding:4px 14px;margin-top:6px}
+.browser{border-radius:20px;overflow:hidden;background:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.browser .bar{height:44px;flex:none;display:flex;align-items:center;gap:9px;padding:0 18px;background:#EDF1EF;border-bottom:1px solid var(--border)}
+.browser .bar i{width:13px;height:13px;border-radius:50%;background:#D3DAD6}
+.browser .view{position:relative;flex:1;overflow:hidden}
+.browser .view img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left}
+.counter{width:400px;border-radius:26px;padding:24px 32px;background:linear-gradient(160deg,rgba(10,30,20,.92),rgba(4,18,10,.96));border:1.5px solid rgba(18,224,123,.55);
+  box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 60px rgba(18,224,123,.15)}
+.counter small{display:block;font-size:20px;font-weight:700;letter-spacing:.18em;color:var(--volt);text-transform:uppercase}
+.counter .row{display:flex;align-items:flex-end;gap:12px;font-family:var(--display);font-weight:700}
+.roll{height:130px;overflow:hidden;font-size:130px;line-height:130px}
+.counter .row span{font-size:48px;color:#8FA098;padding-bottom:16px}
+.toast{width:520px;border-radius:22px;background:#fff;box-shadow:var(--shadow);padding:18px 24px;display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:center;color:var(--text)}
+.toast .dot{grid-row:span 2;width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:30px;font-weight:800;background:var(--volt-dim);color:var(--volt-text)}
+.toast b{font-size:29px}
+.toast > span{font-size:22px;color:var(--text2);font-weight:500}
+
+/* ===== E · Conectado ===== */
+#sE{background:radial-gradient(circle at 50% 45%,#0D4D2B 0%,#05261A 50%,#010D07 100%)}
+.mini{width:200px;height:200px;border-radius:30px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.04));border:1.5px solid rgba(18,224,123,.5);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;box-shadow:0 0 50px rgba(18,224,123,.15)}
+.mini svg{width:84px;height:84px;fill:none;stroke:#12E07B;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.mini span{font-size:24px;font-weight:700;color:#fff;letter-spacing:.04em}
+#tE{left:0;right:0;top:560px;text-align:center;font-size:124px}
+#tE div{display:block}
+
+/* ===== F · Firma (cuadro final = portada de la presentación) ===== */
+#sF{background:#000}
+#glowF{left:360px;top:-70px;width:1200px;height:1000px;background:radial-gradient(circle at 50% 50%,rgba(18,224,123,.32),rgba(18,224,123,.08) 40%,transparent 68%)}
+#firm{left:0;right:0;top:772px;display:flex;justify-content:center;align-items:center;gap:26px}
+#firm small{font-size:21px;font-weight:700;letter-spacing:.26em;color:rgba(255,255,255,.55)}
+
+/* ===== Capas globales ===== */
+#fx,#grain{position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none}
+#grain{mix-blend-mode:overlay;opacity:.09}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.55) 100%)}
+#flash{position:absolute;inset:0;pointer-events:none;opacity:0}
+
+.ctrl{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:14px;padding:10px 16px;background:rgba(16,20,18,.92);color:#E8EEEA;font:14px system-ui;z-index:5}
+.ctrl button{background:#12E07B;color:#04120A;border:0;border-radius:8px;padding:7px 16px;font-weight:700;cursor:pointer}
+.ctrl input{flex:1;accent-color:#12E07B}
+.ctrl span{font-variant-numeric:tabular-nums;min-width:90px;text-align:right}
+body.render .ctrl{display:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <filter id="mb" x="-20%" y="-5%" width="140%" height="110%"><feGaussianBlur id="mbg" stdDeviation="0 0"/></filter>
+</defs></svg>
+
+<div id="stage">
+  <!-- A · Las preguntas de todos los días (0 – 10.4) -->
+  <div class="L" id="sA">
+    <div id="echoes"></div>
+    <div class="a q" id="q1" style="font-size:200px">¿Quién entró?</div>
+    <div class="a q" id="q2" style="font-size:200px">¿Quién pagó?</div>
+    <div class="a q" id="q3" style="font-size:190px">¿Quién no volvió?</div>
+    <div class="a q" id="q4" style="font-size:150px">¿Cuánta gente hay ahora?</div>
+    <div class="a" id="clk"><i></i><span>LUNES</span><b id="clkT">06:00</b></div>
+    <div class="a" id="clkBar"><i id="clkFill"></i></div>
+  </div>
+
+  <!-- B · La línea se enciende (10.4 – 13.3) y C · el logo (13.25 – 19) -->
+  <div class="L" id="sB">
+    <div class="a" id="horizon"></div>
+    <div class="a" id="floor"></div>
+    <svg class="a" id="shock" viewBox="0 0 1920 1080"><circle id="wv0" cx="960" cy="405" r="0" fill="none" stroke="#12E07B"/><circle id="wv1" cx="960" cy="405" r="0" fill="none" stroke="#12E07B"/></svg>
+    <svg class="a" id="lineSvg" viewBox="0 0 1920 1080">
+      <g id="lineCam">
+        <path id="ln" d="" fill="none" stroke="#5CF5A8" stroke-width="7" stroke-linecap="round" style="filter:drop-shadow(0 0 10px #12E07B) drop-shadow(0 0 26px #12E07B)"/>
+        <circle id="lnHead" r="9" fill="#EFFFF6" style="filter:drop-shadow(0 0 14px #12E07B) drop-shadow(0 0 30px #12E07B)"/>
+      </g>
+    </svg>
+    <div class="a tl" id="logoC" style="left:0;top:0;width:790px;height:770px">
+      <div class="a tl" id="embBox" style="left:115px;top:0;width:560px;height:510px">
+        <div id="embGlow" style="position:absolute;left:30px;top:5px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(18,224,123,.45),transparent 65%);filter:blur(30px)"></div>
+        <img id="emb" src="assets/logo/emblema.png" alt="" style="position:absolute;left:0;top:0;width:560px;height:510px">
+      </div>
+      <div class="a tl" id="letrasBox" style="left:0;top:600px;width:790px;height:150px;overflow:hidden">
+        <img id="letras" src="assets/logo/letras.png" alt="GymGo" style="position:absolute;left:0;top:0;width:790px;height:150px">
+        <img class="sheen" id="sheenC" src="assets/logo/letras.png" alt="" style="position:absolute;left:0;top:0;width:790px;height:150px">
+      </div>
+    </div>
+  </div>
+
+  <!-- D · Destellos (18.8 – 35.2) -->
+  <div class="L" id="sD">
+    <div class="a" id="trackD">
+      <div class="shot" style="left:0">
+        <div class="a glow" id="g1" style="left:880px;top:120px;width:820px;height:820px;background:radial-gradient(circle,rgba(18,224,123,.5),transparent 66%)"></div>
+        <div class="a phone" id="ph1" style="left:926px;top:-51px;height:1500px;transform-origin:50% 38%"><img src="assets/app/cliente-qr.png" alt="">
+          <div id="qrScan"><div id="qrOk"></div><div id="qrLine"></div></div></div>
+        <svg class="a" viewBox="0 0 1920 1080" style="left:0;top:0;width:1920px;height:1080px"><circle id="ok1" cx="1270" cy="520" r="0" fill="none" stroke="#12E07B" stroke-width="6"/><circle id="ok2" cx="1270" cy="520" r="0" fill="none" stroke="#12E07B" stroke-width="3"/></svg>
+        <div class="a" id="okBadge" style="left:1500px;top:250px">✓</div>
+        <div class="verb" id="v1"><span>Entra<em>.</em></span></div>
+      </div>
+      <div class="shot" style="left:1920px">
+        <div class="a phone" id="ph2" style="left:1380px;top:110px;height:900px"><img src="assets/app/cliente-rutinas.png" alt=""></div>
+        <div class="a plan" id="plan" style="left:1000px;top:250px">
+          <h4>Fuerza tren superior</h4><div class="who">Rutina de Ana López</div>
+          <div class="days"><span id="d0">Lun</span><span>Mar</span><span id="d2">Mié</span><span>Jue</span><span id="d4">Vie</span><span>Sáb</span><span>Dom</span></div>
+          <div class="ex" id="e1"><i>1</i>Press de banca</div>
+          <div class="ex" id="e2"><i>2</i>Remo con barra</div>
+          <div class="ex" id="e3"><i>3</i>Press militar</div>
+        </div>
+        <div class="verb" id="v2"><span>Entrena<em>.</em></span></div>
+      </div>
+      <div class="shot" style="left:3840px">
+        <div class="a phone" id="ph3" style="left:1390px;top:110px;height:900px"><img src="assets/app/recepcion-caja.png" alt=""></div>
+        <div class="a paid" id="paid" style="left:1010px;top:420px"><div class="av">V</div><b>Valeria</b><div class="amt"><strong>$650.00</strong><span class="chipg" id="paidChip">PAGADO</span></div><span>Membresía mensual</span></div>
+        <div class="verb" id="v3"><span>Cobra<em>.</em></span></div>
+      </div>
+      <div class="shot" style="left:5760px">
+        <div class="a browser" id="br4" style="left:930px;top:170px;width:1150px;height:720px"><div class="bar"><i></i><i></i><i></i></div><div class="view"><img src="assets/panel-aforo.png" alt=""></div></div>
+        <div class="a counter" id="cnt" style="left:1130px;top:300px"><small>Dentro ahora</small><div class="row"><div class="roll"><div id="rollIn"><div>23</div><div style="color:#12E07B">24</div></div></div><span>/ 80</span></div></div>
+        <div class="a toast" id="toIn" style="left:1300px;top:580px"><div class="dot">→</div><b>Ana López entró</b><span>Fuerza Gym Centro · 7:02 a.m.</span></div>
+        <div class="verb" id="v4"><span>Decide<em>.</em></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E · Todo tu gimnasio. Conectado. (34.9 – 44.1) -->
+  <div class="L" id="sE">
+    <svg class="a" viewBox="0 0 1920 1080" style="left:0;top:0;width:1920px;height:1080px"><line id="bus" x1="570" y1="330" x2="1350" y2="330" stroke="#12E07B" stroke-width="3" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="filter:drop-shadow(0 0 8px #12E07B)"/><circle id="busDot" r="8" cy="330" fill="#E8FFF2" style="filter:drop-shadow(0 0 10px #12E07B)"/></svg>
+    <div class="a mini" id="m1" style="left:470px;top:230px"><svg viewBox="0 0 48 48"><path d="M8 8h12v12H8zM28 8h12v12H28zM8 28h12v12H8z"/><path d="M28 28h5v5h-5zM35 35h5v5h-5zM35 28h5M28 37v3"/></svg><span>Entra</span></div>
+    <div class="a mini" id="m2" style="left:730px;top:230px"><svg viewBox="0 0 48 48"><path d="M6 19v10M11 15v18M37 15v18M42 19v10M11 24h26"/></svg><span>Entrena</span></div>
+    <div class="a mini" id="m3" style="left:990px;top:230px"><svg viewBox="0 0 48 48"><rect x="5" y="13" width="38" height="22" rx="4"/><circle cx="24" cy="24" r="5"/><path d="M11 19v10M37 19v10"/></svg><span>Cobra</span></div>
+    <div class="a mini" id="m4" style="left:1250px;top:230px"><svg viewBox="0 0 48 48"><path d="M7 41h34M12 34V24M20 34V14M28 34v-8M36 34V9"/></svg><span>Decide</span></div>
+    <div class="a disp" id="tE"><div id="tEa">Todo tu gimnasio.</div><div id="tEb" style="color:#12E07B">Conectado.</div></div>
+  </div>
+
+  <!-- F · Firma (45 – 52). Este cuadro final lo replica la portada de la presentación. -->
+  <div class="L" id="sF">
+    <div class="a" id="glowF"></div>
+    <div class="a tl" id="logoF" style="left:0;top:0;width:820px;height:700px">
+      <img src="assets/logo/completo.png" alt="GymGo" style="position:absolute;inset:0;width:820px;height:700px">
+      <img class="sheen" id="sheenF" src="assets/logo/completo.png" alt="" style="position:absolute;inset:0;width:820px;height:700px">
+    </div>
+    <div class="a" id="firm"><small>UN PRODUCTO DE</small><img src="assets/logo/sirid.png" alt="SIRID Systems" style="height:96px"></div>
+  </div>
+
+  <canvas id="fx" width="1920" height="1080"></canvas>
+  <canvas id="grain" width="480" height="270"></canvas>
+  <div id="vig"></div>
+  <div id="flash"></div>
+</div>
+
+<div class="ctrl"><button id="play">▶ Reproducir</button><input id="seek" type="range" min="0" max="52" step="0.01" value="0"><span id="time">0.0 s</span></div>
+<audio id="mix" src="salida/gymgo-intro-v3-audio.wav" preload="auto"></audio>
+
+<script>
+const T = 52;
+window.T = T;
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (p) => 1 - Math.pow(1 - p, 3);
+const ease5 = (p) => 1 - Math.pow(1 - p, 5);
+const easeIn = (p) => p * p * p;
+const easeIO = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+const back = (p) => { const c = 1.6; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+const prog = (t, a, d) => clamp((t - a) / d);
+const lerp = (a, b, p) => a + (b - a) * p;
+const win = (t, a, b) => t >= a && t < b;
+const vis = (t, a, b, din = 0.6, dout = 0.45) => (t < a || t > b + dout ? 0 : ease(prog(t, a, din)) * (1 - ease(prog(t, b, dout))));
+const gauss = (t, c, w) => Math.exp(-Math.pow((t - c) / w, 2));
+function st(el, { o = 1, x = 0, y = 0, z = 0, s = 1, rx = 0, ry = 0, rz = 0, blur = 0 } = {}) {
+  el.style.opacity = o;
+  el.style.visibility = o <= 0.001 ? 'hidden' : 'visible';
+  el.style.transform = `translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;
+  el.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
+}
+const band = (p) => { const c = lerp(-25, 125, easeIO(p)); return `polygon(${c - 4}% 0, ${c + 9}% 0, ${c + 1}% 100%, ${c - 12}% 100%)`; };
+const show = (el, on) => { el.style.display = on ? 'block' : 'none'; };
+const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
+
+/* ===== Marcas de tiempo (todas ligadas a la música) ===== */
+const CUT = 10.4;       // corte a negro: la música se detiene
+const DROP = 13.25;     // regresa la orquesta: el emblema se cierra
+const SHOTS = [18.9, 22.9, 26.9, 30.9]; // Entra · Entrena · Cobra · Decide
+const WHIP = [22.65, 26.65, 30.65];
+const E0 = 34.9;        // Todo tu gimnasio. Conectado.
+const DARK = 44.1;      // silencio en negro
+const HIT = 45.05;      // golpe final de la orquesta y el logotipo
+const STILL = 48.0;     // desde aquí el cuadro queda fijo (igual a la portada)
+
+/* ===== Ecos de las preguntas (7.4 – 10.4) ===== */
+const QTXT = ['¿Quién entró?', '¿Quién pagó?', '¿Quién no volvió?', '¿Cuánta gente hay ahora?', '¿Quién debe?', '¿A qué hora se llena?'];
+const ECHO = Array.from({ length: 22 }, (_, i) => {
+  const p = i / 22;
+  return { txt: QTXT[i % QTXT.length], a: 7.4 + 2.85 * (1 - Math.pow(1 - p, 1.7)), x: (rnd(i, 1) - 0.5) * 1500, y: (rnd(i, 2) - 0.5) * 860,
+    z: -300 - rnd(i, 3) * 900, size: 60 + rnd(i, 4) * 90, rz: (rnd(i, 5) - 0.5) * 8 };
+});
+$('echoes').innerHTML = ECHO.map((e, i) => `<div class="a echo" id="ec${i}" style="left:960px;top:540px;font-size:${e.size.toFixed(0)}px">${e.txt}</div>`).join('');
+
+/* ===== Línea → aro del emblema ===== */
+// Centro del aro en emblema.png: (275, 247), radio 238. El logo C se dibuja a escala LK con el aro en (960, 405).
+const LK = 0.8;
+const C_BOX = { x: 960 - (115 + 275) * LK, y: 405 - 247 * LK };
+const RING = { cx: 960, cy: 405, r: 238 * LK };
+const LINE_Y = RING.cy + RING.r, LINE_START = -1400;
+$('ln').setAttribute('d', `M ${LINE_START} ${LINE_Y} L ${RING.cx} ${LINE_Y} A ${RING.r} ${RING.r} 0 1 0 ${RING.cx - 0.01} ${LINE_Y}`);
+const LN_STRAIGHT = RING.cx - LINE_START, LN_TOTAL = $('ln').getTotalLength();
+
+/* ===== Partículas y grano (deterministas) ===== */
+const PART = Array.from({ length: 90 }, (_, i) => ({ x: rnd(i, 1) * 1920, y: rnd(i, 2) * 1080, z: 0.3 + rnd(i, 3) * 0.7, sp: 8 + rnd(i, 4) * 22, ph: rnd(i, 5) * 6.28 }));
+const fx = $('fx').getContext('2d');
+const grainTiles = [];
+(() => {
+  const g = $('grain').getContext('2d');
+  for (let k = 0; k < 6; k++) {
+    const img = g.createImageData(480, 270);
+    let s = 1234 + k * 999;
+    for (let i = 0; i < img.data.length; i += 4) { s = (s * 16807) % 2147483647; const v = s & 255; img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255; }
+    grainTiles.push(img);
+  }
+})();
+
+/* ===== Audio (lo genera render-v3.js) =====
+   Música: "We Will Get It" (Eugenio Mininni, Mixkit Stock Music Free License), editada en tres tramos:
+   A = 3.0 – 13.4 s de la pista (crece desde el silencio) · B = 181.0 – 214.6 s (cola en silencio y regreso orquestal en 183.85)
+   C = 176.85 – 183.85 s (golpe orquestal y su resonancia natural) colocado en 45.0 s. */
+window.MUSIC_EDIT = { file: 'assets/musica/we-will-get-it-mixkit.mp3',
+  parts: [{ from: 3.0, to: 13.4, at: 0, fin: 0.3, fout: 0.05 }, { from: 181.0, to: 214.6, at: CUT, fin: 0, fout: 0.8 }, { from: 176.85, to: 183.85, at: 45.0, fin: 0.02, fout: 2.2 }] };
+window.AUDIO_CUES = [
+  // A · reloj que se acelera y cada pregunta
+  ...Array.from({ length: 26 }, (_, i) => { const p = i / 26; return ['tick', 0.5 + 9.7 * (1 - Math.pow(1 - p, 1.5)), 0.07 + p * 0.08]; }),
+  ['whoosh', 0.35, 0.3, { dur: 0.55, dir: 1 }], ['hit', 0.55, 0.32],
+  ['whoosh', 2.35, 0.3, { dur: 0.55, dir: -1 }], ['hit', 2.55, 0.36],
+  ['whoosh', 4.25, 0.32, { dur: 0.55, dir: 1 }], ['hit', 4.45, 0.4],
+  ['whoosh', 6.05, 0.34, { dur: 0.55, dir: -1 }], ['hit', 6.25, 0.44],
+  ['riser', 7.4, 0.22, { to: CUT - 0.02 }],
+  // B · la línea y el regreso de la orquesta
+  ['whoosh', 11.2, 0.3, { dur: 1.3, dir: 1 }], ['riser', 11.9, 0.26, { to: DROP - 0.03 }], ['impact', DROP, 0.5], ['glint', DROP + 0.05, 0.12], ['glint', 14.65, 0.16],
+  // D · destellos
+  ['whoosh', 18.45, 0.4, { dur: 0.7, dir: 1 }], ['hit', 18.95, 0.28],
+  ['beep', 20.3, 0.16], ['beep', 20.65, 0.16], ['confirm', 21.15, 0.3],
+  ['whoosh', 22.55, 0.42, { dur: 0.6, dir: -1 }], ['tick', 23.7, 0.13], ['tick', 24.0, 0.13], ['tick', 24.3, 0.13], ['blip', 24.6, 0.14, { f: 1250, pan: 0.3 }],
+  ['whoosh', 26.55, 0.42, { dur: 0.6, dir: -1 }], ['blip', 28.35, 0.24, { f: 1700, pan: 0.3 }],
+  ['whoosh', 30.55, 0.42, { dur: 0.6, dir: -1 }], ['tick', 32.3, 0.14], ['blip', 32.75, 0.2, { f: 1500, pan: 0.4 }],
+  // E · conectado
+  ['whoosh', 34.75, 0.5, { dur: 0.8, dir: 1 }], ['hit', 36.6, 0.3], ['hit', 37.7, 0.34],
+  ['suck', 41.7, 0.36, { to: DARK - 0.05 }],
+  // F · firma
+  ['impact', HIT, 0.35], ['glint', 46.05, 0.16],
+];
+
+function render(t) {
+  /* ---------- A · Las preguntas (0 – 10.4) ---------- */
+  const onA = t < CUT;
+  show($('sA'), onA);
+  if (onA) {
+    const Q = [
+      { id: 'q1', a: 0.5, from: { x: -1300, z: 0, ry: 35 }, rest: { x: -520, y: -300, z: -900 } },
+      { id: 'q2', a: 2.5, from: { x: 0, z: 1200, ry: 0 }, rest: { x: 560, y: 290, z: -1000 } },
+      { id: 'q3', a: 4.4, from: { x: 1500, z: 0, ry: -35 }, rest: { x: -480, y: 330, z: -950 } },
+      { id: 'q4', a: 6.2, from: { x: 0, z: -1600, ry: 0 }, rest: { x: 540, y: -320, z: -900 } },
+    ];
+    Q.forEach((q, k) => {
+      const pin = ease5(prog(t, q.a, 0.55));
+      const next = k < 3 ? Q[k + 1].a : 7.6;
+      const pr = easeIO(prog(t, next - 0.3, 0.7));
+      let x = lerp(q.from.x, 0, pin), z = lerp(q.from.z, 0, pin), ry = lerp(q.from.ry, 0, pin), y = 0;
+      x = lerp(x, q.rest.x, pr) + pr * Math.sin(t * 0.7 + k) * 30; y = lerp(0, q.rest.y, pr); z = lerp(z, q.rest.z, pr);
+      // Al final, todas avanzan hacia la cámara entre los ecos
+      const push = easeIn(prog(t, 8.6, 1.8));
+      z += push * 700;
+      const o = Math.min(1, pin * 1.6) * lerp(1, 0.3, pr) * (1 - push * 0.2);
+      st($(q.id), { o: t < q.a ? 0 : o, x, y, z, ry, blur: Math.abs(1 - pin) * 26 + pr * 6 + push * 3 });
+      $(q.id).style.color = pr > 0.3 ? '#9AA5A0' : '#E9EFEC';
+    });
+    ECHO.forEach((e, i) => {
+      const el = $('ec' + i), p = ease5(prog(t, e.a, 0.45));
+      const drift = Math.max(0, t - e.a) * 220;
+      st(el, { o: t < e.a ? 0 : Math.min(1, p * 1.5) * 0.5, x: e.x - 0.5 * el.offsetWidth, y: e.y - 0.5 * e.size, z: e.z + drift, rz: e.rz, blur: (1 - p) * 18 + 2.5 });
+    });
+    // Reloj: un día que se acelera
+    const mins = 360 + 960 * easeIn(prog(t, 0.5, 9.8));
+    $('clkT').textContent = String(Math.floor(mins / 60)).padStart(2, '0') + ':' + String(Math.floor(mins % 60)).padStart(2, '0');
+    st($('clk'), { o: ease(prog(t, 0.2, 0.8)) });
+    st($('clkBar'), { o: ease(prog(t, 0.2, 0.8)) });
+    $('clkFill').style.width = (100 * (mins - 360) / 960) + '%';
+  }
+
+  /* ---------- B · Línea (10.4 – 13.3) y C · logo (13.25 – 19) ---------- */
+  const onB = t >= CUT && t < 19.05;
+  show($('sB'), onB);
+  if (onB) {
+    const out = easeIn(prog(t, 18.35, 0.65)); // la cámara atraviesa el logo
+    $('sB').style.opacity = 1;
+    const travel = easeIO(prog(t, 11.3, 1.45));
+    $('floor').style.backgroundPosition = `${-travel * 1800 - t * 20}px ${t * 30}px`;
+    st($('floor'), { o: ease(prog(t, 10.9, 0.6)) * (1 - ease(prog(t, 13.1, 1.4)) * 0.75) * (1 - out) });
+    st($('horizon'), { o: 0.9 * ease(prog(t, 10.9, 0.8)) * (1 - out) });
+    const pA = easeIO(prog(t, 11.3, 1.4)), pB = easeIO(prog(t, 12.7, 0.55));
+    let head, tail;
+    if (t < 12.7) { head = lerp(400, LN_STRAIGHT, pA); tail = Math.max(0, head - 1500); }
+    else { head = lerp(LN_STRAIGHT, LN_TOTAL, pB); tail = lerp(LN_STRAIGHT - 1500, LN_STRAIGHT, pB); }
+    const cam = t < 12.7 ? 960 - (LINE_START + head) : 0;
+    $('lineCam').setAttribute('transform', `translate(${cam},0)`);
+    const ln = $('ln');
+    ln.style.strokeDasharray = `${Math.max(0.1, head - tail)} 99999`;
+    ln.style.strokeDashoffset = -tail;
+    const lineO = (t >= 11.3 ? 1 : 0) * (1 - ease(prog(t, DROP + 0.05, 0.45)));
+    ln.style.opacity = lineO;
+    const hp = ln.getPointAtLength(Math.min(head, LN_TOTAL - 0.01));
+    $('lnHead').setAttribute('cx', hp.x); $('lnHead').setAttribute('cy', hp.y);
+    $('lnHead').style.opacity = lineO * (t < DROP + 0.25 ? 1 : 0);
+    // Onda expansiva al regresar la orquesta
+    [['wv0', 0, 1.6, 6], ['wv1', 0.22, 1.9, 3]].forEach(([id, d, dur, w]) => {
+      const p = prog(t, DROP + d, dur), c = $(id);
+      c.setAttribute('r', 160 + ease(p) * 1150); c.style.opacity = p > 0 && p < 1 ? (1 - p) * 0.75 : 0; c.setAttribute('stroke-width', w * (1 - p) + 1);
+    });
+    // Logo: emblema con golpe de luz, letras que suben, brillo; empuje lento de cámara
+    const pIn = ease5(prog(t, DROP, 0.6));
+    const push = lerp(1, 1.05, easeIO(prog(t, 14.2, 4.2))) * lerp(1, 3.2, out);
+    const k = LK * push;
+    const cxL = 960, cyL = 405 + 140 * LK; // punto de anclaje del empuje (centro del conjunto)
+    st($('logoC'), { o: (t >= DROP ? 1 : 0) * (1 - out), x: cxL - (cxL - C_BOX.x) * push, y: cyL - (cyL - C_BOX.y) * push, s: k, blur: out * 30 });
+    st($('embBox'), { o: pIn, s: lerp(1.12, 1, pIn) * (1 + 0.06 * gauss(t, DROP + 0.04, 0.12)), blur: (1 - pIn) * 22 });
+    $('embBox').style.transformOrigin = '275px 247px';
+    $('emb').style.filter = `brightness(${1 + 1.4 * (1 - pIn)})`;
+    $('embGlow').style.opacity = lerp(0.6, 1, Math.sin(t * 2.2) * 0.5 + 0.5);
+    const lp = ease5(prog(t, 13.7, 0.7));
+    st($('letrasBox'), { o: t > 13.7 ? 1 : 0 });
+    $('letras').style.transform = `translateY(${(1 - lp) * 160}px)`;
+    const sh = prog(t, 14.6, 0.7);
+    $('sheenC').style.clipPath = band(sh); $('sheenC').style.opacity = sh > 0 && sh < 1 ? 1 : 0;
+    $('sheenC').style.transform = `translateY(${(1 - lp) * 160}px)`;
+  }
+
+  /* ---------- D · Destellos (18.8 – 35.2) ---------- */
+  const onD = t >= 18.75 && t < 35.3;
+  show($('sD'), onD);
+  if (onD) {
+    $('sD').style.opacity = ease(prog(t, 18.75, 0.35));
+    const WD = 0.5;
+    const pos = WHIP.reduce((acc, a) => acc + easeIO(prog(t, a, WD)), 0);
+    const vel = WHIP.reduce((acc, a) => { const p = prog(t, a, WD); return acc + (p > 0 && p < 1 ? (p < 0.5 ? 12 * p * p : 12 * Math.pow(1 - p, 2)) / WD : 0); }, 0);
+    $('trackD').style.transform = `translateX(${-pos * 1920}px)`;
+    const bl = Math.min(90, vel * 22);
+    $('mbg').setAttribute('stdDeviation', `${bl.toFixed(1)} 0`);
+    $('trackD').style.filter = bl > 0.5 ? 'url(#mb)' : 'none';
+    // Verbos: suben detrás de una máscara
+    ['v1', 'v2', 'v3', 'v4'].forEach((id, i) => {
+      const p = ease5(prog(t, SHOTS[i] + 0.2, 0.75));
+      $(id).firstElementChild.style.transform = `translateY(${(1 - p) * 270}px)`;
+      $(id).style.opacity = t < SHOTS[i] + 0.2 ? 0 : 1;
+    });
+    // 1 · Entra: el QR se lee y se valida
+    { const a = SHOTS[0], p = ease5(prog(t, a, 1.1)), dolly = easeIO(prog(t, a, 4));
+      st($('ph1'), { o: Math.min(1, p * 1.4), x: (1 - p) * 220, y: (1 - p) * 80, s: lerp(1.0, 1.07, dolly), ry: lerp(-24, -12, dolly), rx: 4, rz: lerp(-7, -4, dolly), blur: (1 - p) * 18 });
+      const ok = t >= 21.1;
+      st($('g1'), { o: ease(prog(t, a + 0.4, 1)) * (ok ? 1 : 0.55) * (0.85 + 0.15 * Math.sin(t * 4)), s: ok ? lerp(0.9, 1.15, ease(prog(t, 21.1, 0.8))) : 0.9 });
+      const scanning = win(t, 20.2, 21.1);
+      $('qrLine').style.opacity = scanning ? 1 : 0;
+      $('qrLine').style.top = `${50 - 50 * Math.cos((t - 20.2) * Math.PI * 2.2)}%`;
+      $('qrOk').style.opacity = ok ? 1 - ease(prog(t, 21.5, 0.9)) * 0.6 : 0;
+      [['ok1', 0], ['ok2', 0.18]].forEach(([id, d]) => { const q = prog(t, 21.1 + d, 1.1), c = $(id); c.setAttribute('r', ease(q) * 900); c.style.opacity = q > 0 && q < 1 ? 1 - q : 0; });
+      const b = back(prog(t, 21.2, 0.5)); st($('okBadge'), { o: ease(prog(t, 21.2, 0.25)), s: t < 21.2 ? 0.4 : lerp(0.4, 1, b), z: 60 }); }
+    // 2 · Entrena: la semana y los ejercicios
+    { const a = SHOTS[1], p = ease5(prog(t, a, 1)), dolly = easeIO(prog(t, a, 4));
+      st($('ph2'), { o: Math.min(1, p * 1.3) * 0.9, x: (1 - p) * 160, ry: -20, rz: 4, z: -200, blur: 7 });
+      st($('plan'), { o: Math.min(1, p * 1.5), x: (1 - p) * 180, z: (1 - p) * -400, ry: lerp(-22, -9, dolly), rx: 3, s: lerp(1, 1.04, dolly), blur: (1 - p) * 10 });
+      [['d0', 23.7], ['d2', 24.0], ['d4', 24.3]].forEach(([id, d]) => { $(id).classList.toggle('on', t >= d); $(id).style.transform = `scale(${1 + 0.18 * gauss(t, d + 0.08, 0.1)})`; });
+      [['e1', 24.6], ['e2', 24.85], ['e3', 25.1]].forEach(([id, d]) => { const e = ease(prog(t, d, 0.45)); st($(id), { o: e, x: (1 - e) * 40 }); }); }
+    // 3 · Cobra: el pago queda registrado
+    { const a = SHOTS[2], p = ease5(prog(t, a, 1)), dolly = easeIO(prog(t, a, 4));
+      st($('ph3'), { o: Math.min(1, p * 1.3) * 0.9, x: (1 - p) * 160, ry: -20, rz: 4, z: -200, blur: 7 });
+      const c = back(prog(t, a + 0.3, 0.7)); st($('paid'), { o: ease(prog(t, a + 0.3, 0.35)), x: (1 - clamp(c)) * 120, s: lerp(0.85, 1, clamp(c, 0, 1.08)) * lerp(1, 1.04, dolly), ry: -8, z: 80 });
+      const ch = prog(t, 28.3, 0.45); $('paidChip').style.transform = `scale(${t < 28.3 ? 0.001 : back(ch)})`; }
+    // 4 · Decide: el aforo sube en vivo
+    { const a = SHOTS[3], p = ease5(prog(t, a, 1)), dolly = easeIO(prog(t, a, 4));
+      st($('br4'), { o: Math.min(1, p * 1.3) * 0.85, x: (1 - p) * 160, ry: lerp(-24, -16, dolly), rx: 4, z: -250, blur: 6 });
+      const c = ease5(prog(t, a + 0.35, 0.7)); st($('cnt'), { o: Math.min(1, c * 1.5), y: (1 - c) * -50, z: 120, s: (1 + 0.1 * gauss(t, 32.45, 0.15)) * lerp(1, 1.04, dolly) });
+      $('rollIn').style.transform = `translateY(${-130 * easeIO(prog(t, 32.3, 0.35))}px)`;
+      const q = ease5(prog(t, 32.75, 0.6)); st($('toIn'), { o: Math.min(1, q * 1.5), x: (1 - q) * 240, z: 140 }); }
+  }
+
+  /* ---------- E · Todo tu gimnasio. Conectado. (34.9 – 44.1) ---------- */
+  const onE = t >= E0 && t < DARK;
+  show($('sE'), onE);
+  if (onE) {
+    const rv = easeIO(prog(t, E0, 0.65));
+    $('sE').style.clipPath = `inset(${(1 - rv) * 100}% 0 0 0)`;
+    const conv = easeIn(prog(t, 41.7, 0.9));
+    ['m1', 'm2', 'm3', 'm4'].forEach((id, i) => {
+      const p = ease5(prog(t, 35.3 + i * 0.14, 0.7));
+      const cx = 570 + i * 260, dx = (960 - cx) * conv, dy = (540 - 330) * conv;
+      st($(id), { o: Math.min(1, p * 1.5) * (1 - prog(t, 42.4, 0.2)), x: dx, y: (1 - p) * 60 + dy, s: lerp(1, 0.15, conv), blur: (1 - p) * 10 + conv * 6, rz: conv * (i - 1.5) * 20 });
+    });
+    const b = $('bus'); b.style.strokeDashoffset = 1 - easeIO(prog(t, 35.9, 0.8)); b.style.opacity = 1 - conv;
+    { const d = $('busDot'); const ph = ((t - 36.6) / 1.2) % 1; d.setAttribute('cx', 570 + ph * 780); d.style.opacity = t > 36.6 ? Math.sin(ph * Math.PI) * (1 - conv) : 0; }
+    { const p = ease5(prog(t, 36.6, 0.6)); st($('tEa'), { o: p, y: (1 - p) * 40, blur: (1 - p) * 14 }); }
+    { const p = ease5(prog(t, 37.7, 0.6)); st($('tEb'), { o: p, y: (1 - p) * 40, blur: (1 - p) * 14, s: lerp(1.1, 1, p) }); }
+    const tc = easeIn(prog(t, 42.2, 0.9));
+    st($('tE'), { o: 1 - tc, s: lerp(1, 0.6, tc), y: -tc * 120, blur: tc * 16 });
+  }
+
+  /* ---------- F · Firma (45 – 52) · el cuadro final es la portada ---------- */
+  const onF = t >= 45.0;
+  show($('sF'), onF);
+  if (onF) {
+    const p = ease5(prog(t, HIT, 1.3));
+    const k = 0.62 * lerp(1.16, 1, p), cy = 430;
+    st($('logoF'), { o: Math.min(1, prog(t, HIT - 0.03, 0.2)), x: 960 - 410 * k, y: cy - 350 * k, s: k, blur: (1 - p) * 26 });
+    $('logoF').querySelector('img').style.filter = `brightness(${1 + 2 * Math.pow(1 - p, 2)})`;
+    st($('glowF'), { o: ease(prog(t, HIT, 1.5)) * 0.85, s: lerp(0.6, 1, p) });
+    const sh = prog(t, 46.0, 0.9); $('sheenF').style.clipPath = band(sh); $('sheenF').style.opacity = sh > 0 && sh < 1 ? 1 : 0;
+    { const f = ease5(prog(t, 46.9, 0.8)); st($('firm'), { o: Math.min(1, prog(t, 46.9, 0.5)), y: (1 - f) * 24, blur: (1 - f) * 8 }); }
+  }
+
+  /* ---------- Destellos y negros ---------- */
+  {
+    const fl = $('flash');
+    const green = Math.max(gauss(t, DROP + 0.02, 0.08) * 0.38, gauss(t, HIT + 0.02, 0.08) * 0.45, gauss(t, 21.12, 0.07) * 0.18);
+    if (win(t, CUT, 10.95) || win(t, DARK, 45.0)) { fl.style.background = '#000'; fl.style.opacity = 1; }
+    else if (win(t, 43.3, DARK)) { // punto de luz que se concentra
+      const q = prog(t, 43.3, DARK - 43.3);
+      fl.style.background = `radial-gradient(circle at 960px 540px,rgba(220,255,236,${1 - q * 0.3}) 0,#12E07B ${lerp(60, 3, q)}px,rgba(0,0,0,${lerp(0.2, 1, q)}) ${lerp(420, 10, q)}px,#000 ${lerp(900, 12, q)}px)`;
+      fl.style.opacity = ease(prog(t, 43.3, 0.3));
+    } else { fl.style.background = 'radial-gradient(circle at 50% 50%,#CFFFE6,#12E07B 45%,#0B6B3A)'; fl.style.opacity = green; }
+  }
+
+  /* ---------- Partículas, grano y viñeta ---------- */
+  fx.clearRect(0, 0, 1920, 1080);
+  const partO = (t < CUT ? 0.35 : 0.8) * (win(t, CUT, 10.95) || win(t, 43.6, 45.0) ? 0 : 1) * (t >= 45 ? 0.6 * (1 - prog(t, 47.2, 0.8)) : 1);
+  if (partO > 0) {
+    fx.globalCompositeOperation = 'lighter';
+    for (const q of PART) {
+      const x = (q.x + t * q.sp * q.z) % 1920, y = (q.y - t * q.sp * 0.5 * q.z + 1080) % 1080;
+      const tw = 0.5 + 0.5 * Math.sin(t * 1.7 + q.ph);
+      fx.fillStyle = `rgba(120,255,190,${0.55 * q.z * tw * partO})`;
+      fx.beginPath(); fx.arc(x, y, 1 + q.z * 2.2, 0, 6.283); fx.fill();
+    }
+  }
+  // Desde STILL el grano se congela: el cuadro final queda fijo para empatar con la portada.
+  $('grain').getContext('2d').putImageData(grainTiles[t >= STILL ? 0 : Math.floor(t * 24) % grainTiles.length], 0, 0);
+  $('grain').style.opacity = t >= STILL ? 0 : 0.1 * (1 - prog(t, 47.2, 0.8) * (t >= 45 ? 1 : 0));
+}
+
+/* ===== Exportación cuadro por cuadro ===== */
+let current = 0;
+window.seek = async (t) => { current = t; render(t); };
+
+/* ===== Vista previa ===== */
+const RENDER = new URLSearchParams(location.search).has('render');
+if (RENDER) document.body.classList.add('render');
+function fit() {
+  if (RENDER) return;
+  const s = Math.min(innerWidth / 1920, (innerHeight - 52) / 1080);
+  $('stage').style.transform = `translateY(-26px) scale(${s})`;
+}
+const mix = $('mix');
+let playing = false, startWall = 0, startT = 0;
+function loop() {
+  if (!playing) return;
+  let t = mix.readyState >= 2 && !mix.paused ? mix.currentTime : startT + (performance.now() - startWall) / 1000;
+  if (t >= T) { t = T; stop(); }
+  current = t; render(t); $('seek').value = t; $('time').textContent = t.toFixed(1) + ' s';
+  requestAnimationFrame(loop);
+}
+function stop() { playing = false; $('play').textContent = '▶ Reproducir'; mix.pause(); }
+$('play').onclick = () => {
+  if (playing) return stop();
+  if (current >= T) current = 0;
+  playing = true; startWall = performance.now(); startT = current; $('play').textContent = '❚❚ Pausa';
+  if (mix.readyState >= 1) { mix.currentTime = current; mix.play().catch(() => {}); }
+  loop();
+};
+$('seek').oninput = (e) => { stop(); current = +e.target.value; render(current); $('time').textContent = current.toFixed(1) + ' s'; };
+document.addEventListener('keydown', (e) => { if (e.key === ' ') { e.preventDefault(); $('play').click(); } });
+addEventListener('resize', fit);
+fit(); render(0);
+document.fonts.ready.then(() => render(current));
+</script>
+</body>
+</html>
