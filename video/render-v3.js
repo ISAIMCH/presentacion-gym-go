@@ -48,6 +48,7 @@ function buildAudio({ cues, edit, duration }) {
     g += `[s${k}]atrim=start=${p.from}:end=${p.to},asetpts=PTS-STARTPTS`;
     if (p.fin > 0) g += `,afade=t=in:st=0:d=${p.fin}`;
     if (p.fout > 0) g += `,afade=t=out:st=${(len - p.fout).toFixed(3)}:d=${p.fout}`;
+    if (p.af) g += `,${p.af}`; // filtro propio del tramo (p. ej. graves apagados o eco de cola)
     g += `,adelay=${ms}|${ms}[p${k}];`;
   });
   g += `${edit.parts.map((_, k) => `[p${k}]`).join('')}amix=inputs=${n}:normalize=0,apad,atrim=0:${duration}[mu]`;
@@ -55,7 +56,7 @@ function buildAudio({ cues, edit, duration }) {
   execFileSync(FFMPEG, ['-v', 'error', '-y', '-i', src, '-filter_complex', g, '-map', '[mu]', '-ar', '48000', '-c:a', 'pcm_s16le', music], { stdio: 'inherit' });
 
   const mixed = path.join(OUT, `${NAME}-audio.wav`);
-  const graph = `[0:a]volume=0.9[m];[1:a]volume=0.8[s];[m][s]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.89:level=false,atrim=0:${duration}[a]`;
+  const graph = `[0:a]volume=0.9[m];[1:a]volume=0.8[s];[m][s]amix=inputs=2:normalize=0,loudnorm=I=-16:TP=-1.5:LRA=11,volume=-1.6dB,alimiter=limit=0.89:level=false,atrim=0:${duration}[a]`;
   execFileSync(FFMPEG, ['-v', 'error', '-y', '-i', music, '-i', sfx, '-filter_complex', graph, '-map', '[a]', '-ar', '48000', '-c:a', 'pcm_s16le', mixed], { stdio: 'inherit' });
   console.log('Audio:', mixed);
   return mixed;

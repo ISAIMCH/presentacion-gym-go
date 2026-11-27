@@ -116,6 +116,16 @@ const SFX = {
     const i0 = Math.round(t * SR);
     for (let k = 0; k < 0.012 * SR; k++) { const x = k / SR; bus.add(i0 + k, Math.sin(TAU * 3200 * x) * Math.exp(-x / 0.003) * g); }
   },
+  // Golpe seco de madera (reloj de pared): más grave y corto que tick, sin tono de suspenso.
+  tock(bus, t, g = 0.14) {
+    const n = noiseGen(Math.round(t * 613) + 21), f = svf(), i0 = Math.round(t * SR);
+    for (let k = 0; k < 0.05 * SR; k++) {
+      const x = k / SR;
+      const body = Math.sin(TAU * 820 * x) * Math.exp(-x / 0.012) + Math.sin(TAU * 1650 * x) * Math.exp(-x / 0.006) * 0.4;
+      const click = f(n(), 2500, 0.7).band * Math.exp(-x / 0.0015);
+      bus.add(i0 + k, (body * 0.8 + click * 0.9) * g);
+    }
+  },
   suck(bus, t0, g = 0.4, { to } = {}) {
     const n = noiseGen(Math.round(t0 * 53) + 9), f = svf(), i0 = Math.round(t0 * SR), len = Math.round((to - t0) * SR);
     for (let k = 0; k < len; k++) {

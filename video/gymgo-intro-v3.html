@@ -8,10 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* Versión 3 · "Las preguntas de todos los días". 52 s a 1920 × 1080.
-   El video no explica: pregunta y promete. La presentación responde.
+/* Versión 3 · "Las preguntas de todos los días". 46 s a 1920 × 1080.
+   Las preguntas del día → la línea se enciende → Entra · Entrena · Cobra · Decide (con el rol de cada uno) → Conectado → firma.
    Todo sale de render(t): la vista previa y la exportación cuadro por cuadro dan lo mismo. ?render oculta los controles.
-   El último cuadro (48 – 52 s) es idéntico a la portada de la presentación (corte por coincidencia). */
+   El último cuadro (desde STILL) es idéntico a la portada de la presentación (corte por coincidencia). */
 :root{
   --surface:#FFFFFF; --border:#E0E6E2; --border-strong:#C7D0CB;
   --text:#0E1512; --text2:#4B5751; --text3:#7A8580;
@@ -54,9 +54,12 @@ body.render #stage{left:0;top:0;margin:0}
 #sD{background:radial-gradient(ellipse at 62% 50%,#0B2518 0%,#04100A 50%,#000 100%)}
 #trackD{left:0;top:0;width:7680px;height:1080px}
 .shot{position:absolute;top:0;width:1920px;height:1080px;perspective:1700px;overflow:hidden}
-.verb{position:absolute;left:150px;top:395px;height:260px;overflow:hidden;font-family:var(--display);font-weight:800;font-size:250px;line-height:1;letter-spacing:-.005em;color:#fff}
+.verb{position:absolute;left:150px;top:350px;height:260px;overflow:hidden;font-family:var(--display);font-weight:800;font-size:250px;line-height:1;letter-spacing:-.005em;color:#fff}
 .verb span{display:block}
 .verb em{font-style:normal;color:#12E07B}
+.role{left:160px;top:640px;width:700px;font-size:46px;line-height:1.22;font-weight:500;color:rgba(233,239,236,.8)}
+.role b{color:#fff;font-weight:700}
+.role:before{content:'';display:block;width:64px;height:4px;border-radius:2px;background:#12E07B;margin-bottom:22px;box-shadow:0 0 12px rgba(18,224,123,.6)}
 .phone{border:11px solid #0E1512;border-radius:52px;overflow:hidden;background:#0E1512;position:absolute;aspect-ratio:1080/2400;
   box-shadow:0 0 0 1.5px rgba(255,255,255,.08),0 50px 110px rgba(0,0,0,.7)}
 .phone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
@@ -142,30 +145,19 @@ body.render .ctrl{display:none}
     <div class="a" id="clkBar"><i id="clkFill"></i></div>
   </div>
 
-  <!-- B · La línea se enciende (10.4 – 13.3) y C · el logo (13.25 – 19) -->
+  <!-- B · La línea se enciende (10.4 – DROP) y lleva directo a "Entra." -->
   <div class="L" id="sB">
     <div class="a" id="horizon"></div>
     <div class="a" id="floor"></div>
-    <svg class="a" id="shock" viewBox="0 0 1920 1080"><circle id="wv0" cx="960" cy="405" r="0" fill="none" stroke="#12E07B"/><circle id="wv1" cx="960" cy="405" r="0" fill="none" stroke="#12E07B"/></svg>
     <svg class="a" id="lineSvg" viewBox="0 0 1920 1080">
       <g id="lineCam">
         <path id="ln" d="" fill="none" stroke="#5CF5A8" stroke-width="7" stroke-linecap="round" style="filter:drop-shadow(0 0 10px #12E07B) drop-shadow(0 0 26px #12E07B)"/>
         <circle id="lnHead" r="9" fill="#EFFFF6" style="filter:drop-shadow(0 0 14px #12E07B) drop-shadow(0 0 30px #12E07B)"/>
       </g>
     </svg>
-    <div class="a tl" id="logoC" style="left:0;top:0;width:790px;height:770px">
-      <div class="a tl" id="embBox" style="left:115px;top:0;width:560px;height:510px">
-        <div id="embGlow" style="position:absolute;left:30px;top:5px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(18,224,123,.45),transparent 65%);filter:blur(30px)"></div>
-        <img id="emb" src="assets/logo/emblema.png" alt="" style="position:absolute;left:0;top:0;width:560px;height:510px">
-      </div>
-      <div class="a tl" id="letrasBox" style="left:0;top:600px;width:790px;height:150px;overflow:hidden">
-        <img id="letras" src="assets/logo/letras.png" alt="GymGo" style="position:absolute;left:0;top:0;width:790px;height:150px">
-        <img class="sheen" id="sheenC" src="assets/logo/letras.png" alt="" style="position:absolute;left:0;top:0;width:790px;height:150px">
-      </div>
-    </div>
   </div>
 
-  <!-- D · Destellos (18.8 – 35.2) -->
+  <!-- D · Los cuatro verbos (DROP – E0) -->
   <div class="L" id="sD">
     <div class="a" id="trackD">
       <div class="shot" style="left:0">
@@ -175,6 +167,7 @@ body.render .ctrl{display:none}
         <svg class="a" viewBox="0 0 1920 1080" style="left:0;top:0;width:1920px;height:1080px"><circle id="ok1" cx="1270" cy="520" r="0" fill="none" stroke="#12E07B" stroke-width="6"/><circle id="ok2" cx="1270" cy="520" r="0" fill="none" stroke="#12E07B" stroke-width="3"/></svg>
         <div class="a" id="okBadge" style="left:1500px;top:250px">✓</div>
         <div class="verb" id="v1"><span>Entra<em>.</em></span></div>
+        <div class="a role" id="r1"><b>El socio</b>, con su QR en el lector.</div>
       </div>
       <div class="shot" style="left:1920px">
         <div class="a phone" id="ph2" style="left:1380px;top:110px;height:900px"><img src="assets/app/cliente-rutinas.png" alt=""></div>
@@ -186,22 +179,25 @@ body.render .ctrl{display:none}
           <div class="ex" id="e3"><i>3</i>Press militar</div>
         </div>
         <div class="verb" id="v2"><span>Entrena<em>.</em></span></div>
+        <div class="a role" id="r2"><b>El entrenador</b> le arma su rutina.</div>
       </div>
       <div class="shot" style="left:3840px">
         <div class="a phone" id="ph3" style="left:1390px;top:110px;height:900px"><img src="assets/app/recepcion-caja.png" alt=""></div>
         <div class="a paid" id="paid" style="left:1010px;top:420px"><div class="av">V</div><b>Valeria</b><div class="amt"><strong>$650.00</strong><span class="chipg" id="paidChip">PAGADO</span></div><span>Membresía mensual</span></div>
         <div class="verb" id="v3"><span>Cobra<em>.</em></span></div>
+        <div class="a role" id="r3"><b>Recepción</b> registra cada pago.</div>
       </div>
       <div class="shot" style="left:5760px">
         <div class="a browser" id="br4" style="left:930px;top:170px;width:1150px;height:720px"><div class="bar"><i></i><i></i><i></i></div><div class="view"><img src="assets/panel-aforo.png" alt=""></div></div>
         <div class="a counter" id="cnt" style="left:1130px;top:300px"><small>Dentro ahora</small><div class="row"><div class="roll"><div id="rollIn"><div>23</div><div style="color:#12E07B">24</div></div></div><span>/ 80</span></div></div>
         <div class="a toast" id="toIn" style="left:1300px;top:580px"><div class="dot">→</div><b>Ana López entró</b><span>Fuerza Gym Centro · 7:02 a.m.</span></div>
         <div class="verb" id="v4"><span>Decide<em>.</em></span></div>
+        <div class="a role" id="r4"><b>El dueño</b> lo ve todo en vivo.</div>
       </div>
     </div>
   </div>
 
-  <!-- E · Todo tu gimnasio. Conectado. (34.9 – 44.1) -->
+  <!-- E · Todo tu gimnasio. Conectado. (E0 – HIT) -->
   <div class="L" id="sE">
     <svg class="a" viewBox="0 0 1920 1080" style="left:0;top:0;width:1920px;height:1080px"><line id="bus" x1="570" y1="330" x2="1350" y2="330" stroke="#12E07B" stroke-width="3" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="filter:drop-shadow(0 0 8px #12E07B)"/><circle id="busDot" r="8" cy="330" fill="#E8FFF2" style="filter:drop-shadow(0 0 10px #12E07B)"/></svg>
     <div class="a mini" id="m1" style="left:470px;top:230px"><svg viewBox="0 0 48 48"><path d="M8 8h12v12H8zM28 8h12v12H28zM8 28h12v12H8z"/><path d="M28 28h5v5h-5zM35 35h5v5h-5zM35 28h5M28 37v3"/></svg><span>Entra</span></div>
@@ -211,7 +207,7 @@ body.render .ctrl{display:none}
     <div class="a disp" id="tE"><div id="tEa">Todo tu gimnasio.</div><div id="tEb" style="color:#12E07B">Conectado.</div></div>
   </div>
 
-  <!-- F · Firma (45 – 52). Este cuadro final lo replica la portada de la presentación. -->
+  <!-- F · Firma (HIT – 46). Este cuadro final lo replica la portada de la presentación. -->
   <div class="L" id="sF">
     <div class="a" id="glowF"></div>
     <div class="a tl" id="logoF" style="left:0;top:0;width:820px;height:700px">
@@ -221,17 +217,18 @@ body.render .ctrl{display:none}
     <div class="a" id="firm"><small>UN PRODUCTO DE</small><img src="assets/logo/sirid.png" alt="SIRID Systems" style="height:96px"></div>
   </div>
 
+  <svg class="a" id="shock" viewBox="0 0 1920 1080" style="pointer-events:none"><circle id="wv0" cx="960" cy="540" r="0" fill="none" stroke="#12E07B"/><circle id="wv1" cx="960" cy="540" r="0" fill="none" stroke="#12E07B"/></svg>
   <canvas id="fx" width="1920" height="1080"></canvas>
   <canvas id="grain" width="480" height="270"></canvas>
   <div id="vig"></div>
   <div id="flash"></div>
 </div>
 
-<div class="ctrl"><button id="play">▶ Reproducir</button><input id="seek" type="range" min="0" max="52" step="0.01" value="0"><span id="time">0.0 s</span></div>
+<div class="ctrl"><button id="play">▶ Reproducir</button><input id="seek" type="range" min="0" max="46" step="0.01" value="0"><span id="time">0.0 s</span></div>
 <audio id="mix" src="salida/gymgo-intro-v3-audio.wav" preload="auto"></audio>
 
 <script>
-const T = 52;
+const T = 46;
 window.T = T;
 const $ = (id) => document.getElementById(id);
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -243,7 +240,6 @@ const back = (p) => { const c = 1.6; return 1 + (c + 1) * Math.pow(p - 1, 3) + c
 const prog = (t, a, d) => clamp((t - a) / d);
 const lerp = (a, b, p) => a + (b - a) * p;
 const win = (t, a, b) => t >= a && t < b;
-const vis = (t, a, b, din = 0.6, dout = 0.45) => (t < a || t > b + dout ? 0 : ease(prog(t, a, din)) * (1 - ease(prog(t, b, dout))));
 const gauss = (t, c, w) => Math.exp(-Math.pow((t - c) / w, 2));
 function st(el, { o = 1, x = 0, y = 0, z = 0, s = 1, rx = 0, ry = 0, rz = 0, blur = 0 } = {}) {
   el.style.opacity = o;
@@ -255,15 +251,21 @@ const band = (p) => { const c = lerp(-25, 125, easeIO(p)); return `polygon(${c -
 const show = (el, on) => { el.style.display = on ? 'block' : 'none'; };
 const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
 
-/* ===== Marcas de tiempo (todas ligadas a la música) ===== */
-const CUT = 10.4;       // corte a negro: la música se detiene
-const DROP = 13.25;     // regresa la orquesta: el emblema se cierra
-const SHOTS = [18.9, 22.9, 26.9, 30.9]; // Entra · Entrena · Cobra · Decide
-const WHIP = [22.65, 26.65, 30.65];
-const E0 = 34.9;        // Todo tu gimnasio. Conectado.
-const DARK = 44.1;      // silencio en negro
-const HIT = 45.05;      // golpe final de la orquesta y el logotipo
-const STILL = 48.0;     // desde aquí el cuadro queda fijo (igual a la portada)
+/* ===== Marcas de tiempo (ligadas al pulso de la música: 123 BPM) ===== */
+const BEAT = 0.4877;
+const CUT = 10.4;                 // corte a negro: la música se apaga y se enciende la línea
+const DROP = 12.9;                // entra la música completa: "Entra."
+const SHOT = 10 * BEAT;           // cada verbo dura 10 tiempos (≈ 4.9 s)
+const SHOTS = [0, 1, 2, 3].map((k) => DROP + k * SHOT); // Entra · Entrena · Cobra · Decide
+const WHIP = SHOTS.slice(1).map((s) => s - 0.2);
+const WD = 0.35;                  // duración del barrido entre verbos
+const E0 = DROP + 40 * BEAT - 0.15; // Todo tu gimnasio. Conectado.
+const TA = DROP + 44 * BEAT, TB = DROP + 46 * BEAT; // "Todo tu gimnasio." · "Conectado."
+const HIT = DROP + 56 * BEAT;     // golpe final de la canción = logotipo (≈ 40.2 s)
+const CONV = HIT - 2.6;           // las piezas se juntan al centro
+const DARK = HIT - 0.05;          // fin del punto de luz, entra la firma
+const PT = DARK - 0.8;            // punto de luz que se concentra
+const STILL = HIT + 2.95;         // desde aquí el cuadro queda fijo (igual a la portada)
 
 /* ===== Ecos de las preguntas (7.4 – 10.4) ===== */
 const QTXT = ['¿Quién entró?', '¿Quién pagó?', '¿Quién no volvió?', '¿Cuánta gente hay ahora?', '¿Quién debe?', '¿A qué hora se llena?'];
@@ -274,14 +276,10 @@ const ECHO = Array.from({ length: 22 }, (_, i) => {
 });
 $('echoes').innerHTML = ECHO.map((e, i) => `<div class="a echo" id="ec${i}" style="left:960px;top:540px;font-size:${e.size.toFixed(0)}px">${e.txt}</div>`).join('');
 
-/* ===== Línea → aro del emblema ===== */
-// Centro del aro en emblema.png: (275, 247), radio 238. El logo C se dibuja a escala LK con el aro en (960, 405).
-const LK = 0.8;
-const C_BOX = { x: 960 - (115 + 275) * LK, y: 405 - 247 * LK };
-const RING = { cx: 960, cy: 405, r: 238 * LK };
-const LINE_Y = RING.cy + RING.r, LINE_START = -1400;
-$('ln').setAttribute('d', `M ${LINE_START} ${LINE_Y} L ${RING.cx} ${LINE_Y} A ${RING.r} ${RING.r} 0 1 0 ${RING.cx - 0.01} ${LINE_Y}`);
-const LN_STRAIGHT = RING.cx - LINE_START, LN_TOTAL = $('ln').getTotalLength();
+/* ===== Línea que cruza la pantalla y estalla en "Entra." ===== */
+const LINE_Y = 540, LINE_START = -1400;
+$('ln').setAttribute('d', `M ${LINE_START} ${LINE_Y} L 2600 ${LINE_Y}`);
+const LN_CENTER = 960 - LINE_START;
 
 /* ===== Partículas y grano (deterministas) ===== */
 const PART = Array.from({ length: 90 }, (_, i) => ({ x: rnd(i, 1) * 1920, y: rnd(i, 2) * 1080, z: 0.3 + rnd(i, 3) * 0.7, sp: 8 + rnd(i, 4) * 22, ph: rnd(i, 5) * 6.28 }));
@@ -298,32 +296,38 @@ const grainTiles = [];
 })();
 
 /* ===== Audio (lo genera render-v3.js) =====
-   Música: "We Will Get It" (Eugenio Mininni, Mixkit Stock Music Free License), editada en tres tramos:
-   A = 3.0 – 13.4 s de la pista (crece desde el silencio) · B = 181.0 – 214.6 s (cola en silencio y regreso orquestal en 183.85)
-   C = 176.85 – 183.85 s (golpe orquestal y su resonancia natural) colocado en 45.0 s. */
-window.MUSIC_EDIT = { file: 'assets/musica/we-will-get-it-mixkit.mp3',
-  parts: [{ from: 3.0, to: 13.4, at: 0, fin: 0.3, fout: 0.05 }, { from: 181.0, to: 214.6, at: CUT, fin: 0, fout: 0.8 }, { from: 176.85, to: 183.85, at: 45.0, fin: 0.02, fout: 2.2 }] };
+   Música: "Sports Highlights" (Ahjay Stelino, Mixkit Stock Music Free License), 123 BPM, editada en tres tramos:
+   A = inicio de la pista, apagada con un filtro de graves ("la música del gimnasio detrás de la pared") bajo las preguntas.
+   B = 14 compases que arrancan en DROP y terminan justo en el golpe final de la canción (92.32 s de la pista) = HIT.
+   C = ese golpe final con eco, para que el acorde se sostenga sobre la firma. */
+const SONG_HIT = 92.323, SONG_B = SONG_HIT - (HIT - DROP);
+window.MUSIC_EDIT = { file: 'assets/musica/sports-highlights-mixkit.mp3',
+  parts: [
+    { from: 0.0, to: CUT + 0.05, at: 0, fin: 0.6, fout: 0.08, af: 'lowpass=f=320,lowpass=f=320,volume=0.8' },
+    { from: SONG_B, to: SONG_HIT + 0.02, at: DROP, fin: 0.005, fout: 0.02 },
+    { from: SONG_HIT, to: SONG_HIT + 2.3, at: HIT, fin: 0.003, fout: 0.15, af: 'apad=pad_dur=5,aecho=0.8:0.85:170|340|580|930|1400|2000:0.5|0.42|0.34|0.27|0.2|0.14,volume=1.15' },
+  ] };
+const D = (k, dt) => SHOTS[k] + dt;
 window.AUDIO_CUES = [
-  // A · reloj que se acelera y cada pregunta
-  ...Array.from({ length: 26 }, (_, i) => { const p = i / 26; return ['tick', 0.5 + 9.7 * (1 - Math.pow(1 - p, 1.5)), 0.07 + p * 0.08]; }),
+  // A · reloj que se acelera (golpes secos de madera) y cada pregunta
+  ...Array.from({ length: 26 }, (_, i) => { const p = i / 26; return ['tock', 0.5 + 9.7 * (1 - Math.pow(1 - p, 1.5)), 0.1 + p * 0.1]; }),
   ['whoosh', 0.35, 0.3, { dur: 0.55, dir: 1 }], ['hit', 0.55, 0.32],
   ['whoosh', 2.35, 0.3, { dur: 0.55, dir: -1 }], ['hit', 2.55, 0.36],
   ['whoosh', 4.25, 0.32, { dur: 0.55, dir: 1 }], ['hit', 4.45, 0.4],
   ['whoosh', 6.05, 0.34, { dur: 0.55, dir: -1 }], ['hit', 6.25, 0.44],
-  ['riser', 7.4, 0.22, { to: CUT - 0.02 }],
-  // B · la línea y el regreso de la orquesta
-  ['whoosh', 11.2, 0.3, { dur: 1.3, dir: 1 }], ['riser', 11.9, 0.26, { to: DROP - 0.03 }], ['impact', DROP, 0.5], ['glint', DROP + 0.05, 0.12], ['glint', 14.65, 0.16],
-  // D · destellos
-  ['whoosh', 18.45, 0.4, { dur: 0.7, dir: 1 }], ['hit', 18.95, 0.28],
-  ['beep', 20.3, 0.16], ['beep', 20.65, 0.16], ['confirm', 21.15, 0.3],
-  ['whoosh', 22.55, 0.42, { dur: 0.6, dir: -1 }], ['tick', 23.7, 0.13], ['tick', 24.0, 0.13], ['tick', 24.3, 0.13], ['blip', 24.6, 0.14, { f: 1250, pan: 0.3 }],
-  ['whoosh', 26.55, 0.42, { dur: 0.6, dir: -1 }], ['blip', 28.35, 0.24, { f: 1700, pan: 0.3 }],
-  ['whoosh', 30.55, 0.42, { dur: 0.6, dir: -1 }], ['tick', 32.3, 0.14], ['blip', 32.75, 0.2, { f: 1500, pan: 0.4 }],
+  ['riser', 7.4, 0.2, { to: CUT - 0.02 }],
+  // B · la línea cruza y estalla
+  ['whoosh', 11.0, 0.3, { dur: 1.3, dir: 1 }], ['riser', 11.4, 0.3, { to: DROP - 0.03 }], ['impact', DROP, 0.42], ['glint', DROP + 0.05, 0.1],
+  // D · los cuatro verbos
+  ['beep', D(0, 1.4), 0.16], ['beep', D(0, 1.75), 0.16], ['confirm', D(0, 2.2), 0.3],
+  ['whoosh', WHIP[0] - 0.08, 0.38, { dur: 0.45, dir: -1 }], ['tick', D(1, 0.8), 0.13], ['tick', D(1, 1.1), 0.13], ['tick', D(1, 1.4), 0.13], ['blip', D(1, 1.7), 0.14, { f: 1250, pan: 0.3 }],
+  ['whoosh', WHIP[1] - 0.08, 0.38, { dur: 0.45, dir: -1 }], ['blip', D(2, 1.45), 0.24, { f: 1700, pan: 0.3 }],
+  ['whoosh', WHIP[2] - 0.08, 0.38, { dur: 0.45, dir: -1 }], ['tick', D(3, 1.4), 0.14], ['blip', D(3, 1.85), 0.2, { f: 1500, pan: 0.4 }],
   // E · conectado
-  ['whoosh', 34.75, 0.5, { dur: 0.8, dir: 1 }], ['hit', 36.6, 0.3], ['hit', 37.7, 0.34],
-  ['suck', 41.7, 0.36, { to: DARK - 0.05 }],
+  ['whoosh', E0 - 0.15, 0.45, { dur: 0.7, dir: 1 }], ['hit', TA, 0.28], ['hit', TB, 0.32],
+  ['riser', CONV + 0.2, 0.16, { to: HIT - 0.03 }],
   // F · firma
-  ['impact', HIT, 0.35], ['glint', 46.05, 0.16],
+  ['impact', HIT, 0.3], ['glint', HIT + 1.0, 0.14],
 ];
 
 function render(t) {
@@ -363,123 +367,103 @@ function render(t) {
     $('clkFill').style.width = (100 * (mins - 360) / 960) + '%';
   }
 
-  /* ---------- B · Línea (10.4 – 13.3) y C · logo (13.25 – 19) ---------- */
-  const onB = t >= CUT && t < 19.05;
+  /* ---------- B · La línea (10.4 – DROP): cruza la pantalla y estalla en el centro ---------- */
+  const onB = t >= CUT && t < DROP + 0.12;
   show($('sB'), onB);
   if (onB) {
-    const out = easeIn(prog(t, 18.35, 0.65)); // la cámara atraviesa el logo
-    $('sB').style.opacity = 1;
-    const travel = easeIO(prog(t, 11.3, 1.45));
+    const travel = easeIO(prog(t, 11.0, DROP - 11.0));
     $('floor').style.backgroundPosition = `${-travel * 1800 - t * 20}px ${t * 30}px`;
-    st($('floor'), { o: ease(prog(t, 10.9, 0.6)) * (1 - ease(prog(t, 13.1, 1.4)) * 0.75) * (1 - out) });
-    st($('horizon'), { o: 0.9 * ease(prog(t, 10.9, 0.8)) * (1 - out) });
-    const pA = easeIO(prog(t, 11.3, 1.4)), pB = easeIO(prog(t, 12.7, 0.55));
-    let head, tail;
-    if (t < 12.7) { head = lerp(400, LN_STRAIGHT, pA); tail = Math.max(0, head - 1500); }
-    else { head = lerp(LN_STRAIGHT, LN_TOTAL, pB); tail = lerp(LN_STRAIGHT - 1500, LN_STRAIGHT, pB); }
-    const cam = t < 12.7 ? 960 - (LINE_START + head) : 0;
-    $('lineCam').setAttribute('transform', `translate(${cam},0)`);
+    st($('floor'), { o: ease(prog(t, 10.9, 0.6)) });
+    st($('horizon'), { o: 0.9 * ease(prog(t, 10.9, 0.8)) * (1 + 0.6 * prog(t, DROP - 0.5, 0.5)) });
+    // La cabeza avanza; la cámara la sigue hasta dejarla en el centro justo en DROP
+    const head = lerp(400, LN_CENTER, easeIO(prog(t, 11.0, DROP - 11.0 - 0.05)));
+    const tail = Math.max(0, head - 1500);
+    $('lineCam').setAttribute('transform', `translate(${960 - (LINE_START + head)},0)`);
     const ln = $('ln');
     ln.style.strokeDasharray = `${Math.max(0.1, head - tail)} 99999`;
     ln.style.strokeDashoffset = -tail;
-    const lineO = (t >= 11.3 ? 1 : 0) * (1 - ease(prog(t, DROP + 0.05, 0.45)));
-    ln.style.opacity = lineO;
-    const hp = ln.getPointAtLength(Math.min(head, LN_TOTAL - 0.01));
-    $('lnHead').setAttribute('cx', hp.x); $('lnHead').setAttribute('cy', hp.y);
-    $('lnHead').style.opacity = lineO * (t < DROP + 0.25 ? 1 : 0);
-    // Onda expansiva al regresar la orquesta
-    [['wv0', 0, 1.6, 6], ['wv1', 0.22, 1.9, 3]].forEach(([id, d, dur, w]) => {
-      const p = prog(t, DROP + d, dur), c = $(id);
-      c.setAttribute('r', 160 + ease(p) * 1150); c.style.opacity = p > 0 && p < 1 ? (1 - p) * 0.75 : 0; c.setAttribute('stroke-width', w * (1 - p) + 1);
-    });
-    // Logo: emblema con golpe de luz, letras que suben, brillo; empuje lento de cámara
-    const pIn = ease5(prog(t, DROP, 0.6));
-    const push = lerp(1, 1.05, easeIO(prog(t, 14.2, 4.2))) * lerp(1, 3.2, out);
-    const k = LK * push;
-    const cxL = 960, cyL = 405 + 140 * LK; // punto de anclaje del empuje (centro del conjunto)
-    st($('logoC'), { o: (t >= DROP ? 1 : 0) * (1 - out), x: cxL - (cxL - C_BOX.x) * push, y: cyL - (cyL - C_BOX.y) * push, s: k, blur: out * 30 });
-    st($('embBox'), { o: pIn, s: lerp(1.12, 1, pIn) * (1 + 0.06 * gauss(t, DROP + 0.04, 0.12)), blur: (1 - pIn) * 22 });
-    $('embBox').style.transformOrigin = '275px 247px';
-    $('emb').style.filter = `brightness(${1 + 1.4 * (1 - pIn)})`;
-    $('embGlow').style.opacity = lerp(0.6, 1, Math.sin(t * 2.2) * 0.5 + 0.5);
-    const lp = ease5(prog(t, 13.7, 0.7));
-    st($('letrasBox'), { o: t > 13.7 ? 1 : 0 });
-    $('letras').style.transform = `translateY(${(1 - lp) * 160}px)`;
-    const sh = prog(t, 14.6, 0.7);
-    $('sheenC').style.clipPath = band(sh); $('sheenC').style.opacity = sh > 0 && sh < 1 ? 1 : 0;
-    $('sheenC').style.transform = `translateY(${(1 - lp) * 160}px)`;
+    ln.style.opacity = t >= 11.0 ? 1 : 0;
+    $('lnHead').setAttribute('cx', LINE_START + head); $('lnHead').setAttribute('cy', LINE_Y);
+    $('lnHead').setAttribute('r', 9 + 16 * easeIn(prog(t, DROP - 0.45, 0.45)));
+    $('lnHead').style.opacity = t >= 11.0 ? 1 : 0;
   }
+  // Onda expansiva en DROP (por encima de todo)
+  [['wv0', 0, 1.4, 6], ['wv1', 0.18, 1.7, 3]].forEach(([id, d, dur, w]) => {
+    const p = prog(t, DROP + d, dur), c = $(id);
+    c.setAttribute('r', 20 + ease(p) * 1300); c.style.opacity = p > 0 && p < 1 ? (1 - p) * 0.7 : 0; c.setAttribute('stroke-width', w * (1 - p) + 1);
+  });
 
-  /* ---------- D · Destellos (18.8 – 35.2) ---------- */
-  const onD = t >= 18.75 && t < 35.3;
+  /* ---------- D · Los cuatro verbos (DROP – E0) ---------- */
+  const onD = t >= DROP && t < E0 + 0.4;
   show($('sD'), onD);
   if (onD) {
-    $('sD').style.opacity = ease(prog(t, 18.75, 0.35));
-    const WD = 0.5;
+    $('sD').style.opacity = ease(prog(t, DROP, 0.2));
     const pos = WHIP.reduce((acc, a) => acc + easeIO(prog(t, a, WD)), 0);
     const vel = WHIP.reduce((acc, a) => { const p = prog(t, a, WD); return acc + (p > 0 && p < 1 ? (p < 0.5 ? 12 * p * p : 12 * Math.pow(1 - p, 2)) / WD : 0); }, 0);
     $('trackD').style.transform = `translateX(${-pos * 1920}px)`;
-    const bl = Math.min(90, vel * 22);
+    const bl = Math.min(60, vel * 14);
     $('mbg').setAttribute('stdDeviation', `${bl.toFixed(1)} 0`);
     $('trackD').style.filter = bl > 0.5 ? 'url(#mb)' : 'none';
-    // Verbos: suben detrás de una máscara
+    // Verbos: suben detrás de una máscara; debajo, quién lo hace
     ['v1', 'v2', 'v3', 'v4'].forEach((id, i) => {
-      const p = ease5(prog(t, SHOTS[i] + 0.2, 0.75));
+      const p = ease5(prog(t, SHOTS[i] + 0.15, 0.6));
       $(id).firstElementChild.style.transform = `translateY(${(1 - p) * 270}px)`;
-      $(id).style.opacity = t < SHOTS[i] + 0.2 ? 0 : 1;
+      $(id).style.opacity = t < SHOTS[i] + 0.15 ? 0 : 1;
+      const r = ease5(prog(t, SHOTS[i] + 0.6, 0.6));
+      st($('r' + (i + 1)), { o: Math.min(1, r * 1.4), y: (1 - r) * 30, blur: (1 - r) * 8 });
     });
     // 1 · Entra: el QR se lee y se valida
-    { const a = SHOTS[0], p = ease5(prog(t, a, 1.1)), dolly = easeIO(prog(t, a, 4));
-      st($('ph1'), { o: Math.min(1, p * 1.4), x: (1 - p) * 220, y: (1 - p) * 80, s: lerp(1.0, 1.07, dolly), ry: lerp(-24, -12, dolly), rx: 4, rz: lerp(-7, -4, dolly), blur: (1 - p) * 18 });
-      const ok = t >= 21.1;
-      st($('g1'), { o: ease(prog(t, a + 0.4, 1)) * (ok ? 1 : 0.55) * (0.85 + 0.15 * Math.sin(t * 4)), s: ok ? lerp(0.9, 1.15, ease(prog(t, 21.1, 0.8))) : 0.9 });
-      const scanning = win(t, 20.2, 21.1);
+    { const a = SHOTS[0], p = ease5(prog(t, a, 0.9)), dolly = easeIO(prog(t, a, SHOT));
+      st($('ph1'), { o: Math.min(1, p * 1.4), x: (1 - p) * 220, y: (1 - p) * 80, s: lerp(1.0, 1.05, dolly), ry: lerp(-24, -14, dolly), rx: 4, rz: lerp(-7, -4, dolly), blur: (1 - p) * 14 });
+      const ok = t >= a + 2.2;
+      st($('g1'), { o: ease(prog(t, a + 0.4, 1)) * (ok ? 1 : 0.55) * (0.85 + 0.15 * Math.sin(t * 4)), s: ok ? lerp(0.9, 1.15, ease(prog(t, a + 2.2, 0.8))) : 0.9 });
+      const scanning = win(t, a + 1.3, a + 2.2);
       $('qrLine').style.opacity = scanning ? 1 : 0;
-      $('qrLine').style.top = `${50 - 50 * Math.cos((t - 20.2) * Math.PI * 2.2)}%`;
-      $('qrOk').style.opacity = ok ? 1 - ease(prog(t, 21.5, 0.9)) * 0.6 : 0;
-      [['ok1', 0], ['ok2', 0.18]].forEach(([id, d]) => { const q = prog(t, 21.1 + d, 1.1), c = $(id); c.setAttribute('r', ease(q) * 900); c.style.opacity = q > 0 && q < 1 ? 1 - q : 0; });
-      const b = back(prog(t, 21.2, 0.5)); st($('okBadge'), { o: ease(prog(t, 21.2, 0.25)), s: t < 21.2 ? 0.4 : lerp(0.4, 1, b), z: 60 }); }
+      $('qrLine').style.top = `${50 - 50 * Math.cos((t - a - 1.3) * Math.PI * 2.2)}%`;
+      $('qrOk').style.opacity = ok ? 1 - ease(prog(t, a + 2.6, 0.9)) * 0.6 : 0;
+      [['ok1', 0], ['ok2', 0.18]].forEach(([id, d]) => { const q = prog(t, a + 2.2 + d, 1.1), c = $(id); c.setAttribute('r', ease(q) * 900); c.style.opacity = q > 0 && q < 1 ? 1 - q : 0; });
+      const b = back(prog(t, a + 2.3, 0.5)); st($('okBadge'), { o: ease(prog(t, a + 2.3, 0.25)), s: t < a + 2.3 ? 0.4 : lerp(0.4, 1, b), z: 60 }); }
     // 2 · Entrena: la semana y los ejercicios
-    { const a = SHOTS[1], p = ease5(prog(t, a, 1)), dolly = easeIO(prog(t, a, 4));
-      st($('ph2'), { o: Math.min(1, p * 1.3) * 0.9, x: (1 - p) * 160, ry: -20, rz: 4, z: -200, blur: 7 });
-      st($('plan'), { o: Math.min(1, p * 1.5), x: (1 - p) * 180, z: (1 - p) * -400, ry: lerp(-22, -9, dolly), rx: 3, s: lerp(1, 1.04, dolly), blur: (1 - p) * 10 });
-      [['d0', 23.7], ['d2', 24.0], ['d4', 24.3]].forEach(([id, d]) => { $(id).classList.toggle('on', t >= d); $(id).style.transform = `scale(${1 + 0.18 * gauss(t, d + 0.08, 0.1)})`; });
-      [['e1', 24.6], ['e2', 24.85], ['e3', 25.1]].forEach(([id, d]) => { const e = ease(prog(t, d, 0.45)); st($(id), { o: e, x: (1 - e) * 40 }); }); }
+    { const a = SHOTS[1], p = ease5(prog(t, a, 0.9)), dolly = easeIO(prog(t, a, SHOT));
+      st($('ph2'), { o: Math.min(1, p * 1.3), x: (1 - p) * 160, ry: -18, rz: 3, z: -200, blur: (1 - p) * 8 });
+      st($('plan'), { o: Math.min(1, p * 1.5), x: (1 - p) * 180, z: (1 - p) * -400, ry: lerp(-18, -8, dolly), rx: 3, s: lerp(1, 1.03, dolly), blur: (1 - p) * 10 });
+      [['d0', 0.8], ['d2', 1.1], ['d4', 1.4]].forEach(([id, d]) => { $(id).classList.toggle('on', t >= a + d); $(id).style.transform = `scale(${1 + 0.18 * gauss(t, a + d + 0.08, 0.1)})`; });
+      [['e1', 1.7], ['e2', 1.95], ['e3', 2.2]].forEach(([id, d]) => { const e = ease(prog(t, a + d, 0.45)); st($(id), { o: e, x: (1 - e) * 40 }); }); }
     // 3 · Cobra: el pago queda registrado
-    { const a = SHOTS[2], p = ease5(prog(t, a, 1)), dolly = easeIO(prog(t, a, 4));
-      st($('ph3'), { o: Math.min(1, p * 1.3) * 0.9, x: (1 - p) * 160, ry: -20, rz: 4, z: -200, blur: 7 });
-      const c = back(prog(t, a + 0.3, 0.7)); st($('paid'), { o: ease(prog(t, a + 0.3, 0.35)), x: (1 - clamp(c)) * 120, s: lerp(0.85, 1, clamp(c, 0, 1.08)) * lerp(1, 1.04, dolly), ry: -8, z: 80 });
-      const ch = prog(t, 28.3, 0.45); $('paidChip').style.transform = `scale(${t < 28.3 ? 0.001 : back(ch)})`; }
+    { const a = SHOTS[2], p = ease5(prog(t, a, 0.9)), dolly = easeIO(prog(t, a, SHOT));
+      st($('ph3'), { o: Math.min(1, p * 1.3), x: (1 - p) * 160, ry: -18, rz: 3, z: -200, blur: (1 - p) * 8 });
+      const c = back(prog(t, a + 0.3, 0.7)); st($('paid'), { o: ease(prog(t, a + 0.3, 0.35)), x: (1 - clamp(c)) * 120, s: lerp(0.85, 1, clamp(c, 0, 1.08)) * lerp(1, 1.03, dolly), ry: -8, z: 80 });
+      const ch = prog(t, a + 1.4, 0.45); $('paidChip').style.transform = `scale(${t < a + 1.4 ? 0.001 : back(ch)})`; }
     // 4 · Decide: el aforo sube en vivo
-    { const a = SHOTS[3], p = ease5(prog(t, a, 1)), dolly = easeIO(prog(t, a, 4));
-      st($('br4'), { o: Math.min(1, p * 1.3) * 0.85, x: (1 - p) * 160, ry: lerp(-24, -16, dolly), rx: 4, z: -250, blur: 6 });
-      const c = ease5(prog(t, a + 0.35, 0.7)); st($('cnt'), { o: Math.min(1, c * 1.5), y: (1 - c) * -50, z: 120, s: (1 + 0.1 * gauss(t, 32.45, 0.15)) * lerp(1, 1.04, dolly) });
-      $('rollIn').style.transform = `translateY(${-130 * easeIO(prog(t, 32.3, 0.35))}px)`;
-      const q = ease5(prog(t, 32.75, 0.6)); st($('toIn'), { o: Math.min(1, q * 1.5), x: (1 - q) * 240, z: 140 }); }
+    { const a = SHOTS[3], p = ease5(prog(t, a, 0.9)), dolly = easeIO(prog(t, a, SHOT));
+      st($('br4'), { o: Math.min(1, p * 1.3), x: (1 - p) * 160, ry: lerp(-20, -14, dolly), rx: 4, z: -250, blur: (1 - p) * 8 });
+      const c = ease5(prog(t, a + 0.35, 0.7)); st($('cnt'), { o: Math.min(1, c * 1.5), y: (1 - c) * -50, z: 120, s: (1 + 0.1 * gauss(t, a + 1.55, 0.15)) * lerp(1, 1.03, dolly) });
+      $('rollIn').style.transform = `translateY(${-130 * easeIO(prog(t, a + 1.4, 0.35))}px)`;
+      const q = ease5(prog(t, a + 1.85, 0.6)); st($('toIn'), { o: Math.min(1, q * 1.5), x: (1 - q) * 240, z: 140 }); }
   }
 
-  /* ---------- E · Todo tu gimnasio. Conectado. (34.9 – 44.1) ---------- */
+  /* ---------- E · Todo tu gimnasio. Conectado. (E0 – HIT) ---------- */
   const onE = t >= E0 && t < DARK;
   show($('sE'), onE);
   if (onE) {
-    const rv = easeIO(prog(t, E0, 0.65));
+    const rv = easeIO(prog(t, E0, 0.55));
     $('sE').style.clipPath = `inset(${(1 - rv) * 100}% 0 0 0)`;
-    const conv = easeIn(prog(t, 41.7, 0.9));
+    const conv = easeIn(prog(t, CONV, 0.9));
     ['m1', 'm2', 'm3', 'm4'].forEach((id, i) => {
-      const p = ease5(prog(t, 35.3 + i * 0.14, 0.7));
+      const p = ease5(prog(t, E0 + 0.35 + i * 0.12, 0.7));
       const cx = 570 + i * 260, dx = (960 - cx) * conv, dy = (540 - 330) * conv;
-      st($(id), { o: Math.min(1, p * 1.5) * (1 - prog(t, 42.4, 0.2)), x: dx, y: (1 - p) * 60 + dy, s: lerp(1, 0.15, conv), blur: (1 - p) * 10 + conv * 6, rz: conv * (i - 1.5) * 20 });
+      st($(id), { o: Math.min(1, p * 1.5) * (1 - prog(t, CONV + 0.7, 0.2)), x: dx, y: (1 - p) * 60 + dy, s: lerp(1, 0.15, conv), blur: (1 - p) * 10 + conv * 6, rz: conv * (i - 1.5) * 20 });
     });
-    const b = $('bus'); b.style.strokeDashoffset = 1 - easeIO(prog(t, 35.9, 0.8)); b.style.opacity = 1 - conv;
-    { const d = $('busDot'); const ph = ((t - 36.6) / 1.2) % 1; d.setAttribute('cx', 570 + ph * 780); d.style.opacity = t > 36.6 ? Math.sin(ph * Math.PI) * (1 - conv) : 0; }
-    { const p = ease5(prog(t, 36.6, 0.6)); st($('tEa'), { o: p, y: (1 - p) * 40, blur: (1 - p) * 14 }); }
-    { const p = ease5(prog(t, 37.7, 0.6)); st($('tEb'), { o: p, y: (1 - p) * 40, blur: (1 - p) * 14, s: lerp(1.1, 1, p) }); }
-    const tc = easeIn(prog(t, 42.2, 0.9));
+    const b = $('bus'); b.style.strokeDashoffset = 1 - easeIO(prog(t, E0 + 0.9, 0.8)); b.style.opacity = 1 - conv;
+    { const d = $('busDot'); const ph = ((t - TA) / 1.2) % 1; d.setAttribute('cx', 570 + ph * 780); d.style.opacity = t > TA ? Math.sin(ph * Math.PI) * (1 - conv) : 0; }
+    { const p = ease5(prog(t, TA, 0.6)); st($('tEa'), { o: p, y: (1 - p) * 40, blur: (1 - p) * 14 }); }
+    { const p = ease5(prog(t, TB, 0.6)); st($('tEb'), { o: p, y: (1 - p) * 40, blur: (1 - p) * 14, s: lerp(1.1, 1, p) }); }
+    const tc = easeIn(prog(t, CONV + 0.5, 0.9));
     st($('tE'), { o: 1 - tc, s: lerp(1, 0.6, tc), y: -tc * 120, blur: tc * 16 });
   }
 
-  /* ---------- F · Firma (45 – 52) · el cuadro final es la portada ---------- */
-  const onF = t >= 45.0;
+  /* ---------- F · Firma (HIT – 46) · el cuadro final es la portada ---------- */
+  const onF = t >= DARK;
   show($('sF'), onF);
   if (onF) {
     const p = ease5(prog(t, HIT, 1.3));
@@ -487,25 +471,25 @@ function render(t) {
     st($('logoF'), { o: Math.min(1, prog(t, HIT - 0.03, 0.2)), x: 960 - 410 * k, y: cy - 350 * k, s: k, blur: (1 - p) * 26 });
     $('logoF').querySelector('img').style.filter = `brightness(${1 + 2 * Math.pow(1 - p, 2)})`;
     st($('glowF'), { o: ease(prog(t, HIT, 1.5)) * 0.85, s: lerp(0.6, 1, p) });
-    const sh = prog(t, 46.0, 0.9); $('sheenF').style.clipPath = band(sh); $('sheenF').style.opacity = sh > 0 && sh < 1 ? 1 : 0;
-    { const f = ease5(prog(t, 46.9, 0.8)); st($('firm'), { o: Math.min(1, prog(t, 46.9, 0.5)), y: (1 - f) * 24, blur: (1 - f) * 8 }); }
+    const sh = prog(t, HIT + 0.95, 0.9); $('sheenF').style.clipPath = band(sh); $('sheenF').style.opacity = sh > 0 && sh < 1 ? 1 : 0;
+    { const f = ease5(prog(t, HIT + 1.85, 0.8)); st($('firm'), { o: Math.min(1, prog(t, HIT + 1.85, 0.5)), y: (1 - f) * 24, blur: (1 - f) * 8 }); }
   }
 
   /* ---------- Destellos y negros ---------- */
   {
     const fl = $('flash');
-    const green = Math.max(gauss(t, DROP + 0.02, 0.08) * 0.38, gauss(t, HIT + 0.02, 0.08) * 0.45, gauss(t, 21.12, 0.07) * 0.18);
-    if (win(t, CUT, 10.95) || win(t, DARK, 45.0)) { fl.style.background = '#000'; fl.style.opacity = 1; }
-    else if (win(t, 43.3, DARK)) { // punto de luz que se concentra
-      const q = prog(t, 43.3, DARK - 43.3);
+    const green = Math.max(gauss(t, DROP + 0.02, 0.09) * 0.5, gauss(t, HIT + 0.02, 0.08) * 0.45, gauss(t, SHOTS[0] + 2.22, 0.07) * 0.18);
+    if (win(t, CUT, 10.95)) { fl.style.background = '#000'; fl.style.opacity = 1; }
+    else if (win(t, PT, DARK)) { // punto de luz que se concentra
+      const q = prog(t, PT, DARK - PT);
       fl.style.background = `radial-gradient(circle at 960px 540px,rgba(220,255,236,${1 - q * 0.3}) 0,#12E07B ${lerp(60, 3, q)}px,rgba(0,0,0,${lerp(0.2, 1, q)}) ${lerp(420, 10, q)}px,#000 ${lerp(900, 12, q)}px)`;
-      fl.style.opacity = ease(prog(t, 43.3, 0.3));
+      fl.style.opacity = ease(prog(t, PT, 0.3));
     } else { fl.style.background = 'radial-gradient(circle at 50% 50%,#CFFFE6,#12E07B 45%,#0B6B3A)'; fl.style.opacity = green; }
   }
 
   /* ---------- Partículas, grano y viñeta ---------- */
   fx.clearRect(0, 0, 1920, 1080);
-  const partO = (t < CUT ? 0.35 : 0.8) * (win(t, CUT, 10.95) || win(t, 43.6, 45.0) ? 0 : 1) * (t >= 45 ? 0.6 * (1 - prog(t, 47.2, 0.8)) : 1);
+  const partO = (t < CUT ? 0.35 : 0.8) * (win(t, CUT, 10.95) || win(t, PT + 0.3, HIT) ? 0 : 1) * (t >= HIT ? 0.6 * (1 - prog(t, HIT + 2.15, 0.8)) : 1);
   if (partO > 0) {
     fx.globalCompositeOperation = 'lighter';
     for (const q of PART) {
@@ -515,9 +499,10 @@ function render(t) {
       fx.beginPath(); fx.arc(x, y, 1 + q.z * 2.2, 0, 6.283); fx.fill();
     }
   }
-  // Desde STILL el grano se congela: el cuadro final queda fijo para empatar con la portada.
+  // Grano suave (más bajo en los verbos para que las pantallas se lean limpias). Desde STILL se apaga.
   $('grain').getContext('2d').putImageData(grainTiles[t >= STILL ? 0 : Math.floor(t * 24) % grainTiles.length], 0, 0);
-  $('grain').style.opacity = t >= STILL ? 0 : 0.1 * (1 - prog(t, 47.2, 0.8) * (t >= 45 ? 1 : 0));
+  const gBase = t >= DROP && t < E0 + 0.4 ? 0.035 : 0.07;
+  $('grain').style.opacity = t >= STILL ? 0 : gBase * (1 - (t >= HIT ? prog(t, HIT + 2.15, 0.8) : 0));
 }
 
 /* ===== Exportación cuadro por cuadro ===== */
