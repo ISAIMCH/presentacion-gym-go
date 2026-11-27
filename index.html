@@ -329,6 +329,10 @@ a.go-link:hover{transform:translateY(-2px)}
 
 /* ===== 11 · Gracias ===== */
 .thanks h1{font-size:170px;line-height:.95;margin-bottom:14px}
+/* El logo tiene letras blancas: va sobre una placa oscura para leerse en el fondo claro */
+.thanks .tlogo{display:grid;place-items:center;width:250px;height:250px;margin:6px auto 30px;border-radius:48px;
+  background:radial-gradient(circle at 50% 42%,#0C3D24 0%,#04120A 72%);box-shadow:0 0 0 1px rgba(18,224,123,.25),0 30px 70px rgba(4,18,10,.35),0 0 80px rgba(18,224,123,.18)}
+.thanks .tlogo img{width:196px;height:auto;display:block}
 
 /* Avisos */
 .hand{position:fixed;left:50%;bottom:7vh;translate:-50% 30px;background:var(--volt);color:var(--ink);font-weight:700;border-radius:999px;
@@ -781,10 +785,9 @@ const SLIDES = [
           <a class="go-link" href="${CONFIG.urlPanel}" target="_blank" rel="noopener">Ver la bitácora ${ic('arrow')}</a></div></div>`,
     say: 'A continuación, vamos a recorrer GymGo desde la perspectiva de quienes lo utilizan.<br><br>Primero veremos cómo un gimnasio puede conocer y contratar nuestra plataforma.<br><br>Después entraremos al panel administrativo para conocer las herramientas de gestión.<br><br>Continuaremos con la aplicación móvil, donde veremos las funciones disponibles para cada perfil.<br><br>Y finalmente, comprobaremos cómo funciona nuestro control de acceso y cómo se registra una entrada en la plataforma.<br><br>Los invitamos a conocer GymGo en funcionamiento.<br><br><b>Durante la demostración:</b> Sitio web: mostrar contratación y registro. · Dashboard: mostrar administración. · Aplicación: mostrar los perfiles y sus funciones. · IoT: validar un acceso y comprobar el registro en tiempo real.<br><br><i>Evitar volver a explicar lo que ya se dijo en la presentación. Aquí hay que demostrar.</i>' },
 
-  { post: true, t: 0, center: true, cls: 'thanks', kicker: 'SIRID Systems', title: 'Gracias',
-    body: `<p class="lead rv-1">GymGo: todo tu gimnasio en una sola plataforma. Quedamos atentos a sus preguntas.</p>
-      <div class="chips rv-g">${CONFIG.equipo.map((n) => `<span class="chip">${n}</span>`).join('')}</div>
-      <div class="chips rv-g" style="margin-top:14px"><span class="chip g"><b>14 días</b> de prueba gratis</span><span class="chip">Desde <b>$699</b> al mes + IVA</span></div>`,
+  { post: true, t: 0, center: true, cls: 'thanks', kicker: 'SIRID Systems', title: '<span class="tlogo"><img src="video/assets/logo/completo.png" alt=""></span>Gracias',
+    body: `<p class="lead rv-1">GymGo: todo tu gimnasio en una sola plataforma. Muchas gracias por su tiempo y su atención.</p>
+      <div class="chips rv-g">${CONFIG.equipo.map((n) => `<span class="chip">${n}</span>`).join('')}</div>`,
     say: 'GymGo: un gimnasio mejor conectado, una administración más inteligente y una experiencia mejor para todos.<br><br>Somos SIRID Systems.<br><br>Muchas gracias por su atención. Estamos listos para responder sus preguntas.' },
 ];
 
